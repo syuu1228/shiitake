@@ -2,8 +2,7 @@
 
 struct segment_descriptor {
 	uint16_t limit_l;
-	uint16_t base_l;
-	uint8_t base_m;
+	uint32_t base_l:24;
 	uint8_t type:4;
 	uint8_t s:1;
 	uint8_t dpl:2;
@@ -19,12 +18,21 @@ struct segment_descriptor {
 struct gate_descriptor {
 	uint16_t offset_l;
 	uint16_t segment_selector;
-	uint8_t stack_copy_count;
-	uint8_t type:3;
-	uint8_t d:1;
+	uint8_t stack_copy_count:5;
+	uint8_t __unused1:3;
+	uint8_t type:4;
+	uint8_t __unused2:1;
 	uint8_t dpl:2;
 	uint8_t p:1;
 	uint16_t offset_h;
+} __attribute__ ((__packed__));
+
+struct segment_descriptor_table {
+	uint16_t limit;
+	union {
+		struct segment_descriptor *segment_descriptor;
+		struct gate_descriptor *gate_descriptor;
+	} base;
 } __attribute__ ((__packed__));
 
 #define GATE_TYPE_16BIT_TSS 0x1
@@ -40,50 +48,39 @@ struct gate_descriptor {
 #define GATE_TYPE_32BIT_INTERRUPT 0xE
 #define GATE_TYPE_32BIT_TRAP 0xF
 
-struct segment_descriptor_table {
-	uint16_t limit;
-	void *base;
-} __attribute__ ((__packed__));
-
-inline static void get_gdtr(struct segment_descriptor_table *table)
+inline static void
+get_gdtr(struct segment_descriptor_table *table)
 {
 	asm volatile("sgdt %0" : "=m"(table->limit));
 }
 
-inline static void set_gdtr(struct segment_descriptor_table *table)
+inline static void
+set_gdtr(struct segment_descriptor_table *table)
 {
 	asm volatile("lgdt %0" :: "m"(table->limit));
 }
 
-inline static void get_idtr(struct segment_descriptor_table *table)
+inline static void
+get_idtr(struct segment_descriptor_table *table)
 {
 	asm volatile("sidt %0" : "=m"(table->limit));
 }
 
-inline static void set_idtr(struct segment_descriptor_table *table)
+inline static void
+set_idtr(struct segment_descriptor_table *table)
 {
 	asm volatile("lidt %0" :: "m"(table->limit));
 }
 
-inline static int get_gdt_length(struct segment_descriptor_table *table)
-{
-	return table->limit / sizeof(struct segment_descriptor);
-}
-
-inline static struct segment_descriptor *get_gdt_entry(struct segment_descriptor_table *table, int i)
-{
-	return ((struct segment_descriptor *)table->base) + i;
-}
-
-inline static void init_gate_descriptor(struct gate_descriptor *gate, uint16_t segment_selector,
-					void (*function)(void), uint8_t stack_copy_count, uint8_t type,
-					uint8_t d, uint8_t dpl, uint8_t p)
+inline static void 
+init_gate_descriptor(struct gate_descriptor *gate, uint16_t segment_selector,
+		     void (*function)(void), uint8_t stack_copy_count, 
+		     uint8_t type, uint8_t dpl, uint8_t p)
 {
 	gate->offset_l = (uint16_t)(uint32_t)function;
 	gate->segment_selector = segment_selector;
 	gate->stack_copy_count = stack_copy_count;
 	gate->type = type;
-	gate->d = d;
 	gate->dpl = dpl;
 	gate->p = p;
 	gate->offset_h = (uint16_t)((uint32_t)function >> 16);

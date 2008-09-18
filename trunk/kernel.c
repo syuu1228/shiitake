@@ -46,7 +46,7 @@ static void cls (void);
 static void itoa (char *buf, int base, int d);
 static void putchar (int c);
 void printf (const char *format, ...);
-#include "locore.h"
+#include "segment.h"
 struct segment_descriptor_table idtr;
 struct gate_descriptor idt[256];
 
@@ -158,10 +158,10 @@ cmain (unsigned long magic, unsigned long addr)
 #if 0
   struct segment_descriptor_table gdtr;
   get_gdtr(&gdtr);
-  int len = get_gdt_length(&gdtr);
+  int len = table->limit / sizeof(struct segment_descriptor);
   int i;
   for(i = 0; i <= len; i++) {
-	  struct segment_descriptor *desc = get_gdt_entry(&gdtr, i);
+	  struct segment_descriptor *desc = &gdtr->base.segment_descriptor[i];
 	  printf("gdt[%d]\n", i);
 	  printf("limit_l:%x ",
 		 desc->limit_l);
@@ -175,10 +175,16 @@ cmain (unsigned long magic, unsigned long addr)
 #endif
   int i;
   for(i = 0; i < 256; i++)
-	  init_gate_descriptor(&idt[i], 0x8, interrupt_handler, 0x0, GATE_TYPE_32BIT_INTERRUPT, 0x1, 0x3, 0x1);
+	  init_gate_descriptor(&idt[i], 0x8, interrupt_handler, 0x0, GATE_TYPE_32BIT_TRAP, 0, 1);
 //  init_gate_descriptor(&idt[0xd], 0x8, gpe_fault, 0x0, GATE_TYPE_32BIT_TRAP, 0x1, 0x3, 0x1);
-//  asm volatile ("sti");
+  idtr.limit = 256 * sizeof(struct gate_descriptor);
+  idtr.base.gate_descriptor = idt;
+  set_idtr(&idtr);
   printf("idt initialized\n");
+  asm volatile ("sti");
+  printf("interrupt enabled\n");
+  while(1)
+	  ;
 }  
 
 /* Clear the screen and initialize VIDEO, XPOS and YPOS.  */
