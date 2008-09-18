@@ -181,10 +181,12 @@ cmain (unsigned long magic, unsigned long addr)
   idtr.base.gate_descriptor = idt;
   set_idtr(&idtr);
   printf("idt initialized\n");
-  asm volatile ("sti");
-  printf("interrupt enabled\n");
-  while(1)
-	  ;
+//  asm volatile ("sti");
+//  printf("interrupt enabled\n");
+  extern void *_start, *_edata, *_end;
+  printf("_start:%x _edata:%x _end:%x\n", _start, _edata, _end);
+  extern void *_edata1, *_end1;
+  printf("_edata1:%x _end1:%x\n", _edata1, _end1);
 }  
 
 /* Clear the screen and initialize VIDEO, XPOS and YPOS.  */

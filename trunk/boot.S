@@ -74,21 +74,23 @@ loop:	hlt
 
 	.globl	interrupt_handler, interrupt_handler
 interrupt_handler:
-	push %ds
-	push %es
-	pusha
+	pushl %fs
+	pushl %ds
+	pushl %es
+	pushal
 	pushl $handled_message
 	call	EXT_C(printf)
-	popa
-	push %es
-	push %ds
+	popal
+	pushl %es
+	pushl %ds
+	pushl %fs
 	iret
 
 handled_message:
-	.asciz	"Handled."
+	.asciz	"Handled.\n"
 	
 halt_message:
-	.asciz	"Halted."
+	.asciz	"Halted.\n"
 
 	/* Our stack area.  */
 	.comm	stack, STACK_SIZE

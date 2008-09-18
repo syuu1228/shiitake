@@ -4,7 +4,8 @@ CFLAGS = -I. -Wall -Wmissing-prototypes -Wunused -Wshadow -Wpointer-arith -falig
 all: shiitake
 
 shiitake: $(OBJS)
-	$(CC) -g -o shiitake -nostdlib -Wl,-N -Wl,-Ttext -Wl,100000 $(OBJS)
+#	$(CC) -g -o shiitake -nostdlib -Wl,-N -Wl,-Ttext -Wl,100000 $(OBJS)
+	$(LD) -Map shiitake.map -T ldscript -o shiitake $(OBJS)
 
 clean:
 	rm -f $(OBJS) shiitake
