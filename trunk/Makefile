@@ -9,3 +9,9 @@ shiitake: $(OBJS)
 
 clean:
 	rm -f $(OBJS) shiitake
+
+.S.o:
+	$(CC) -c $(CFLAGS) $< -o $@
+
+.c.o:
+	$(CC) -c $(CFLAGS) $< -o $@
