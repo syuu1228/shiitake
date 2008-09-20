@@ -1,5 +1,5 @@
 OBJS = boot.o kernel.o
-CFLAGS = -I. -Wall -Wmissing-prototypes -Wunused -Wshadow -Wpointer-arith -falign-jumps=1 -falign-loops=1 -falign-functions=1 -Wundef -g -fno-builtin -nostdinc -O
+CFLAGS = -I. -Wall -Wmissing-prototypes -Wunused -Wshadow -Wpointer-arith -falign-jumps=1 -falign-loops=1 -falign-functions=1 -Wundef -g -fno-builtin -nostdinc -O -fno-stack-protector
 
 all: shiitake
 
