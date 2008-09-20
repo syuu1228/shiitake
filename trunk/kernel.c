@@ -16,6 +16,7 @@
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #include <multiboot.h>
+#include <segment.h>
 
 /* Macros.  */
 
@@ -46,7 +47,7 @@ static void cls (void);
 static void itoa (char *buf, int base, int d);
 static void putchar (int c);
 void printf (const char *format, ...);
-#include "segment.h"
+
 struct segment_descriptor_table idtr;
 struct gate_descriptor idt[256];
 
@@ -172,7 +173,6 @@ cmain (unsigned long magic, unsigned long addr)
 	  printf("limit_h:%x avl:%x unused:%x db:%x g:%x base_h:%x\n",
 		 desc->limit_h, desc->avl, desc->unused, desc->db, desc->g, desc->base_h);
   }
-#endif
   int i;
   for(i = 0; i < 256; i++)
 	  init_gate_descriptor(&idt[i], 0x8, interrupt_handler, 0x0, GATE_TYPE_32BIT_TRAP, 0, 1);
@@ -183,8 +183,18 @@ cmain (unsigned long magic, unsigned long addr)
   printf("idt initialized\n");
 //  asm volatile ("sti");
 //  printf("interrupt enabled\n");
-  extern void *_start, *_edata, *_end;
-  printf("_start:%x _edata:%x _end:%x\n", _start, _edata, _end);
+#endif
+  extern void *_start;
+  extern void *_edata, *_end;
+  printf("_start:%x _edata:%x _end:%x\n", _start, &_edata, &_end);
+  printf("mbi->mem_upper:%x\n", mbi->mem_upper * 1024);
+
+  unsigned *ptr;
+  for(ptr = (unsigned *)&_end;
+      ptr < (unsigned *)(mbi->mem_upper * 1024);
+      ptr++)
+	  *ptr = 0;
+  printf("zero clear finished\n");
 }  
 
 /* Clear the screen and initialize VIDEO, XPOS and YPOS.  */
