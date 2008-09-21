@@ -1,4 +1,7 @@
-#include "types.h"
+#ifndef SEGMENT_H
+#define SEGMENT_H
+
+#include <types.h>
 
 struct segment_descriptor {
 	uint16_t limit_l;
@@ -85,3 +88,5 @@ init_gate_descriptor(struct gate_descriptor *gate, uint16_t segment_selector,
 	gate->p = p;
 	gate->offset_h = (uint16_t)((uint32_t)function >> 16);
 }
+
+#endif

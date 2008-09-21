@@ -17,6 +17,7 @@
 
 #include <multiboot.h>
 #include <segment.h>
+#include <task.h>
 
 /* Macros.  */
 
@@ -189,6 +190,8 @@ cmain (unsigned long magic, unsigned long addr)
   printf("_start:%x _edata:%x _end:%x\n", _start, &_edata, &_end);
   printf("mbi->mem_upper:%x\n", mbi->mem_upper * 1024);
 
+  printf("sizeof eflags:%d\n", sizeof(struct eflags));
+  printf("sizeof tss:%d\n", sizeof(struct tss));
   unsigned *ptr;
   for(ptr = (unsigned *)&_end;
       ptr < (unsigned *)(mbi->mem_upper * 1024);
