@@ -66,8 +66,8 @@ multiboot_entry:
 	call	EXT_C(cmain)
 
 	/* Halt.  */
-	pushl	$halt_message
-	call	EXT_C(printf)
+/*	pushl	$halt_message
+	call	EXT_C(printf)*/
 	
 loop:	hlt
 	jmp	loop

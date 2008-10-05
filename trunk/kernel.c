@@ -18,6 +18,7 @@
 #include <multiboot.h>
 #include <segment.h>
 #include <task.h>
+//#include <paging.h>
 
 /* Macros.  */
 
@@ -46,14 +47,10 @@ static volatile unsigned char *video;
 void cmain (unsigned long magic, unsigned long addr);
 static void cls (void);
 static void itoa (char *buf, int base, int d);
+static void scroll(void);
 static void putchar (int c);
 void printf (const char *format, ...);
-
-struct segment_descriptor_table idtr;
-struct gate_descriptor idt[256];
-
-extern void interrupt_handler(void);
-
+//struct segment_descriptor_table idtr;
 /* Check if MAGIC is valid and print the Multiboot information structure
    pointed by ADDR.  */
 void
@@ -157,23 +154,43 @@ cmain (unsigned long magic, unsigned long addr)
 		(unsigned) mmap->length_low,
 		(unsigned) mmap->type);
     }
-#if 0
-  struct segment_descriptor_table gdtr;
-  get_gdtr(&gdtr);
-  int len = table->limit / sizeof(struct segment_descriptor);
-  int i;
-  for(i = 0; i <= len; i++) {
-	  struct segment_descriptor *desc = &gdtr->base.segment_descriptor[i];
-	  printf("gdt[%d]\n", i);
-	  printf("limit_l:%x ",
-		 desc->limit_l);
-	  printf("base_l:%x ",
-		 desc->base_l);
-	  printf("base_m:%x type:%x dpl:%x p:%x ",
-		 desc->base_m, desc->type, desc->dpl, desc->p);
-	  printf("limit_h:%x avl:%x unused:%x db:%x g:%x base_h:%x\n",
-		 desc->limit_h, desc->avl, desc->unused, desc->db, desc->g, desc->base_h);
+
+  {
+	  struct segment_descriptor_table gdtr;
+	  get_gdtr(&gdtr);
+	  printf("gdtr limit:%x base:%p\n",
+		 gdtr.limit, gdtr.base);
+	  int len = gdtr.limit / sizeof(struct segment_descriptor);
+	  int i;
+	  for(i = 0; i <= len; i++) {
+		  struct segment_descriptor *desc = &gdtr.base.segment_descriptor[i];
+		  printf("gdt[%d]\n", i);
+		  printf("limit_l:%x ", desc->limit_l);
+		  printf("base_l:%x ", desc->base_l);
+		  printf("type:%x dpl:%x p:%x ",
+			 desc->type, desc->dpl, desc->p);
+		  printf("limit_h:%x avl:%x db:%x g:%x base_h:%x\n",
+			 desc->limit_h, desc->avl, desc->db, desc->g, desc->base_h);
+	  }
   }
+  {
+	  struct segment_descriptor_table idtr;
+	  get_idtr(&idtr);
+	  printf("idtr limit:%x base:%p\n",
+		 idtr.limit, idtr.base);
+	  int len = idtr.limit / sizeof(struct segment_descriptor);
+	  int i;
+	  for(i = 0; i <= len; i++) {
+		  struct gate_descriptor *desc = &idtr.base.gate_descriptor[i];
+		  printf("idt[%d]\n", i);
+		  printf("offset_l:%x ", desc->offset_l);
+		  printf("segment_selector:%x ", desc->segment_selector);
+		  printf("stack_copy_count:%x ", desc->stack_copy_count);
+		  printf("type:%x dpl:%x p:%x ", desc->type, desc->dpl, desc->p);
+		  printf("offset_h:%x\n", desc->offset_h);
+	  }
+  }
+#if 0
   int i;
   for(i = 0; i < 256; i++)
 	  init_gate_descriptor(&idt[i], 0x8, interrupt_handler, 0x0, GATE_TYPE_32BIT_TRAP, 0, 1);
@@ -182,9 +199,10 @@ cmain (unsigned long magic, unsigned long addr)
   idtr.base.gate_descriptor = idt;
   set_idtr(&idtr);
   printf("idt initialized\n");
-//  asm volatile ("sti");
-//  printf("interrupt enabled\n");
+  asm volatile ("sti");
+  printf("interrupt enabled\n");
 #endif
+
   extern void *_start;
   extern void *_edata, *_end;
   printf("_start:%x _edata:%x _end:%x\n", _start, &_edata, &_end);
@@ -261,6 +279,24 @@ itoa (char *buf, int base, int d)
     }
 }
 
+static void
+scroll (void)
+{
+	int x, y;
+	for(y = 1; y < LINES; y++)
+		for(x = 0; x < COLUMNS; x++) {
+			*(video + (x + (y - 1) * COLUMNS) * 2) = 
+				*(video + (x + y * COLUMNS) * 2);
+			*(video + (x + (y - 1) * COLUMNS) * 2 + 1) = 
+				ATTRIBUTE;
+		}
+	y = LINES - 1;
+	for(x = 0; x < COLUMNS; x++) {
+		*(video + (x + y * COLUMNS) * 2) = 0;
+		*(video + (x + y * COLUMNS) * 2 + 1) = ATTRIBUTE;
+	}
+}
+
 /* Put the character C on the screen.  */
 static void
 putchar (int c)
@@ -269,12 +305,13 @@ putchar (int c)
     {
     newline:
       xpos = 0;
-      ypos++;
-      if (ypos >= LINES)
-	ypos = 0;
+      if(ypos < LINES - 1)
+	      ypos++;
       return;
     }
 
+  if (xpos == 0 && ypos == LINES - 1)
+	  scroll();
   *(video + (xpos + ypos * COLUMNS) * 2) = c & 0xFF;
   *(video + (xpos + ypos * COLUMNS) * 2 + 1) = ATTRIBUTE;
 

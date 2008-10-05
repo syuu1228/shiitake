@@ -75,6 +75,26 @@ set_idtr(struct segment_descriptor_table *table)
 	asm volatile("lidt %0" :: "m"(table->limit));
 }
 
+inline static int
+selector_to_index(int selector)
+{
+	return selector >> 3;
+}
+
+inline static void 
+set_limit(struct segment_descriptor *descriptor, uint32_t limit)
+{
+	descriptor->limit_l = (uint16_t)limit;
+	descriptor->limit_h = (uint8_t)(0xf & (limit >> 16));
+}
+
+inline static void
+set_base(struct segment_descriptor *descriptor, uint32_t base)
+{
+	descriptor->base_l = 0xffffff & base;
+	descriptor->base_h = (uint8_t)(base >> 24);
+}		       
+
 inline static void 
 init_gate_descriptor(struct gate_descriptor *gate, uint16_t segment_selector,
 		     void (*function)(void), uint8_t stack_copy_count, 
