@@ -17,8 +17,7 @@
 
 #include <multiboot.h>
 #include <segment.h>
-#include <task.h>
-//#include <paging.h>
+#include <process.h>
 
 /* Macros.  */
 
@@ -154,25 +153,30 @@ cmain (unsigned long magic, unsigned long addr)
 		(unsigned) mmap->length_low,
 		(unsigned) mmap->type);
     }
-
+  gdt_init();
+  printf("gdt initialized\n");
+#if 0
   {
 	  struct segment_descriptor_table gdtr;
 	  get_gdtr(&gdtr);
+	  printf("sizeof gdt:%d\n", sizeof(struct segment_descriptor));
 	  printf("gdtr limit:%x base:%p\n",
 		 gdtr.limit, gdtr.base);
 	  int len = gdtr.limit / sizeof(struct segment_descriptor);
+	  printf("len:%d\n", len);
 	  int i;
 	  for(i = 0; i <= len; i++) {
-		  struct segment_descriptor *desc = &gdtr.base.segment_descriptor[i];
+		  struct segment_descriptor *desc = &gdtr.base.segment[i];
 		  printf("gdt[%d]\n", i);
 		  printf("limit_l:%x ", desc->limit_l);
 		  printf("base_l:%x ", desc->base_l);
-		  printf("type:%x dpl:%x p:%x ",
-			 desc->type, desc->dpl, desc->p);
+		  printf("base_m:%x type:%x s:%x dpl:%x p:%x ",
+			 desc->base_m, desc->type, desc->s, desc->dpl, desc->p);
 		  printf("limit_h:%x avl:%x db:%x g:%x base_h:%x\n",
 			 desc->limit_h, desc->avl, desc->db, desc->g, desc->base_h);
 	  }
   }
+
   {
 	  struct segment_descriptor_table idtr;
 	  get_idtr(&idtr);
@@ -190,7 +194,10 @@ cmain (unsigned long magic, unsigned long addr)
 		  printf("offset_h:%x\n", desc->offset_h);
 	  }
   }
-#if 0
+  unsigned tr;
+  asm volatile ("str %0" : "=m"(tr));
+  printf("tr: %x\n", tr);
+
   int i;
   for(i = 0; i < 256; i++)
 	  init_gate_descriptor(&idt[i], 0x8, interrupt_handler, 0x0, GATE_TYPE_32BIT_TRAP, 0, 1);
@@ -201,7 +208,7 @@ cmain (unsigned long magic, unsigned long addr)
   printf("idt initialized\n");
   asm volatile ("sti");
   printf("interrupt enabled\n");
-#endif
+
 
   extern void *_start;
   extern void *_edata, *_end;
@@ -216,6 +223,7 @@ cmain (unsigned long magic, unsigned long addr)
       ptr++)
 	  *ptr = 0;
   printf("zero clear finished\n");
+#endif
 }  
 
 /* Clear the screen and initialize VIDEO, XPOS and YPOS.  */

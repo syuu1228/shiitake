@@ -1,4 +1,4 @@
-OBJS = boot.o kernel.o
+OBJS = boot.o kernel.o segment.o
 CFLAGS = -I. -Werror -Wall -Wmissing-prototypes -Wunused -Wshadow -Wpointer-arith -falign-jumps=1 -falign-loops=1 -falign-functions=1 -Wundef -g -fno-builtin -nostdinc -O
 CFLAGS += $(shell if $(CC) -fno-stack-protector -S -o /dev/null -xc /dev/null > /dev/null 2>&1; then echo "-fno-stack-protector"; fi)
 

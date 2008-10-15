@@ -1,10 +1,10 @@
-#ifndef TASK_H
-#define TASK_H
+#ifndef PROCESS_H
+#define PROCESS_H
 
 #include <types.h>
 #include <cpu.h>
 
-struct tss {
+struct process {
 	uint16_t previous_task;
 	uint16_t __unused1;
 	uint32_t esp0;
