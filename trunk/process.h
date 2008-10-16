@@ -1,9 +1,6 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
-#include <types.h>
-#include <cpu.h>
-
 struct process {
 	uint16_t previous_task;
 	uint16_t __unused1;
@@ -18,7 +15,7 @@ struct process {
 	uint16_t __unused4;
 	uint32_t cr3;
 	uint32_t eip;
-	struct eflags eflags;
+	uint32_t eflags;
 	uint32_t eax;
 	uint32_t ecx;
 	uint32_t edx;
@@ -44,5 +41,7 @@ struct process {
 	uint16_t t;
 	uint16_t io_map_base_address;
 } __attribute__ ((__packed__));
+
+void process_init(void);
 
 #endif

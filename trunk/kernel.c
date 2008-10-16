@@ -155,6 +155,8 @@ cmain (unsigned long magic, unsigned long addr)
     }
   gdt_init();
   printf("gdt initialized\n");
+  process_init();
+  printf("process initialized\n");
 #if 0
   {
 	  struct segment_descriptor_table gdtr;
