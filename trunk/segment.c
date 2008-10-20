@@ -21,7 +21,7 @@ void gdt_init(void)
 	gdt_set_segment(0x00, 0x0, 0x0, 0, 0, 0, 0, 0, 0);
 
 	/* 32bit code segment */
-	gdt_set_segment(0x08, 0x0, 0xfffff,
+	gdt_set_segment(GLOBAL_32BIT_CODE, 0x0, 0xfffff,
 			SEGMENT_TYPE_WRITABLE | SEGMENT_TYPE_CODE,
 			SEGMENT_DESCRIPTOR_TYPE_CODEDATA,
 			SEGMENT_PRIVILEGE_LEVEL_KERNEL,
@@ -30,7 +30,7 @@ void gdt_init(void)
 			SEGMENT_GRANULARITY_ENABLE);
 
 	/* 32bit data segment */
-	gdt_set_segment(0x10, 0x0, 0xfffff,
+	gdt_set_segment(GLOBAL_32BIT_DATA, 0x0, 0xfffff,
 			SEGMENT_TYPE_WRITABLE | SEGMENT_TYPE_DATA,
 			SEGMENT_DESCRIPTOR_TYPE_CODEDATA,
 			SEGMENT_PRIVILEGE_LEVEL_KERNEL,

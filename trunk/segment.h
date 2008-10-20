@@ -4,6 +4,9 @@
 #include <types.h>
 #include <process.h>
 
+#define GLOBAL_32BIT_CODE 0x08
+#define GLOBAL_32BIT_DATA 0x10
+
 struct segment_descriptor {
 	uint16_t limit_l;
 	uint16_t base_l;
