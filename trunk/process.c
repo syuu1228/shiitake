@@ -20,6 +20,8 @@ void process_init(void)
 		    TSS_PRIVILEGE_LEVEL_KERNEL, TSS_PRESENT,
 		    TSS_GRANULARITY_ENABLE);
 
+	gdt_dump();
+
 	tr_load(0x100);
 }
 

@@ -79,8 +79,8 @@ struct gate_descriptor {
 #define GATE_TYPE_32BIT_TRAP 0xF
 
 union descriptor {
-	struct segment_descriptor *segment;
-	struct gate_descriptor *gate;
+	struct segment_descriptor segment;
+	struct gate_descriptor gate;
 };
 
 struct descriptor_table_register {
@@ -98,6 +98,8 @@ set_descriptor_table_register(struct descriptor_table_register *reg,
 }
 
 void gdt_init(void);
+
+void gdt_dump(void);
 
 void 
 gdt_set_segment(uint16_t selector, uint32_t base, uint32_t limit,

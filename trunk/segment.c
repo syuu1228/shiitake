@@ -2,7 +2,10 @@
 
 #define GDT_SIZE 4096
 
-static union descriptor gdt[GDT_SIZE] = {{0}};
+static union descriptor gdt[GDT_SIZE] = {{{0}}};
+
+extern void
+printf (const char *format, ...);
 
 static inline void
 gdt_load(struct descriptor_table_register *reg)
@@ -37,6 +40,24 @@ void gdt_init(void)
 
 	set_descriptor_table_register(&gdtr, gdt, GDT_SIZE);
 	gdt_load(&gdtr);
+}
+
+void
+gdt_dump(void)
+{
+	uint16_t *t = (uint16_t *)gdt;
+	int i, j;
+	for(i = 0; i < 33; i++) {
+		if(i < 5 || i == 32)
+			printf("gdt[%d] ", i);
+		for(j = 0; j < 4; j++) {
+			if(i < 5 || i == 32)
+				printf("%x ", *t);
+			t++;
+		}
+		if(i < 5 || i == 32)
+			printf("\n");
+	}
 }
 
 void 
@@ -77,7 +98,7 @@ gdt_set_tss(uint16_t selector, struct process *base, uint8_t type,
 struct segment_descriptor *
 gdt_get_segment(uint16_t selector)
 {
-	return gdt[selector >> 3].segment;
+	return &gdt[selector >> 3].segment;
 }
 
 void 
@@ -98,6 +119,6 @@ gdt_set_gate(uint16_t selector, uint32_t offset, uint16_t segment_selector,
 struct gate_descriptor *
 gdt_get_gate(uint16_t selector)
 {
-	return gdt[selector >> 3].gate;
+	return &gdt[selector >> 3].gate;
 }
 
