@@ -1,0 +1,307 @@
+Archive member included because of file (symbol)
+
+/usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+                              ../lib/console.o (__udivdi3)
+/usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+                              ../lib/console.o (__umoddi3)
+/usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+                              /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o) (__clz_tab)
+
+Discarded input sections
+
+ .reginfo       0x0000000000000000        0x0 boot.o
+ .reginfo       0x0000000000000000        0x0 init.o
+ .reginfo       0x0000000000000000        0x0 console.o
+ .reginfo       0x0000000000000000        0x0 ../lib/list.o
+ .reginfo       0x0000000000000000        0x0 ../lib/string.o
+ .reginfo       0x0000000000000000        0x0 ../lib/console.o
+ .reginfo       0x0000000000000000        0x0 ../kern/main.o
+ .reginfo       0x0000000000000000        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .reginfo       0x0000000000000000        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .reginfo       0x0000000000000000        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+
+.text           0x0000000080030000     0x2a28
+                0x0000000080030000                _ftext = <code 342> (.)
+ boot.o(.text)
+ .text          0x0000000080030000       0x60 boot.o
+                0x0000000080030000                _start
+ *(.text)
+ .text          0x0000000080030060       0x20 init.o
+                0x0000000080030060                arch_init
+ .text          0x0000000080030080       0x80 console.o
+                0x0000000080030080                putchar
+                0x00000000800300b8                getchar
+ .text          0x0000000080030100      0x818 ../lib/list.o
+                0x0000000080030368                list_delete
+                0x0000000080030270                list_insert_head
+                0x0000000080030600                list_tail
+                0x0000000080030584                list_move_tail
+                0x0000000080030860                list_dump
+                0x00000000800302ec                list_insert_tail
+                0x000000008003069c                list_head
+                0x0000000080030508                list_move_head
+                0x00000000800301b8                list_insert_after
+                0x00000000800304a0                list_move_after
+                0x0000000080030100                list_insert_before
+                0x0000000080030438                list_move_before
+                0x00000000800307b8                list_count
+                0x0000000080030738                list_node_copy
+ .text          0x0000000080030918      0x604 ../lib/string.o
+                0x0000000080030afc                strcpy
+                0x0000000080030a40                memcpy
+                0x0000000080030df4                strncmp
+                0x0000000080030ba8                strncpy
+                0x000000008003098c                memset
+                0x0000000080030ce8                strcmp
+                0x0000000080030918                strlen
+ .text          0x0000000080030f1c      0xc90 ../lib/console.o
+                0x0000000080031714                printf
+                0x0000000080031534                puts
+                0x0000000080031648                getns
+                0x00000000800313e4                putx
+                0x00000000800315b8                putns
+                0x00000000800310ec                putu
+                0x000000008003125c                putlu
+                0x0000000080030f1c                putd
+ .text          0x0000000080031bac       0x44 ../kern/main.o
+                0x0000000080031bac                main
+ .text          0x0000000080031bf0      0x634 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+                0x0000000080031bf0                __udivdi3
+ .text          0x0000000080032224      0x644 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+                0x0000000080032224                __umoddi3
+ .text          0x0000000080032868        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+                0x0000000080032868                _ecode = <code 342> (.)
+ *(.rodata)
+ .rodata        0x0000000080032868       0x58 ../lib/list.o
+ .rodata        0x00000000800328c0       0x28 ../lib/string.o
+ .rodata        0x00000000800328e8       0x28 ../lib/console.o
+ .rodata        0x0000000080032910       0x14 ../kern/main.o
+ .rodata        0x0000000080032924      0x100 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+                0x0000000080032924                __clz_tab
+                0x0000000080032a28                . = ALIGN (0x8)
+ *fill*         0x0000000080032a24        0x4 00000000
+                0x0000000080032a28                _etext = <code 342> (.)
+
+.eh_frame       0x0000000080032a28       0x38
+ .eh_frame      0x0000000080032a28       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .eh_frame      0x0000000080032a48       0x18 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+                                         0x28 (size before relaxing)
+
+.data           0x0000000080032a60        0x0
+                0x0000000080032a60                _fdata = <code 342> (.)
+ *(.data)
+ .data          0x0000000080032a60        0x0 boot.o
+ .data          0x0000000080032a60        0x0 init.o
+ .data          0x0000000080032a60        0x0 console.o
+ .data          0x0000000080032a60        0x0 ../lib/list.o
+ .data          0x0000000080032a60        0x0 ../lib/string.o
+ .data          0x0000000080032a60        0x0 ../lib/console.o
+ .data          0x0000000080032a60        0x0 ../kern/main.o
+ .data          0x0000000080032a60        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .data          0x0000000080032a60        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .data          0x0000000080032a60        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+                0x0000000080032a60                . = ALIGN (0x8)
+                0x000000008003aa50                _gp = <code 342> ((. + 0x7ff0))
+ *(.lit8)
+ *(.lit4)
+ *(.sdata)
+                0x0000000080032a60                . = ALIGN (0x8)
+                0x0000000080032a60                _edata = <code 342> (.)
+                0x0000000080032a60                _fbss = .
+
+.sbss
+ *(.sbss)
+ *(.scommon)
+
+.bss            0x0000000080032a60     0x5000
+ *(.bss)
+ .bss           0x0000000080032a60        0x0 boot.o
+ .bss           0x0000000080032a60        0x0 init.o
+ .bss           0x0000000080032a60        0x0 console.o
+ .bss           0x0000000080032a60        0x0 ../lib/list.o
+ .bss           0x0000000080032a60        0x0 ../lib/string.o
+ .bss           0x0000000080032a60        0x0 ../lib/console.o
+ .bss           0x0000000080032a60        0x0 ../kern/main.o
+ .bss           0x0000000080032a60        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .bss           0x0000000080032a60        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .bss           0x0000000080032a60        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+ *(COMMON)
+                0x0000000080032a60                . = ALIGN (0x8)
+                0x0000000080037a60                . = (. + 0x5000)
+ *fill*         0x0000000080032a60     0x5000 00
+                0x0000000080037a50                _sp = (. - 0x10)
+                0x0000000080037a60                _end = .
+
+.gptab.sdata
+ *(.gptab.data)
+ *(.gptab.sdata)
+
+.gptab.sbss
+ *(.gptab.bss)
+ *(.gptab.sbss)
+
+/DISCARD/
+ *(.reginfo)
+                0x0000000080032a28                PROVIDE (etext, _etext)
+                0x0000000080037a60                PROVIDE (edata, .)
+                0x0000000080037a60                PROVIDE (end, .)
+LOAD boot.o
+LOAD init.o
+LOAD console.o
+LOAD ../lib/list.o
+LOAD ../lib/string.o
+LOAD ../lib/console.o
+LOAD ../kern/main.o
+LOAD /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a
+OUTPUT(shiitake elf32-littlemips)
+
+.pdr            0x0000000000000000      0x480
+ .pdr           0x0000000000000000       0x20 boot.o
+ .pdr           0x0000000000000020       0x20 init.o
+ .pdr           0x0000000000000040       0x40 console.o
+ .pdr           0x0000000000000080      0x1c0 ../lib/list.o
+ .pdr           0x0000000000000240       0xe0 ../lib/string.o
+ .pdr           0x0000000000000320      0x100 ../lib/console.o
+ .pdr           0x0000000000000420       0x20 ../kern/main.o
+ .pdr           0x0000000000000440       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .pdr           0x0000000000000460       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .pdr           0x0000000000000480        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+
+.debug_line     0x0000000000000000      0x643
+ .debug_line    0x0000000000000000       0x46 boot.o
+ .debug_line    0x0000000000000046       0x35 init.o
+ .debug_line    0x000000000000007b       0x41 console.o
+ .debug_line    0x00000000000000bc       0xe2 ../lib/list.o
+ .debug_line    0x000000000000019e       0xad ../lib/string.o
+ .debug_line    0x000000000000024b      0x150 ../lib/console.o
+ .debug_line    0x000000000000039b       0x40 ../kern/main.o
+ .debug_line    0x00000000000003db      0x105 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .debug_line    0x00000000000004e0      0x120 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .debug_line    0x0000000000000600       0x43 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+
+.debug_info     0x0000000000000000     0x1ade
+ .debug_info    0x0000000000000000       0x4b boot.o
+ .debug_info    0x000000000000004b       0x6d init.o
+ .debug_info    0x00000000000000b8       0xb4 console.o
+ .debug_info    0x000000000000016c      0x4d0 ../lib/list.o
+ .debug_info    0x000000000000063c      0x331 ../lib/string.o
+ .debug_info    0x000000000000096d      0x396 ../lib/console.o
+ .debug_info    0x0000000000000d03       0x7b ../kern/main.o
+ .debug_info    0x0000000000000d7e      0x63d /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .debug_info    0x00000000000013bb      0x66c /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .debug_info    0x0000000000001a27       0xb7 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+
+.debug_abbrev   0x0000000000000000      0x67e
+ .debug_abbrev  0x0000000000000000       0x14 boot.o
+ .debug_abbrev  0x0000000000000014       0x2c init.o
+ .debug_abbrev  0x0000000000000040       0x71 console.o
+ .debug_abbrev  0x00000000000000b1       0xbd ../lib/list.o
+ .debug_abbrev  0x000000000000016e       0x9c ../lib/string.o
+ .debug_abbrev  0x000000000000020a       0xdc ../lib/console.o
+ .debug_abbrev  0x00000000000002e6       0x39 ../kern/main.o
+ .debug_abbrev  0x000000000000031f      0x175 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .debug_abbrev  0x0000000000000494      0x180 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .debug_abbrev  0x0000000000000614       0x6a /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+
+.debug_aranges  0x0000000000000000      0x120
+ .debug_aranges
+                0x0000000000000000       0x20 boot.o
+ .debug_aranges
+                0x0000000000000020       0x20 init.o
+ .debug_aranges
+                0x0000000000000040       0x20 console.o
+ .debug_aranges
+                0x0000000000000060       0x20 ../lib/list.o
+ .debug_aranges
+                0x0000000000000080       0x20 ../lib/string.o
+ .debug_aranges
+                0x00000000000000a0       0x20 ../lib/console.o
+ .debug_aranges
+                0x00000000000000c0       0x20 ../kern/main.o
+ .debug_aranges
+                0x00000000000000e0       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .debug_aranges
+                0x0000000000000100       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+
+.mdebug.abi32   0x0000000000000000        0x0
+ .mdebug.abi32  0x0000000000000000        0x0 init.o
+ .mdebug.abi32  0x0000000000000000        0x0 console.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../lib/list.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../lib/string.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../lib/console.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../kern/main.o
+ .mdebug.abi32  0x0000000000000000        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .mdebug.abi32  0x0000000000000000        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .mdebug.abi32  0x0000000000000000        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+
+.debug_frame    0x0000000000000000      0x458
+ .debug_frame   0x0000000000000000       0x2c init.o
+ .debug_frame   0x000000000000002c       0x48 console.o
+ .debug_frame   0x0000000000000074      0x198 ../lib/list.o
+ .debug_frame   0x000000000000020c       0xd4 ../lib/string.o
+ .debug_frame   0x00000000000002e0      0x104 ../lib/console.o
+ .debug_frame   0x00000000000003e4       0x2c ../kern/main.o
+ .debug_frame   0x0000000000000410       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .debug_frame   0x0000000000000430       0x28 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+
+.debug_loc      0x0000000000000000     0x158f
+ .debug_loc     0x0000000000000000       0x2b init.o
+ .debug_loc     0x000000000000002b       0x56 console.o
+ .debug_loc     0x0000000000000081      0x25a ../lib/list.o
+ .debug_loc     0x00000000000002db      0x12d ../lib/string.o
+ .debug_loc     0x0000000000000408      0x160 ../lib/console.o
+ .debug_loc     0x0000000000000568       0x2b ../kern/main.o
+ .debug_loc     0x0000000000000593      0x7c9 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .debug_loc     0x0000000000000d5c      0x833 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+
+.debug_pubnames
+                0x0000000000000000      0x299
+ .debug_pubnames
+                0x0000000000000000       0x20 init.o
+ .debug_pubnames
+                0x0000000000000020       0x2a console.o
+ .debug_pubnames
+                0x000000000000004a      0x114 ../lib/list.o
+ .debug_pubnames
+                0x000000000000015e       0x61 ../lib/string.o
+ .debug_pubnames
+                0x00000000000001bf       0x5f ../lib/console.o
+ .debug_pubnames
+                0x000000000000021e       0x1b ../kern/main.o
+ .debug_pubnames
+                0x0000000000000239       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .debug_pubnames
+                0x0000000000000259       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .debug_pubnames
+                0x0000000000000279       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+
+.comment        0x0000000000000000       0xa2
+ .comment       0x0000000000000000       0x12 init.o
+ .comment       0x0000000000000012       0x12 console.o
+ .comment       0x0000000000000024       0x12 ../lib/list.o
+ .comment       0x0000000000000036       0x12 ../lib/string.o
+ .comment       0x0000000000000048       0x12 ../lib/console.o
+ .comment       0x000000000000005a       0x12 ../kern/main.o
+ .comment       0x000000000000006c       0x12 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .comment       0x000000000000007e       0x12 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .comment       0x0000000000000090       0x12 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+
+.debug_str      0x0000000000000000      0x153
+ .debug_str     0x0000000000000000        0xa ../lib/list.o
+ .debug_str     0x000000000000000a      0x13f /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+                                        0x178 (size before relaxing)
+ .debug_str     0x0000000000000149        0xa /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+                                        0x178 (size before relaxing)
+ .debug_str     0x0000000000000000      0x10a /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+
+.debug_ranges   0x0000000000000000      0x280
+ .debug_ranges  0x0000000000000000      0x160 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .debug_ranges  0x0000000000000160      0x120 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)

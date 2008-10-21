@@ -1,0 +1,90 @@
+OUTPUT_ARCH(mips)
+
+/**** Start point ****/
+ENTRY(_start)			/* Entry point of application		*/
+
+SECTIONS
+{
+  /**** Code and read-only data ****/
+/*
+  .utlb_vector 0x80000000 :
+  {
+  	utlb_exception.o (.text)
+  }
+  .general_vector 0x80000080:
+  {
+  	general_exception.o (.text)
+  }
+*/
+  .text 0x80030000 :
+  {
+    _ftext = ABSOLUTE(.) ;	/* Start of code and read-only data	*/
+    boot.o (.text)		/* Entry point				*/
+    *(.text)
+    _ecode = ABSOLUTE(.) ;	/* End of code				*/
+
+    *(.rodata)
+
+    . = ALIGN(8);
+    _etext = ABSOLUTE(.);	/* End of code and read-only data	*/
+  } = 0
+/*
+  .reset_vector 0xbfc00000 :
+  {
+  	reset_exception.o (.text)
+  }
+*/
+  /**** Initialised data ****/
+
+  .data :
+  {
+    _fdata = ABSOLUTE(.);	/* Start of initialised data		*/
+    *(.data)
+   
+    . = ALIGN(8);
+
+    _gp = ABSOLUTE(. + 0x7ff0); /* Base of small data			*/
+
+    *(.lit8) 
+    *(.lit4) 
+    *(.sdata) 
+
+    . = ALIGN(8);
+
+    _edata  = ABSOLUTE(.);	/* End of initialised data		*/
+  }
+
+  /**** Uninitialised data ****/
+
+  _fbss = .;			/* Start of uninitialised data		*/
+
+  .sbss : 
+  { 
+    *(.sbss) 
+    *(.scommon)
+  }
+  .bss :
+  {
+    *(.bss)
+    *(COMMON)
+
+    /* Allocate room for stack */
+    .   =  ALIGN(8) ;
+    .   += 0x5000 ;
+    _sp =  . - 16;
+  }
+
+  _end = . ;			/* End of unitialised data		*/
+
+  .gptab.sdata : { *(.gptab.data) *(.gptab.sdata) }
+  .gptab.sbss : { *(.gptab.bss) *(.gptab.sbss) }
+
+  /DISCARD/ :
+  {
+    *(.reginfo)
+  }
+
+  PROVIDE(etext = _etext);
+  PROVIDE (edata = .);
+  PROVIDE (end = .);
+}
