@@ -1,0 +1,221 @@
+Archive member included because of file (symbol)
+
+/usr/lib/libgcc.a(_umoddi3.o)
+                              ../lib/console.o (__umoddi3)
+/usr/lib/libgcc.a(_udivdi3.o)
+                              ../lib/console.o (__udivdi3)
+
+Allocating common symbols
+Common symbol       size              file
+
+stack               0x4000            boot.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+                0x0000000000100000                . = 0x100000
+
+.text           0x0000000000100000     0x114b
+ *(.text)
+ .text          0x0000000000100000       0x4a boot.o
+                0x0000000000100000                _start
+                0x0000000000100022                interrupt_handler
+                0x0000000000100000                start
+ *fill*         0x000000000010004a 0x810610000000002 00
+ .text          0x000000000010004c      0x1a3 kernel.o
+                0x000000000010004c                cmain
+ *fill*         0x00000000001001ef 0x810610000000001 00
+ .text          0x00000000001001f0      0x2e0 segment.o
+                0x00000000001002fe                gdt_set_segment
+                0x0000000000100428                gdt_get_segment
+                0x00000000001004ba                gdt_get_gate
+                0x00000000001001f0                gdt_init
+                0x000000000010043e                gdt_set_gate
+                0x00000000001003a8                gdt_set_tss
+                0x000000000010027c                gdt_dump
+ .text          0x00000000001004d0      0x140 console.o
+                0x000000000010057b                putchar
+                0x0000000000100606                getchar
+                0x00000000001004d0                cls
+ .text          0x0000000000100610      0x2eb ../lib/list.o
+                0x00000000001006df                list_delete
+                0x0000000000100679                list_insert_head
+                0x00000000001007df                list_tail
+                0x00000000001007ac                list_move_tail
+                0x00000000001008c0                list_dump
+                0x00000000001006ac                list_insert_tail
+                0x000000000010081b                list_head
+                0x0000000000100779                list_move_head
+                0x0000000000100644                list_insert_after
+                0x000000000010074e                list_move_after
+                0x0000000000100610                list_insert_before
+                0x0000000000100723                list_move_before
+                0x000000000010087f                list_count
+                0x0000000000100854                list_node_copy
+ *fill*         0x00000000001008fb 0x810610000000001 00
+ .text          0x00000000001008fc      0x197 ../lib/string.o
+                0x0000000000100994                strcpy
+                0x0000000000100954                memcpy
+                0x0000000000100a4c                strncmp
+                0x00000000001009ba                strncpy
+                0x000000000010091a                memset
+                0x0000000000100a12                strcmp
+                0x00000000001008fc                strlen
+ *fill*         0x0000000000100a93 0x810610000000001 00
+ .text          0x0000000000100a94      0x43e ../lib/console.o
+                0x0000000000100d64                printf
+                0x0000000000100cda                puts
+                0x0000000000100d31                getns
+                0x0000000000100c66                putx
+                0x0000000000100d03                putns
+                0x0000000000100b4f                putu
+                0x0000000000100bd7                putlu
+                0x0000000000100a94                putd
+ *fill*         0x0000000000100ed2 0x810610000000002 00
+ .text          0x0000000000100ed4      0x18a /usr/lib/libgcc.a(_umoddi3.o)
+                0x0000000000100ed4                __umoddi3
+ *fill*         0x000000000010105e 0x810610000000002 00
+ .text          0x0000000000101060       0xeb /usr/lib/libgcc.a(_udivdi3.o)
+                0x0000000000101060                __udivdi3
+
+.rodata
+ *(.rodata)
+
+.rodata.str1.1  0x000000000010114b      0x10f
+ .rodata.str1.1
+                0x000000000010114b       0x79 kernel.o
+ .rodata.str1.1
+                0x00000000001011c4        0xd segment.o
+                                          0xf (size before relaxing)
+ .rodata.str1.1
+                0x00000000001011d1       0x45 ../lib/list.o
+                                         0x4e (size before relaxing)
+ .rodata.str1.1
+                0x0000000000101216       0x25 ../lib/string.o
+ .rodata.str1.1
+                0x000000000010123b       0x1f ../lib/console.o
+
+.rodata.str1.4  0x000000000010125c      0x160
+ .rodata.str1.4
+                0x000000000010125c      0x160 kernel.o
+
+.data           0x00000000001013bc        0x0
+ *(.data)
+                0x00000000001013bc                _edata = .
+
+.bss            0x00000000001013c0     0xc080
+ *(.dynbss)
+ *(.bss)
+ .bss           0x00000000001013c0     0x8068 segment.o
+ .bss           0x0000000000109428        0xc console.o
+ *(.COMMON)
+ *fill*         0x0000000000109434 0xbfbfe8a00000000c 00
+ COMMON         0x0000000000109440     0x4000 boot.o
+                                          0x0 (size before relaxing)
+                0x0000000000109440                stack
+
+.rel.dyn
+                0x000000000010d440                _end = .
+LOAD boot.o
+LOAD kernel.o
+LOAD segment.o
+LOAD console.o
+LOAD ../lib/list.o
+LOAD ../lib/string.o
+LOAD ../lib/console.o
+LOAD /usr/lib/libgcc.a
+OUTPUT(shiitake elf32-i386-freebsd)
+
+.debug_line     0x0000000000000000      0x3cb
+ .debug_line    0x0000000000000000       0x48 boot.o
+ .debug_line    0x0000000000000048       0x7e kernel.o
+ .debug_line    0x00000000000000c6       0xbf segment.o
+ .debug_line    0x0000000000000185       0x5c console.o
+ .debug_line    0x00000000000001e1       0x92 ../lib/list.o
+ .debug_line    0x0000000000000273       0x72 ../lib/string.o
+ .debug_line    0x00000000000002e5       0xe6 ../lib/console.o
+
+.debug_info     0x0000000000000000     0x157e
+ .debug_info    0x0000000000000000       0x5c boot.o
+ .debug_info    0x000000000000005c      0x36f kernel.o
+ .debug_info    0x00000000000003cb      0x7a6 segment.o
+ .debug_info    0x0000000000000b71      0x154 console.o
+ .debug_info    0x0000000000000cc5      0x36f ../lib/list.o
+ .debug_info    0x0000000000001034      0x27f ../lib/string.o
+ .debug_info    0x00000000000012b3      0x2cb ../lib/console.o
+
+.debug_abbrev   0x0000000000000000      0x58c
+ .debug_abbrev  0x0000000000000000       0x14 boot.o
+ .debug_abbrev  0x0000000000000014       0xdf kernel.o
+ .debug_abbrev  0x00000000000000f3      0x16f segment.o
+ .debug_abbrev  0x0000000000000262       0xce console.o
+ .debug_abbrev  0x0000000000000330       0xc2 ../lib/list.o
+ .debug_abbrev  0x00000000000003f2       0xb0 ../lib/string.o
+ .debug_abbrev  0x00000000000004a2       0xea ../lib/console.o
+
+.debug_aranges  0x0000000000000000       0xe0
+ .debug_aranges
+                0x0000000000000000       0x20 boot.o
+ .debug_aranges
+                0x0000000000000020       0x20 kernel.o
+ .debug_aranges
+                0x0000000000000040       0x20 segment.o
+ .debug_aranges
+                0x0000000000000060       0x20 console.o
+ .debug_aranges
+                0x0000000000000080       0x20 ../lib/list.o
+ .debug_aranges
+                0x00000000000000a0       0x20 ../lib/string.o
+ .debug_aranges
+                0x00000000000000c0       0x20 ../lib/console.o
+
+.debug_frame    0x0000000000000000      0x5b0
+ .debug_frame   0x0000000000000000       0x48 kernel.o
+ .debug_frame   0x0000000000000048       0xf4 segment.o
+ .debug_frame   0x000000000000013c       0x80 console.o
+ .debug_frame   0x00000000000001bc      0x1e4 ../lib/list.o
+ .debug_frame   0x00000000000003a0       0xec ../lib/string.o
+ .debug_frame   0x000000000000048c      0x124 ../lib/console.o
+
+.debug_pubnames
+                0x0000000000000000      0x2a8
+ .debug_pubnames
+                0x0000000000000000       0x1c kernel.o
+ .debug_pubnames
+                0x000000000000001c       0x86 segment.o
+ .debug_pubnames
+                0x00000000000000a2       0x32 console.o
+ .debug_pubnames
+                0x00000000000000d4      0x114 ../lib/list.o
+ .debug_pubnames
+                0x00000000000001e8       0x61 ../lib/string.o
+ .debug_pubnames
+                0x0000000000000249       0x5f ../lib/console.o
+
+.debug_str      0x0000000000000000      0x630
+ .debug_str     0x0000000000000000      0x21c kernel.o
+                                        0x26a (size before relaxing)
+ .debug_str     0x000000000000021c      0x251 segment.o
+                                        0x344 (size before relaxing)
+ .debug_str     0x000000000000046d       0x2f console.o
+                                        0x102 (size before relaxing)
+ .debug_str     0x000000000000049c       0xf2 ../lib/list.o
+                                        0x1cf (size before relaxing)
+ .debug_str     0x000000000000058e       0x4a ../lib/string.o
+                                        0x118 (size before relaxing)
+ .debug_str     0x00000000000005d8       0x58 ../lib/console.o
+                                        0x12e (size before relaxing)
+
+.comment        0x0000000000000000      0x128
+ .comment       0x0000000000000000       0x25 kernel.o
+ .comment       0x0000000000000025       0x25 segment.o
+ .comment       0x000000000000004a       0x25 console.o
+ .comment       0x000000000000006f       0x25 ../lib/list.o
+ .comment       0x0000000000000094       0x25 ../lib/string.o
+ .comment       0x00000000000000b9       0x25 ../lib/console.o
+ .comment       0x00000000000000de       0x25 /usr/lib/libgcc.a(_umoddi3.o)
+ .comment       0x0000000000000103       0x25 /usr/lib/libgcc.a(_udivdi3.o)

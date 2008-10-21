@@ -2,10 +2,10 @@
 #define SEGMENT_H
 
 #include <types.h>
-#include <process.h>
 
 #define GLOBAL_32BIT_CODE 0x08
 #define GLOBAL_32BIT_DATA 0x10
+#define GLOBAL_32BIT_TSS 0x18
 
 struct segment_descriptor {
 	uint16_t limit_l;
@@ -91,6 +91,47 @@ struct descriptor_table_register {
 	union descriptor *base;
 } __attribute__ ((__packed__));
 
+struct tss {
+	uint16_t previous_task;
+	uint16_t __unused1;
+	uint32_t esp0;
+	uint16_t ss0;
+	uint16_t __unused2;
+	uint32_t esp1;
+	uint16_t ss1;
+	uint16_t __unused3;
+	uint32_t esp2;
+	uint16_t ss2;
+	uint16_t __unused4;
+	uint32_t cr3;
+	uint32_t eip;
+	uint32_t eflags;
+	uint32_t eax;
+	uint32_t ecx;
+	uint32_t edx;
+	uint32_t ebx;
+	uint32_t esp;
+	uint32_t ebp;
+	uint32_t esi;
+	uint32_t edi;
+	uint16_t es;
+	uint16_t __unused5;
+	uint16_t cs;
+	uint16_t __unused6;
+	uint16_t ss;
+	uint16_t __unused7;
+	uint16_t ds;
+	uint16_t __unused8;
+	uint16_t fs;
+	uint16_t __unused9;
+	uint16_t gs;
+	uint16_t __unused10;
+	uint16_t ldt_segment_selector;
+	uint16_t __unused11;
+	uint16_t t;
+	uint16_t io_map_base_address;
+} __attribute__ ((__packed__));
+
 inline static void
 set_descriptor_table_register(struct descriptor_table_register *reg,
 			      union descriptor *descriptor_table,
@@ -109,7 +150,7 @@ gdt_set_segment(uint16_t selector, uint32_t base, uint32_t limit,
 		uint8_t type, uint8_t descriptor_type, uint8_t privilege_level,
 		uint8_t present, uint8_t operation_size, uint8_t granularity);
 void 
-gdt_set_tss(uint16_t selector, struct process *base, uint8_t type,
+gdt_set_tss(uint16_t selector, struct tss *base, uint8_t type,
 	    uint8_t privilege_level, uint8_t present, uint8_t granularity);
 
 struct segment_descriptor *

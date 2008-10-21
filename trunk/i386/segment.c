@@ -1,8 +1,8 @@
-#include <segment.h>
+#include <i386/segment.h>
 
 #define GDT_SIZE 4096
-
 static union descriptor gdt[GDT_SIZE] = {{{0}}};
+static struct tss global_tss;
 
 extern void
 printf (const char *format, ...);
@@ -12,6 +12,13 @@ gdt_load(struct descriptor_table_register *reg)
 {
 	asm volatile("lgdt %0" :: "m"(reg->limit));
 }
+
+static inline void
+tr_load(uint16_t selector)
+{
+	asm volatile("ltr %0" : : "r" (selector));
+}
+
 
 void gdt_init(void)
 {
@@ -38,8 +45,15 @@ void gdt_init(void)
 			SEGMENT_OPERATION_SIZE_32BIT,
 			SEGMENT_GRANULARITY_ENABLE);
 
+	/* tss descriptor */
+	gdt_set_tss(GLOBAL_32BIT_TSS, &global_tss, TSS_TYPE_NORMAL,
+		    TSS_PRIVILEGE_LEVEL_KERNEL, TSS_PRESENT,
+		    TSS_GRANULARITY_ENABLE);
+
+
 	set_descriptor_table_register(&gdtr, gdt, GDT_SIZE);
 	gdt_load(&gdtr);
+	tr_load(GLOBAL_32BIT_TSS);
 }
 
 void
@@ -80,12 +94,12 @@ gdt_set_segment(uint16_t selector, uint32_t base, uint32_t limit,
 }
 
 void 
-gdt_set_tss(uint16_t selector, struct process *base, uint8_t type,
+gdt_set_tss(uint16_t selector, struct tss *base, uint8_t type,
 	    uint8_t privilege_level, uint8_t present, uint8_t granularity)
 {
 	struct segment_descriptor *descriptor = gdt_get_segment(selector);
-        descriptor->limit_l = (uint16_t)(0xffff & sizeof(struct process));
-        descriptor->limit_h = (uint8_t)(0x0f & (sizeof(struct process) >> 16));
+        descriptor->limit_l = (uint16_t)(0xffff & sizeof(struct tss));
+        descriptor->limit_h = (uint8_t)(0x0f & (sizeof(struct tss) >> 16));
         descriptor->base_l = (uint16_t)(0xffff & (uint32_t)base);
         descriptor->base_m = (uint8_t)(0xff & ((uint32_t)base >> 16));
         descriptor->base_h = (uint8_t)(0xff & ((uint32_t)base >> 24));

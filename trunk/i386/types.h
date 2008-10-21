@@ -1,5 +1,5 @@
-#ifndef TYPES_H
-#define TYPES_H
+#ifndef I386_TYPES_H
+#define I386_TYPES_H
 
 typedef unsigned long long uint64_t;
 typedef unsigned uint32_t;
