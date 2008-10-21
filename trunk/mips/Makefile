@@ -15,11 +15,15 @@ OBJS = boot.o init.o console.o ../lib/list.o ../lib/string.o ../lib/console.o ..
 
 all: shiitake
 
-shiitake: $(OBJS)
+link_arch:
+	rm -f ../arch
+	ln -sf mips ../arch
+
+shiitake: link_arch $(OBJS)
 	$(LD) -Map sos.map $(LDFLAGS) -o shiitake $(OBJS) `$(CC) -print-libgcc-file-name`
 
 clean:
-	rm -f $(OBJS) shiitake shiitake.map
+	rm -f $(OBJS) shiitake shiitake.map ../arch
 .S.o:
 	$(CC) -c $(CFLAGS) -D__ASSEMBLY__ $< -o $@
 .c.o:

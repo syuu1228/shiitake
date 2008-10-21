@@ -63,31 +63,16 @@ multiboot_entry:
 	pushl	%eax
 
 	/* Now enter the C main function...  */
-	call	EXT_C(cmain)
+	call	EXT_C(arch_init)
 
+	call    EXT_C(main)
+	
 	/* Halt.  */
-/*	pushl	$halt_message
-	call	EXT_C(printf)*/
+	pushl	$halt_message
+	call	EXT_C(printf)
 	
 loop:	hlt
 	jmp	loop
-
-	.globl	interrupt_handler, interrupt_handler
-interrupt_handler:
-	pushl %fs
-	pushl %ds
-	pushl %es
-	pushal
-	pushl $handled_message
-	call	EXT_C(printf)
-	popal
-	pushl %es
-	pushl %ds
-	pushl %fs
-	iret
-
-handled_message:
-	.asciz	"Handled.\n"
 	
 halt_message:
 	.asciz	"Halted.\n"

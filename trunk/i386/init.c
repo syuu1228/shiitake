@@ -23,13 +23,13 @@
 #define CHECK_FLAG(flags,bit)	((flags) & (1 << (bit)))
 
 /* Forward declarations.  */
-void cmain (unsigned long magic, unsigned long addr);
+void arch_init (unsigned long magic, unsigned long addr);
 
 //struct segment_descriptor_table idtr;
 /* Check if MAGIC is valid and print the Multiboot information structure
    pointed by ADDR.  */
 void
-cmain (unsigned long magic, unsigned long addr)
+arch_init (unsigned long magic, unsigned long addr)
 {
   multiboot_info_t *mbi;
   

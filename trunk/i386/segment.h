@@ -1,7 +1,7 @@
 #ifndef SEGMENT_H
 #define SEGMENT_H
 
-#include <types.h>
+#include <lib/types.h>
 
 #define GLOBAL_32BIT_CODE 0x08
 #define GLOBAL_32BIT_DATA 0x10
