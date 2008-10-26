@@ -1,9 +1,10 @@
 #include <lib/string.h>
 #include <lib/console.h>
 
-#define DPRINTF printf
+#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
 
-int strlen(const char *s)
+int
+strlen(const char *s)
 {
 	int i = 0;
 	while (*s++)
@@ -11,7 +12,8 @@ int strlen(const char *s)
 	return i;
 }
 
-void *memset(void *s, int c, int n)
+void *
+memset(void *s, int c, int n)
 {
 	DPRINTF("s:%x c:%d n:%d\n", s, c, n);
 	int i;
@@ -20,7 +22,8 @@ void *memset(void *s, int c, int n)
 	return s;
 }
 
-void *memcpy(void *dest, const void *src, int n)
+void *
+memcpy(void *dest, const void *src, int n)
 {
 	DPRINTF("dest:%x src:%x n:%d\n", dest, src, n);
 	int i;
@@ -29,7 +32,8 @@ void *memcpy(void *dest, const void *src, int n)
 	return dest;
 }
 
-char *strcpy (char *dest, const char *src)
+char *
+strcpy(char *dest, const char *src)
 {
 	int i;
 	for (i = 0; src[i]; i++)
@@ -37,7 +41,8 @@ char *strcpy (char *dest, const char *src)
 	return dest;
 }
 
-char *strncpy(char *dest, const char *src, size_t n)
+char *
+strncpy(char *dest, const char *src, size_t n)
 {
 	DPRINTF("dest:%x src:%x n:%d\n", dest, src, n);
 	int i;
@@ -48,7 +53,8 @@ char *strncpy(char *dest, const char *src, size_t n)
 	return dest;
 }
 
-int strcmp(const char *s1, const char *s2)
+int 
+strcmp(const char *s1, const char *s2)
 {
 	int i;
 	for(i = 0; s1[i] == s2[i]; i++)
@@ -57,7 +63,8 @@ int strcmp(const char *s1, const char *s2)
 	return s1[i] - s2[i];
 }
 
-int strncmp(const char *s1, const char *s2, size_t n)
+int
+strncmp(const char *s1, const char *s2, size_t n)
 {
 	int i;
 	for(i = 0; s1[i] == s2[i] && i < n; i++)

@@ -54,7 +54,7 @@ Linker script and memory map
                 0x0000000000100600                list_insert_before
                 0x0000000000100713                list_move_before
                 0x000000000010086f                list_count
-                0x0000000000100844                list_node_copy
+                0x0000000000100844                list_node_t_copy
  *fill*         0x00000000001008eb 0x810610000000001 00
  .text          0x00000000001008ec      0x197 ../lib/string.o
                 0x0000000000100984                strcpy
@@ -145,25 +145,25 @@ OUTPUT(shiitake elf32-i386-freebsd)
  .debug_line    0x00000000000002db       0xe6 ../lib/console.o
  .debug_line    0x00000000000003c1       0x3b ../kern/main.o
 
-.debug_info     0x0000000000000000     0x161a
+.debug_info     0x0000000000000000     0x15a3
  .debug_info    0x0000000000000000       0x60 boot.o
  .debug_info    0x0000000000000060      0x36f init.o
- .debug_info    0x00000000000003cf      0x7a6 segment.o
- .debug_info    0x0000000000000b75      0x154 console.o
- .debug_info    0x0000000000000cc9      0x36f ../lib/list.o
- .debug_info    0x0000000000001038      0x27f ../lib/string.o
- .debug_info    0x00000000000012b7      0x2cb ../lib/console.o
- .debug_info    0x0000000000001582       0x98 ../kern/main.o
+ .debug_info    0x00000000000003cf      0x72f segment.o
+ .debug_info    0x0000000000000afe      0x154 console.o
+ .debug_info    0x0000000000000c52      0x36f ../lib/list.o
+ .debug_info    0x0000000000000fc1      0x27f ../lib/string.o
+ .debug_info    0x0000000000001240      0x2cb ../lib/console.o
+ .debug_info    0x000000000000150b       0x98 ../kern/main.o
 
-.debug_abbrev   0x0000000000000000      0x5cd
+.debug_abbrev   0x0000000000000000      0x5ba
  .debug_abbrev  0x0000000000000000       0x14 boot.o
  .debug_abbrev  0x0000000000000014       0xdf init.o
- .debug_abbrev  0x00000000000000f3      0x16f segment.o
- .debug_abbrev  0x0000000000000262       0xce console.o
- .debug_abbrev  0x0000000000000330       0xc2 ../lib/list.o
- .debug_abbrev  0x00000000000003f2       0xb0 ../lib/string.o
- .debug_abbrev  0x00000000000004a2       0xea ../lib/console.o
- .debug_abbrev  0x000000000000058c       0x41 ../kern/main.o
+ .debug_abbrev  0x00000000000000f3      0x15c segment.o
+ .debug_abbrev  0x000000000000024f       0xce console.o
+ .debug_abbrev  0x000000000000031d       0xc2 ../lib/list.o
+ .debug_abbrev  0x00000000000003df       0xb0 ../lib/string.o
+ .debug_abbrev  0x000000000000048f       0xea ../lib/console.o
+ .debug_abbrev  0x0000000000000579       0x41 ../kern/main.o
 
 .debug_aranges  0x0000000000000000      0x100
  .debug_aranges
@@ -193,7 +193,7 @@ OUTPUT(shiitake elf32-i386-freebsd)
  .debug_frame   0x00000000000005b0       0x30 ../kern/main.o
 
 .debug_pubnames
-                0x0000000000000000      0x2c7
+                0x0000000000000000      0x2c9
  .debug_pubnames
                 0x0000000000000000       0x20 init.o
  .debug_pubnames
@@ -201,29 +201,29 @@ OUTPUT(shiitake elf32-i386-freebsd)
  .debug_pubnames
                 0x00000000000000a6       0x32 console.o
  .debug_pubnames
-                0x00000000000000d8      0x114 ../lib/list.o
+                0x00000000000000d8      0x116 ../lib/list.o
  .debug_pubnames
-                0x00000000000001ec       0x61 ../lib/string.o
+                0x00000000000001ee       0x61 ../lib/string.o
  .debug_pubnames
-                0x000000000000024d       0x5f ../lib/console.o
+                0x000000000000024f       0x5f ../lib/console.o
  .debug_pubnames
-                0x00000000000002ac       0x1b ../kern/main.o
+                0x00000000000002ae       0x1b ../kern/main.o
 
-.debug_str      0x0000000000000000      0x64a
+.debug_str      0x0000000000000000      0x62d
  .debug_str     0x0000000000000000      0x222 init.o
                                         0x270 (size before relaxing)
- .debug_str     0x0000000000000222      0x251 segment.o
-                                        0x348 (size before relaxing)
- .debug_str     0x0000000000000473       0x2f console.o
+ .debug_str     0x0000000000000222      0x226 segment.o
+                                        0x301 (size before relaxing)
+ .debug_str     0x0000000000000448       0x2f console.o
                                         0x106 (size before relaxing)
- .debug_str     0x00000000000004a2       0xf2 ../lib/list.o
+ .debug_str     0x0000000000000477      0x100 ../lib/list.o
                                         0x1d3 (size before relaxing)
- .debug_str     0x0000000000000594       0x4a ../lib/string.o
-                                        0x11c (size before relaxing)
- .debug_str     0x00000000000005de       0x58 ../lib/console.o
-                                        0x132 (size before relaxing)
- .debug_str     0x0000000000000636       0x14 ../kern/main.o
-                                         0xe1 (size before relaxing)
+ .debug_str     0x0000000000000577       0x4a ../lib/string.o
+                                        0x118 (size before relaxing)
+ .debug_str     0x00000000000005c1       0x58 ../lib/console.o
+                                        0x12e (size before relaxing)
+ .debug_str     0x0000000000000619       0x14 ../kern/main.o
+                                         0xdd (size before relaxing)
 
 .comment        0x0000000000000000      0x14d
  .comment       0x0000000000000000       0x25 init.o

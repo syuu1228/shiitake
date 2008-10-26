@@ -7,7 +7,7 @@
 #define GLOBAL_32BIT_DATA 0x10
 #define GLOBAL_32BIT_TSS 0x18
 
-struct segment_descriptor {
+typedef struct {
 	uint16_t limit_l;
 	uint16_t base_l;
 	uint8_t base_m;
@@ -20,7 +20,7 @@ struct segment_descriptor {
 	uint8_t operation_size:1;
 	uint8_t granularity:1;
 	uint8_t base_h;
-} __attribute__ ((__packed__));
+} __attribute__ ((__packed__)) segment_descriptor_t;
 
 #define SEGMENT_TYPE_ACCESSED 0x1
 #define SEGMENT_TYPE_READONLY 0x0
@@ -56,7 +56,7 @@ struct segment_descriptor {
 #define TSS_GRANULARITY_DISABLE SEGMENT_GRANULARITY_DISABLE
 #define TSS_GRANULARITY_ENABLE SEGMENT_GRANULARITY_ENABLE
 
-struct gate_descriptor {
+typedef struct {
 	uint16_t offset_l;
 	uint16_t segment_selector;
 	uint8_t parameter_count:5;
@@ -66,7 +66,7 @@ struct gate_descriptor {
 	uint8_t privilege_level:2;
 	uint8_t present:1;
 	uint16_t offset_h;
-} __attribute__ ((__packed__));
+} __attribute__ ((__packed__)) gate_descriptor_t;
 
 #define GATE_TYPE_16BIT_TSS 0x1
 #define GATE_TYPE_LDT 0x2
@@ -81,28 +81,24 @@ struct gate_descriptor {
 #define GATE_TYPE_32BIT_INTERRUPT 0xE
 #define GATE_TYPE_32BIT_TRAP 0xF
 
-union descriptor {
-	struct segment_descriptor segment;
-	struct gate_descriptor gate;
-};
+typedef union {
+	segment_descriptor_t segment;
+	gate_descriptor_t gate;
+} descriptor_t;
 
-struct descriptor_table_register {
+typedef struct {
 	uint16_t limit;
-	union descriptor *base;
-} __attribute__ ((__packed__));
+	descriptor_t *base;
+} __attribute__ ((__packed__)) descriptor_table_register_t;
 
-struct tss {
-	uint16_t previous_task;
-	uint16_t __unused1;
+typedef struct {
+	uint32_t previous_task;
 	uint32_t esp0;
-	uint16_t ss0;
-	uint16_t __unused2;
+	uint32_t ss0;
 	uint32_t esp1;
-	uint16_t ss1;
-	uint16_t __unused3;
+	uint32_t ss1;
 	uint32_t esp2;
-	uint16_t ss2;
-	uint16_t __unused4;
+	uint32_t ss2;
 	uint32_t cr3;
 	uint32_t eip;
 	uint32_t eflags;
@@ -114,31 +110,24 @@ struct tss {
 	uint32_t ebp;
 	uint32_t esi;
 	uint32_t edi;
-	uint16_t es;
-	uint16_t __unused5;
-	uint16_t cs;
-	uint16_t __unused6;
-	uint16_t ss;
-	uint16_t __unused7;
-	uint16_t ds;
-	uint16_t __unused8;
-	uint16_t fs;
-	uint16_t __unused9;
-	uint16_t gs;
-	uint16_t __unused10;
-	uint16_t ldt_segment_selector;
-	uint16_t __unused11;
+	uint32_t es;
+	uint32_t cs;
+	uint32_t ss;
+	uint32_t ds;
+	uint32_t fs;
+	uint32_t gs;
+	uint32_t ldt_segment_selector;
 	uint16_t t;
 	uint16_t io_map_base_address;
-} __attribute__ ((__packed__));
+} __attribute__ ((__packed__)) tss_t;
 
 inline static void
-set_descriptor_table_register(struct descriptor_table_register *reg,
-			      union descriptor *descriptor_table,
+set_descriptor_table_register(descriptor_table_register_t *reg,
+			      descriptor_t *descriptor_table,
 			      int length)
 {
 	reg->base = descriptor_table;
-	reg->limit = length * sizeof(union descriptor);
+	reg->limit = length * sizeof(descriptor_t);
 }
 
 void gdt_init(void);
@@ -150,10 +139,10 @@ gdt_set_segment(uint16_t selector, uint32_t base, uint32_t limit,
 		uint8_t type, uint8_t descriptor_type, uint8_t privilege_level,
 		uint8_t present, uint8_t operation_size, uint8_t granularity);
 void 
-gdt_set_tss(uint16_t selector, struct tss *base, uint8_t type,
+gdt_set_tss(uint16_t selector, tss_t *base, uint8_t type,
 	    uint8_t privilege_level, uint8_t present, uint8_t granularity);
 
-struct segment_descriptor *
+segment_descriptor_t *
 gdt_get_segment(uint16_t selector);
 
 void 
@@ -161,7 +150,7 @@ gdt_set_gate(uint16_t selector, uint32_t offset, uint16_t segment_selector,
 	     uint8_t stack_copy_count, uint8_t type, uint8_t privilge_level,
 	     uint8_t present);
 
-struct gate_descriptor *
+gate_descriptor_t *
 gdt_get_gate(uint16_t selector);
 
 #endif

@@ -11,7 +11,7 @@ OBJCOPY = $(CROSS_COMPILE)objcopy
 OBJDUMP = $(CROSS_COMPILE)objdump
 CFLAGS = -g -EL -I../ -march=mips1 -mno-mips16 -O0 -mgp32 -mfp32 -mabi=32 -mno-abicalls -msoft-float -mmemcpy -mlong-calls -fno-builtin
 LDFLAGS = -T ldscript --oformat $(OFORMAT)
-OBJS = boot.o init.o console.o ../lib/list.o ../lib/string.o ../lib/console.o ../kern/main.o
+OBJS = boot.o init.o console.o thread.o memory.o locore.o ../lib/string.o ../lib/console.o ../kern/main.o ../kern/memory.o ../kern/thread.o
 
 all: shiitake
 
