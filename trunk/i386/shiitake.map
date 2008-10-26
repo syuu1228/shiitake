@@ -1,9 +1,9 @@
 Archive member included because of file (symbol)
 
-/usr/lib/libgcc.a(_umoddi3.o)
-                              ../lib/console.o (__umoddi3)
-/usr/lib/libgcc.a(_udivdi3.o)
+/usr/lib/gcc/i486-linux-gnu/4.3.2/libgcc.a(_udivdi3.o)
                               ../lib/console.o (__udivdi3)
+/usr/lib/gcc/i486-linux-gnu/4.3.2/libgcc.a(_umoddi3.o)
+                              ../lib/console.o (__umoddi3)
 
 Allocating common symbols
 Common symbol       size              file
@@ -21,138 +21,167 @@ Linker script and memory map
 
                 0x0000000000100000                . = 0x100000
 
-.text           0x0000000000100000     0x18e7
+.text           0x0000000000100000     0x1ab5
  *(.text)
  .text          0x0000000000100000       0x3a boot.o
                 0x0000000000100000                _start
                 0x0000000000100000                start
- *fill*         0x000000000010003a 0x810610000000002 00
- .text          0x000000000010003c      0x1e4 init.o
+ *fill*         0x000000000010003a        0x2 00
+ .text          0x000000000010003c      0x224 init.o
                 0x000000000010003c                arch_init
- .text          0x0000000000100220      0x2e0 segment.o
-                0x000000000010032e                gdt_set_segment
-                0x0000000000100458                gdt_get_segment
-                0x00000000001004ea                gdt_get_gate
-                0x0000000000100220                gdt_init
-                0x000000000010046e                gdt_set_gate
-                0x00000000001003d8                gdt_set_tss
-                0x00000000001002ac                gdt_dump
- .text          0x0000000000100500      0x140 console.o
-                0x00000000001005ab                putchar
-                0x0000000000100636                getchar
-                0x0000000000100500                cls
- .text          0x0000000000100640       0x17 thread.o
-                0x0000000000100640                md_thread_create
- *fill*         0x0000000000100657 0x810610000000001 00
- .text          0x0000000000100658       0x1a memory.o
-                0x0000000000100658                md_memory_head
-                0x0000000000100662                md_memory_tail
- *fill*         0x0000000000100672 0x810610000000002 00
- .text          0x0000000000100674       0x42 locore.o
-                0x0000000000100674                md_thread_switch
- *fill*         0x00000000001006b6 0x810610000000002 00
- .text          0x00000000001006b8      0x1e2 ../lib/string.o
-                0x0000000000100782                strcpy
-                0x0000000000100729                memcpy
-                0x0000000000100853                strncmp
-                0x00000000001007a8                strncpy
-                0x00000000001006d6                memset
-                0x0000000000100819                strcmp
-                0x00000000001006b8                strlen
- *fill*         0x000000000010089a 0x810610000000002 00
- .text          0x000000000010089c      0x43e ../lib/console.o
-                0x0000000000100b6c                printf
-                0x0000000000100ae2                puts
-                0x0000000000100b39                getns
-                0x0000000000100a6e                putx
-                0x0000000000100b0b                putns
-                0x0000000000100957                putu
-                0x00000000001009df                putlu
-                0x000000000010089c                putd
- *fill*         0x0000000000100cda 0x810610000000002 00
- .text          0x0000000000100cdc       0x8c ../kern/main.o
-                0x0000000000100d4b                thread2
-                0x0000000000100cdc                main
-                0x0000000000100d2e                thread1
- .text          0x0000000000100d68      0x60f ../kern/memory.o
-                0x00000000001012f8                malloc_dump
-                0x0000000000100e21                malloc
-                0x0000000000100fa1                calloc
-                0x0000000000100d68                memory_init
-                0x0000000000100fe4                free
- *fill*         0x0000000000101377 0x810610000000001 00
- .text          0x0000000000101378      0x2f6 ../kern/thread.o
-                0x0000000000101378                thread_init
-                0x00000000001014bf                thread_wakeup
-                0x000000000010162f                thread_switch
-                0x0000000000101554                thread_sleep
-                0x000000000010157b                thread_yield
-                0x00000000001013ba                thread_self
-                0x0000000000101488                thread_destroy
-                0x00000000001013c4                thread_create
- *fill*         0x000000000010166e 0x810610000000002 00
- .text          0x0000000000101670      0x18a /usr/lib/libgcc.a(_umoddi3.o)
-                0x0000000000101670                __umoddi3
- *fill*         0x00000000001017fa 0x810610000000002 00
- .text          0x00000000001017fc       0xeb /usr/lib/libgcc.a(_udivdi3.o)
-                0x00000000001017fc                __udivdi3
+ .text          0x0000000000100260      0x3e6 segment.o
+                0x0000000000100307                gdt_set_segment
+                0x0000000000100260                gdt_get_segment
+                0x00000000001004f4                gdt_get_gate
+                0x00000000001003c2                gdt_init
+                0x000000000010050b                gdt_set_gate
+                0x0000000000100277                gdt_set_tss
+                0x000000000010059c                gdt_dump
+ *fill*         0x0000000000100646        0x2 00
+ .text          0x0000000000100648      0x14d console.o
+                0x000000000010067d                putchar
+                0x000000000010078b                getchar
+                0x0000000000100648                cls
+ *fill*         0x0000000000100795        0x3 00
+ .text          0x0000000000100798       0x17 thread.o
+                0x0000000000100798                md_thread_create
+ *fill*         0x00000000001007af        0x1 00
+ .text          0x00000000001007b0       0x1a memory.o
+                0x00000000001007b0                md_memory_head
+                0x00000000001007ba                md_memory_tail
+ *fill*         0x00000000001007ca        0x2 00
+ .text          0x00000000001007cc       0x41 locore.o
+                0x00000000001007cc                md_thread_switch
+ *fill*         0x000000000010080d        0x3 00
+ .text          0x0000000000100810      0x269 ../lib/string.o
+                0x000000000010082b                strcpy
+                0x000000000010099d                memcpy
+                0x00000000001008a6                strncmp
+                0x0000000000100904                strncpy
+                0x0000000000100a0c                memset
+                0x000000000010085d                strcmp
+                0x0000000000100810                strlen
+ *fill*         0x0000000000100a79        0x7 00
+ .text          0x0000000000100a80      0x45e ../lib/console.o
+                0x0000000000100d67                printf
+                0x0000000000100ab3                puts
+                0x0000000000100ea9                getns
+                0x0000000000100adf                putx
+                0x0000000000100a80                putns
+                0x0000000000100c30                putu
+                0x0000000000100b67                putlu
+                0x0000000000100cb1                putd
+ *fill*         0x0000000000100ede        0x2 00
+ .text          0x0000000000100ee0       0x5d ../kern/main.o
+                0x0000000000100f0b                thread2
+                0x0000000000100ee0                main
+                0x0000000000100f24                thread1
+ *fill*         0x0000000000100f3d        0x3 00
+ .text          0x0000000000100f40      0x5cf ../kern/memory.o
+                0x0000000000101222                malloc_dump
+                0x0000000000100f40                malloc
+                0x0000000000101104                calloc
+                0x0000000000101147                memory_init
+                0x0000000000101485                free
+ *fill*         0x000000000010150f        0x1 00
+ .text          0x0000000000101510      0x2fc ../kern/thread.o
+                0x000000000010172a                thread_init
+                0x0000000000101776                thread_wakeup
+                0x000000000010153b                thread_switch
+                0x000000000010151a                thread_sleep
+                0x0000000000101587                thread_yield
+                0x0000000000101510                thread_self
+                0x0000000000101634                thread_destroy
+                0x0000000000101660                thread_create
+ *fill*         0x000000000010180c        0x4 00
+ .text          0x0000000000101810      0x136 /usr/lib/gcc/i486-linux-gnu/4.3.2/libgcc.a(_udivdi3.o)
+                0x0000000000101810                __udivdi3
+ *fill*         0x0000000000101946        0xa 00
+ .text          0x0000000000101950      0x165 /usr/lib/gcc/i486-linux-gnu/4.3.2/libgcc.a(_umoddi3.o)
+                0x0000000000101950                __umoddi3
 
-.rodata         0x00000000001018e7       0x81
+.rodata         0x0000000000101ab5       0x81
  *(.rodata)
- .rodata        0x00000000001018e7       0x16 ../lib/string.o
- .rodata        0x00000000001018fd       0x42 ../kern/memory.o
- .rodata        0x000000000010193f       0x29 ../kern/thread.o
+ .rodata        0x0000000000101ab5       0x16 ../lib/string.o
+ .rodata        0x0000000000101acb       0x42 ../kern/memory.o
+ .rodata        0x0000000000101b0d       0x29 ../kern/thread.o
 
-.rodata.str1.1  0x0000000000101968      0x1cf
+.rodata.str1.1  0x0000000000101b36      0x1ba
  .rodata.str1.1
-                0x0000000000101968       0x79 init.o
+                0x0000000000101b36       0x79 init.o
  .rodata.str1.1
-                0x00000000001019e1        0xd segment.o
+                0x0000000000101baf        0xd segment.o
                                           0xf (size before relaxing)
  .rodata.str1.1
-                0x00000000001019ee       0x41 ../lib/string.o
+                0x0000000000101bbc       0x41 ../lib/string.o
  .rodata.str1.1
-                0x0000000000101a2f       0x1f ../lib/console.o
+                0x0000000000101bfd       0x1f ../lib/console.o
  .rodata.str1.1
-                0x0000000000101a4e       0x3c ../kern/main.o
+                0x0000000000101c1c       0x27 ../kern/main.o
  .rodata.str1.1
-                0x0000000000101a8a       0x73 ../kern/memory.o
+                0x0000000000101c43       0x73 ../kern/memory.o
                                          0x81 (size before relaxing)
  .rodata.str1.1
-                0x0000000000101afd       0x3a ../kern/thread.o
+                0x0000000000101cb6       0x3a ../kern/thread.o
 
-.rodata.str1.4  0x0000000000101b38      0x1b6
+.rodata.str1.4  0x0000000000101cf0      0x198
  .rodata.str1.4
-                0x0000000000101b38      0x160 init.o
+                0x0000000000101cf0      0x160 init.o
  .rodata.str1.4
-                0x0000000000101c98       0x1f ../kern/main.o
- *fill*         0x0000000000101cb7 0xbfbfe85000000001 00
- .rodata.str1.4
-                0x0000000000101cb8       0x36 ../kern/memory.o
+                0x0000000000101e50       0x38 ../kern/memory.o
+                                         0x36 (size before relaxing)
 
-.data           0x0000000000101cf0        0x0
+.eh_frame       0x0000000000101e88       0x50
+ .eh_frame      0x0000000000101e88       0x34 /usr/lib/gcc/i486-linux-gnu/4.3.2/libgcc.a(_udivdi3.o)
+ .eh_frame      0x0000000000101ebc       0x1c /usr/lib/gcc/i486-linux-gnu/4.3.2/libgcc.a(_umoddi3.o)
+                                         0x34 (size before relaxing)
+
+.rel.dyn        0x0000000000101ed8        0x0
+ .rel.text      0x0000000000000000        0x0 boot.o
+
+.data           0x0000000000101ed8        0x0
  *(.data)
-                0x0000000000101cf0                _edata = .
+ .data          0x0000000000101ed8        0x0 boot.o
+ .data          0x0000000000101ed8        0x0 init.o
+ .data          0x0000000000101ed8        0x0 segment.o
+ .data          0x0000000000101ed8        0x0 console.o
+ .data          0x0000000000101ed8        0x0 thread.o
+ .data          0x0000000000101ed8        0x0 memory.o
+ .data          0x0000000000101ed8        0x0 locore.o
+ .data          0x0000000000101ed8        0x0 ../lib/string.o
+ .data          0x0000000000101ed8        0x0 ../lib/console.o
+ .data          0x0000000000101ed8        0x0 ../kern/main.o
+ .data          0x0000000000101ed8        0x0 ../kern/memory.o
+ .data          0x0000000000101ed8        0x0 ../kern/thread.o
+ .data          0x0000000000101ed8        0x0 /usr/lib/gcc/i486-linux-gnu/4.3.2/libgcc.a(_udivdi3.o)
+ .data          0x0000000000101ed8        0x0 /usr/lib/gcc/i486-linux-gnu/4.3.2/libgcc.a(_umoddi3.o)
+                0x0000000000101ed8                _edata = .
 
-.bss            0x0000000000101d00     0xc088
+.bss            0x0000000000101ee0     0xc088
  *(.dynbss)
  *(.bss)
- .bss           0x0000000000101d00     0x8068 segment.o
- .bss           0x0000000000109d68        0xc console.o
- .bss           0x0000000000109d74        0xc ../kern/thread.o
+ .bss           0x0000000000101ee0        0x0 boot.o
+ .bss           0x0000000000101ee0        0x0 init.o
+ .bss           0x0000000000101ee0     0x8068 segment.o
+ .bss           0x0000000000109f48        0xc console.o
+ .bss           0x0000000000109f54        0x0 thread.o
+ .bss           0x0000000000109f54        0x0 memory.o
+ .bss           0x0000000000109f54        0x0 locore.o
+ .bss           0x0000000000109f54        0x0 ../lib/string.o
+ .bss           0x0000000000109f54        0x0 ../lib/console.o
+ .bss           0x0000000000109f54        0x0 ../kern/main.o
+ .bss           0x0000000000109f54        0x0 ../kern/memory.o
+ .bss           0x0000000000109f54        0xc ../kern/thread.o
+ .bss           0x0000000000109f60        0x0 /usr/lib/gcc/i486-linux-gnu/4.3.2/libgcc.a(_udivdi3.o)
+ .bss           0x0000000000109f60        0x0 /usr/lib/gcc/i486-linux-gnu/4.3.2/libgcc.a(_umoddi3.o)
  *(.COMMON)
- COMMON         0x0000000000109d80     0x4000 boot.o
-                                          0x0 (size before relaxing)
-                0x0000000000109d80                stack
- COMMON         0x000000000010dd80        0x4 init.o
-                                          0x0 (size before relaxing)
-                0x000000000010dd80                mbi
- COMMON         0x000000000010dd84        0x4 ../kern/memory.o
-                                          0x0 (size before relaxing)
-                0x000000000010dd84                unit_list_head
-
-.rel.dyn
-                0x000000000010dd88                _end = .
+ COMMON         0x0000000000109f60     0x4000 boot.o
+                0x0000000000109f60                stack
+ COMMON         0x000000000010df60        0x4 init.o
+                0x000000000010df60                mbi
+ COMMON         0x000000000010df64        0x4 ../kern/memory.o
+                0x000000000010df64                unit_list_head
+                0x000000000010df68                _end = .
 LOAD boot.o
 LOAD init.o
 LOAD segment.o
@@ -165,50 +194,50 @@ LOAD ../lib/console.o
 LOAD ../kern/main.o
 LOAD ../kern/memory.o
 LOAD ../kern/thread.o
-LOAD /usr/lib/libgcc.a
-OUTPUT(shiitake elf32-i386-freebsd)
+LOAD /usr/lib/gcc/i486-linux-gnu/4.3.2/libgcc.a
+OUTPUT(shiitake elf32-i386)
 
-.debug_line     0x0000000000000000      0x6d5
- .debug_line    0x0000000000000000       0x40 boot.o
- .debug_line    0x0000000000000040       0x7c init.o
- .debug_line    0x00000000000000bc       0xca segment.o
- .debug_line    0x0000000000000186       0x5c console.o
- .debug_line    0x00000000000001e2       0x7a thread.o
- .debug_line    0x000000000000025c       0x50 memory.o
- .debug_line    0x00000000000002ac       0x4b locore.o
- .debug_line    0x00000000000002f7       0x6d ../lib/string.o
- .debug_line    0x0000000000000364       0xe6 ../lib/console.o
- .debug_line    0x000000000000044a       0x49 ../kern/main.o
- .debug_line    0x0000000000000493      0x10e ../kern/memory.o
- .debug_line    0x00000000000005a1      0x134 ../kern/thread.o
+.debug_line     0x0000000000000000      0x70f
+ .debug_line    0x0000000000000000       0x43 boot.o
+ .debug_line    0x0000000000000043       0x82 init.o
+ .debug_line    0x00000000000000c5       0xde segment.o
+ .debug_line    0x00000000000001a3       0x70 console.o
+ .debug_line    0x0000000000000213       0x7d thread.o
+ .debug_line    0x0000000000000290       0x53 memory.o
+ .debug_line    0x00000000000002e3       0x4e locore.o
+ .debug_line    0x0000000000000331       0x80 ../lib/string.o
+ .debug_line    0x00000000000003b1       0xf9 ../lib/console.o
+ .debug_line    0x00000000000004aa       0x4d ../kern/main.o
+ .debug_line    0x00000000000004f7       0xd9 ../kern/memory.o
+ .debug_line    0x00000000000005d0      0x13f ../kern/thread.o
 
-.debug_info     0x0000000000000000     0x2515
- .debug_info    0x0000000000000000       0x5c boot.o
- .debug_info    0x000000000000005c      0x373 init.o
- .debug_info    0x00000000000003cf      0x74b segment.o
- .debug_info    0x0000000000000b1a      0x154 console.o
- .debug_info    0x0000000000000c6e      0x302 thread.o
- .debug_info    0x0000000000000f70      0x1f0 memory.o
- .debug_info    0x0000000000001160       0x5e locore.o
- .debug_info    0x00000000000011be      0x2d3 ../lib/string.o
- .debug_info    0x0000000000001491      0x2cb ../lib/console.o
- .debug_info    0x000000000000175c       0xd0 ../kern/main.o
- .debug_info    0x000000000000182c      0x570 ../kern/memory.o
- .debug_info    0x0000000000001d9c      0x779 ../kern/thread.o
+.debug_info     0x0000000000000000     0x2428
+ .debug_info    0x0000000000000000       0x48 boot.o
+ .debug_info    0x0000000000000048      0x35f init.o
+ .debug_info    0x00000000000003a7      0x74c segment.o
+ .debug_info    0x0000000000000af3      0x127 console.o
+ .debug_info    0x0000000000000c1a      0x2e6 thread.o
+ .debug_info    0x0000000000000f00      0x1f4 memory.o
+ .debug_info    0x00000000000010f4       0x4a locore.o
+ .debug_info    0x000000000000113e      0x2ee ../lib/string.o
+ .debug_info    0x000000000000142c      0x2dc ../lib/console.o
+ .debug_info    0x0000000000001708       0xb4 ../kern/main.o
+ .debug_info    0x00000000000017bc      0x493 ../kern/memory.o
+ .debug_info    0x0000000000001c4f      0x7d9 ../kern/thread.o
 
-.debug_abbrev   0x0000000000000000      0xa4a
+.debug_abbrev   0x0000000000000000      0xb29
  .debug_abbrev  0x0000000000000000       0x14 boot.o
- .debug_abbrev  0x0000000000000014       0xf0 init.o
- .debug_abbrev  0x0000000000000104      0x15c segment.o
- .debug_abbrev  0x0000000000000260       0xce console.o
- .debug_abbrev  0x000000000000032e       0xd7 thread.o
- .debug_abbrev  0x0000000000000405       0xbc memory.o
- .debug_abbrev  0x00000000000004c1       0x14 locore.o
- .debug_abbrev  0x00000000000004d5       0xc2 ../lib/string.o
- .debug_abbrev  0x0000000000000597       0xea ../lib/console.o
- .debug_abbrev  0x0000000000000681       0x67 ../kern/main.o
- .debug_abbrev  0x00000000000006e8      0x177 ../kern/memory.o
- .debug_abbrev  0x000000000000085f      0x1eb ../kern/thread.o
+ .debug_abbrev  0x0000000000000014       0xfd init.o
+ .debug_abbrev  0x0000000000000111      0x18f segment.o
+ .debug_abbrev  0x00000000000002a0       0xec console.o
+ .debug_abbrev  0x000000000000038c       0xe0 thread.o
+ .debug_abbrev  0x000000000000046c       0xbc memory.o
+ .debug_abbrev  0x0000000000000528       0x14 locore.o
+ .debug_abbrev  0x000000000000053c       0xc3 ../lib/string.o
+ .debug_abbrev  0x00000000000005ff      0x10d ../lib/console.o
+ .debug_abbrev  0x000000000000070c       0x6e ../kern/main.o
+ .debug_abbrev  0x000000000000077a      0x190 ../kern/memory.o
+ .debug_abbrev  0x000000000000090a      0x21f ../kern/thread.o
 
 .debug_aranges  0x0000000000000000      0x180
  .debug_aranges
@@ -236,17 +265,29 @@ OUTPUT(shiitake elf32-i386-freebsd)
  .debug_aranges
                 0x0000000000000160       0x20 ../kern/thread.o
 
-.debug_frame    0x0000000000000000      0x704
- .debug_frame   0x0000000000000000       0x48 init.o
- .debug_frame   0x0000000000000048       0xf4 segment.o
- .debug_frame   0x000000000000013c       0x80 console.o
- .debug_frame   0x00000000000001bc       0x2c thread.o
- .debug_frame   0x00000000000001e8       0x44 memory.o
- .debug_frame   0x000000000000022c       0xec ../lib/string.o
- .debug_frame   0x0000000000000318      0x124 ../lib/console.o
- .debug_frame   0x000000000000043c       0x80 ../kern/main.o
- .debug_frame   0x00000000000004bc      0x148 ../kern/memory.o
- .debug_frame   0x0000000000000604      0x100 ../kern/thread.o
+.debug_frame    0x0000000000000000      0x5f4
+ .debug_frame   0x0000000000000000       0x34 init.o
+ .debug_frame   0x0000000000000034       0xdc segment.o
+ .debug_frame   0x0000000000000110       0x64 console.o
+ .debug_frame   0x0000000000000174       0x2c thread.o
+ .debug_frame   0x00000000000001a0       0x44 memory.o
+ .debug_frame   0x00000000000001e4       0xec ../lib/string.o
+ .debug_frame   0x00000000000002d0      0x110 ../lib/console.o
+ .debug_frame   0x00000000000003e0       0x6c ../kern/main.o
+ .debug_frame   0x000000000000044c       0xc8 ../kern/memory.o
+ .debug_frame   0x0000000000000514       0xe0 ../kern/thread.o
+
+.debug_loc      0x0000000000000000     0x14cf
+ .debug_loc     0x0000000000000000       0xc7 init.o
+ .debug_loc     0x00000000000000c7      0x2e4 segment.o
+ .debug_loc     0x00000000000003ab       0xce console.o
+ .debug_loc     0x0000000000000479       0x2c thread.o
+ .debug_loc     0x00000000000004a5       0x58 memory.o
+ .debug_loc     0x00000000000004fd      0x4a9 ../lib/string.o
+ .debug_loc     0x00000000000009a6      0x4fc ../lib/console.o
+ .debug_loc     0x0000000000000ea2       0x9b ../kern/main.o
+ .debug_loc     0x0000000000000f3d      0x24f ../kern/memory.o
+ .debug_loc     0x000000000000118c      0x343 ../kern/thread.o
 
 .debug_pubnames
                 0x0000000000000000      0x33b
@@ -271,38 +312,69 @@ OUTPUT(shiitake elf32-i386-freebsd)
  .debug_pubnames
                 0x000000000000029e       0x9d ../kern/thread.o
 
-.debug_str      0x0000000000000000      0x769
- .debug_str     0x0000000000000000      0x21e init.o
-                                        0x26c (size before relaxing)
- .debug_str     0x000000000000021e      0x21d segment.o
-                                        0x326 (size before relaxing)
- .debug_str     0x000000000000043b       0x2f console.o
-                                        0x102 (size before relaxing)
- .debug_str     0x000000000000046a       0x58 thread.o
-                                        0x1a5 (size before relaxing)
- .debug_str     0x00000000000004c2       0x1e memory.o
-                                        0x189 (size before relaxing)
- .debug_str     0x00000000000004e0       0x55 ../lib/string.o
-                                        0x11e (size before relaxing)
- .debug_str     0x0000000000000535       0x58 ../lib/console.o
-                                        0x12e (size before relaxing)
- .debug_str     0x000000000000058d       0x30 ../kern/main.o
-                                         0xf9 (size before relaxing)
- .debug_str     0x00000000000005bd       0xc2 ../kern/memory.o
-                                        0x1b1 (size before relaxing)
- .debug_str     0x000000000000067f       0xea ../kern/thread.o
-                                        0x29f (size before relaxing)
+.debug_str      0x0000000000000000      0x777
+ .debug_str     0x0000000000000000      0x203 init.o
+                                        0x23c (size before relaxing)
+ .debug_str     0x0000000000000203      0x21d segment.o
+                                        0x2e4 (size before relaxing)
+ .debug_str     0x0000000000000420       0x2f console.o
+                                         0x71 (size before relaxing)
+ .debug_str     0x000000000000044f       0x58 thread.o
+                                        0x163 (size before relaxing)
+ .debug_str     0x00000000000004a7       0x1e memory.o
+                                        0x175 (size before relaxing)
+ .debug_str     0x00000000000004c5       0x55 ../lib/string.o
+                                         0xdc (size before relaxing)
+ .debug_str     0x000000000000051a       0x6f ../lib/console.o
+                                        0x103 (size before relaxing)
+ .debug_str     0x0000000000000589       0x30 ../kern/main.o
+                                         0xb7 (size before relaxing)
+ .debug_str     0x00000000000005b9       0xd4 ../kern/memory.o
+                                        0x186 (size before relaxing)
+ .debug_str     0x000000000000068d       0xea ../kern/thread.o
+                                        0x25d (size before relaxing)
 
-.comment        0x0000000000000000      0x1bc
- .comment       0x0000000000000000       0x25 init.o
- .comment       0x0000000000000025       0x25 segment.o
- .comment       0x000000000000004a       0x25 console.o
- .comment       0x000000000000006f       0x25 thread.o
- .comment       0x0000000000000094       0x25 memory.o
- .comment       0x00000000000000b9       0x25 ../lib/string.o
- .comment       0x00000000000000de       0x25 ../lib/console.o
- .comment       0x0000000000000103       0x25 ../kern/main.o
- .comment       0x0000000000000128       0x25 ../kern/memory.o
- .comment       0x000000000000014d       0x25 ../kern/thread.o
- .comment       0x0000000000000172       0x25 /usr/lib/libgcc.a(_umoddi3.o)
- .comment       0x0000000000000197       0x25 /usr/lib/libgcc.a(_udivdi3.o)
+.comment        0x0000000000000000      0x15c
+ .comment       0x0000000000000000       0x1d init.o
+ .comment       0x000000000000001d       0x1d segment.o
+ .comment       0x000000000000003a       0x1d console.o
+ .comment       0x0000000000000057       0x1d thread.o
+ .comment       0x0000000000000074       0x1d memory.o
+ .comment       0x0000000000000091       0x1d ../lib/string.o
+ .comment       0x00000000000000ae       0x1d ../lib/console.o
+ .comment       0x00000000000000cb       0x1d ../kern/main.o
+ .comment       0x00000000000000e8       0x1d ../kern/memory.o
+ .comment       0x0000000000000105       0x1d ../kern/thread.o
+ .comment       0x0000000000000122       0x1d /usr/lib/gcc/i486-linux-gnu/4.3.2/libgcc.a(_udivdi3.o)
+ .comment       0x000000000000013f       0x1d /usr/lib/gcc/i486-linux-gnu/4.3.2/libgcc.a(_umoddi3.o)
+
+.note.GNU-stack
+                0x0000000000000000        0x0
+ .note.GNU-stack
+                0x0000000000000000        0x0 init.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 segment.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 console.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 thread.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 memory.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 ../lib/string.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 ../lib/console.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 ../kern/main.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 ../kern/memory.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 ../kern/thread.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /usr/lib/gcc/i486-linux-gnu/4.3.2/libgcc.a(_udivdi3.o)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /usr/lib/gcc/i486-linux-gnu/4.3.2/libgcc.a(_umoddi3.o)
+
+.debug_ranges   0x0000000000000000       0xc0
+ .debug_ranges  0x0000000000000000       0x30 console.o
+ .debug_ranges  0x0000000000000030       0x90 ../kern/thread.o
