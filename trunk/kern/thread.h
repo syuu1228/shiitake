@@ -22,4 +22,7 @@ void thread_rotate(void);
 void thread_yield(void);
 void thread_switch(thread_t *next);
 
+void md_thread_create(thread_t *t, void (*function)(void));
+void md_thread_switch(thread_t *cur, void *new);
+
 #endif /* KERN_THREAD_H_*/

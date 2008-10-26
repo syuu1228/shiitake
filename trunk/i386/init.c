@@ -28,6 +28,9 @@ void arch_init (unsigned long magic, unsigned long addr);
 //struct segment_descriptor_table idtr;
 /* Check if MAGIC is valid and print the Multiboot information structure
    pointed by ADDR.  */
+
+multiboot_info_t *mbi;
+
 void
 arch_init (unsigned long magic, unsigned long addr)
 {  

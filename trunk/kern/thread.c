@@ -2,14 +2,12 @@
 #include <kern/memory.h>
 #include <lib/assert.h>
 #include <lib/console.h>
+#include <lib/string.h>
 
 //#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
 #define DPRINTF(...) do{}while(0)
 static thread_t *running = 0;
 static list_node_t runq = {0};
-
-extern void md_thread_create(thread_t *t, void (*function)(void));
-extern void md_thread_switch(thread_t *cur, void *new);
 
 static inline void
 add_queue(thread_t *t)

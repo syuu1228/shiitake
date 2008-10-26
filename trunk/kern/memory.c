@@ -55,19 +55,19 @@ unit_add(malloc_unit_t *unit, malloc_unit_t *list)
 		unit->next->prev = unit;
 	}
 	list->next = unit;
-	DPRINTF("");
+	DPRINTF("\n");
 }
 
 static inline void 
 unit_merge(malloc_unit_t *unit1, malloc_unit_t *unit2)
 {
-	DPRINTF("");
+	DPRINTF("\n");
 	unit_dump(unit1);
-	DPRINTF("");
+	DPRINTF("\n");
 	unit_dump(unit2);
 	unit1->next = unit2->next;
 	unit1->size += sizeof(malloc_unit_t) + unit2->size;
-	DPRINTF("");
+	DPRINTF("\n");
 	unit_dump(unit1);
 }
 
@@ -79,12 +79,13 @@ memory_init(void)
 	unit_list_head->prev = 0;
         unit_list_head->size = md_memory_tail() - (char *)unit_list_head - sizeof(malloc_unit_t);
 	unit_list_head->allocated = false;
-	DPRINTF("");
+	DPRINTF("\n");
 	unit_dump(unit_list_head);
 	return unit_list_head->size;
 }
 
-void *malloc(size_t size)
+void *
+malloc(size_t size)
 {
 	malloc_unit_t *unit;
 	DPRINTF("size:%d\n", size);
@@ -110,7 +111,8 @@ void *malloc(size_t size)
 	return unit_data(unit);
 }
 
-void *calloc(size_t nmemb, size_t size)
+void *
+calloc(size_t nmemb, size_t size)
 {
 	void *ptr = malloc(nmemb * size);
 	if(!ptr)
@@ -119,7 +121,8 @@ void *calloc(size_t nmemb, size_t size)
 	return ptr;
 }
 
-void free(void *ptr)
+void 
+free(void *ptr)
 {
 	DPRINTF("ptr:%x\n", ptr);
 	malloc_unit_t *unit = unit_data_to_head(ptr);
@@ -132,12 +135,13 @@ void free(void *ptr)
 		unit_merge(unit, unit->next);
 }
 
-void malloc_dump(void)
+void 
+malloc_dump(void)
 {
 	malloc_unit_t *unit = unit_list_head;
 	do
 	{
-		DPRINTF("");
+		DPRINTF("\n");
 		unit_dump(unit);
-	} while (unit = unit->next);
+	} while ((unit = unit->next));
 }

@@ -15,6 +15,8 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
+#ifndef I386_MULTIBOOT_H_
+#define I386_MULTIBOOT_H_
 /* Macros.  */
 
 /* The magic number for the Multiboot header.  */
@@ -116,5 +118,7 @@ typedef struct memory_map
   unsigned long type;
 } memory_map_t;
 
-multiboot_info_t *mbi = 0;
+multiboot_info_t *mbi;
 #endif /* ! ASM */
+#endif
+

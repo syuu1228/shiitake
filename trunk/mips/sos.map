@@ -215,21 +215,21 @@ OUTPUT(shiitake elf32-littlemips)
  .pdr           0x00000000000006c0       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
  .pdr           0x00000000000006e0        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
 
-.debug_line     0x0000000000000000      0x8eb
+.debug_line     0x0000000000000000      0x8e3
  .debug_line    0x0000000000000000       0x46 boot.o
  .debug_line    0x0000000000000046       0x35 init.o
  .debug_line    0x000000000000007b       0x41 console.o
- .debug_line    0x00000000000000bc       0x8a thread.o
- .debug_line    0x0000000000000146       0x3e memory.o
- .debug_line    0x0000000000000184       0x9a locore.o
- .debug_line    0x000000000000021e       0xa2 ../lib/string.o
- .debug_line    0x00000000000002c0      0x150 ../lib/console.o
- .debug_line    0x0000000000000410       0x57 ../kern/main.o
- .debug_line    0x0000000000000467      0x102 ../kern/memory.o
- .debug_line    0x0000000000000569      0x11a ../kern/thread.o
- .debug_line    0x0000000000000683      0x105 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
- .debug_line    0x0000000000000788      0x120 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
- .debug_line    0x00000000000008a8       0x43 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+ .debug_line    0x00000000000000bc       0x82 thread.o
+ .debug_line    0x000000000000013e       0x3e memory.o
+ .debug_line    0x000000000000017c       0x9a locore.o
+ .debug_line    0x0000000000000216       0xa2 ../lib/string.o
+ .debug_line    0x00000000000002b8      0x150 ../lib/console.o
+ .debug_line    0x0000000000000408       0x57 ../kern/main.o
+ .debug_line    0x000000000000045f      0x102 ../kern/memory.o
+ .debug_line    0x0000000000000561      0x11a ../kern/thread.o
+ .debug_line    0x000000000000067b      0x105 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .debug_line    0x0000000000000780      0x120 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .debug_line    0x00000000000008a0       0x43 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
 
 .debug_info     0x0000000000000000     0x2a1a
  .debug_info    0x0000000000000000       0x47 boot.o
