@@ -9,7 +9,6 @@ int
 main(void)
 {
 	printf("starting shiitake..\n");
-	return 0;
 	size_t memory_size = memory_init();
 	printf("%u byte of memory initializd.\n", memory_size);
 	thread_init();
