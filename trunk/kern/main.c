@@ -2,6 +2,9 @@
 #include <kern/memory.h>
 #include <kern/thread.h>
 
+void thread1(void);
+void thread2(void);
+
 int 
 main(void)
 {
@@ -10,6 +13,7 @@ main(void)
 	printf("%u byte of memory initializd.\n", memory_size);
 	thread_init();
 	printf("thread initialized.\n");
+	thread_create(thread2);
 	thread1();
 	return 0;
 }

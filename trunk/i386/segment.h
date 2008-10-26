@@ -16,7 +16,7 @@ typedef struct {
 	uint8_t privilege_level:2;
 	uint8_t present:1;
 	uint8_t limit_h:4;
-	uint8_t __unused:2;
+	uint8_t __unused1:2;
 	uint8_t operation_size:1;
 	uint8_t granularity:1;
 	uint8_t base_h;

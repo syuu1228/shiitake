@@ -116,4 +116,5 @@ typedef struct memory_map
   unsigned long type;
 } memory_map_t;
 
+multiboot_info_t *mbi = 0;
 #endif /* ! ASM */

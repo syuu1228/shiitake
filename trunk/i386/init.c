@@ -30,9 +30,7 @@ void arch_init (unsigned long magic, unsigned long addr);
    pointed by ADDR.  */
 void
 arch_init (unsigned long magic, unsigned long addr)
-{
-  multiboot_info_t *mbi;
-  
+{  
   /* Clear the screen.  */
   cls ();
 
@@ -131,20 +129,4 @@ arch_init (unsigned long magic, unsigned long addr)
     }
   gdt_init();
   printf("gdt initialized\n");
-
-#if 0
-  extern void *_start;
-  extern void *_edata, *_end;
-  printf("_start:%x _edata:%x _end:%x\n", _start, &_edata, &_end);
-  printf("mbi->mem_upper:%x\n", mbi->mem_upper * 1024);
-
-  printf("sizeof eflags:%d\n", sizeof(struct eflags));
-  printf("sizeof tss:%d\n", sizeof(struct tss));
-  unsigned *ptr;
-  for(ptr = (unsigned *)&_end;
-      ptr < (unsigned *)(mbi->mem_upper * 1024);
-      ptr++)
-	  *ptr = 0;
-  printf("zero clear finished\n");
-#endif
 }  

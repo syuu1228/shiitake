@@ -20,5 +20,6 @@ void thread_wakeup(thread_t *t);
 void thread_sleep(thread_t *t);
 void thread_rotate(void);
 void thread_yield(void);
+void thread_switch(thread_t *next);
 
 #endif /* KERN_THREAD_H_*/

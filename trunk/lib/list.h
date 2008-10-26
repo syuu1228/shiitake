@@ -12,9 +12,14 @@ typedef struct list_node
 #define LIST_FOR_EACH(head, node) for(node = head; node; node = node->next)
 #define LIST_FOR_EACH_REVERSE(tail, node) for(node = tail; node; node = node->prev)
 #define LIST_NODE_IS_HEAD(node) (!node->prev)
-
-#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
-
+#define LIST_DUMP(head)							\
+	{								\
+		list_node_t *lp;					\
+		LIST_FOR_EACH (head, lp)				\
+			printf("[%s:%s:%d] list:%p prev:%p next:%p\n", __FILE__, __FUNCTION__, __LINE__, lp, lp->prev, lp->next); \
+	}
+//#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
+#define DPRINTF(...) do{}while(0)
 static inline void
 list_delete(list_node_t *node)
 {
@@ -70,10 +75,12 @@ list_move_after(list_node_t *dest, list_node_t *node)
 }
 
 static inline void
-list_move_tail(list_node_t *list, list_node_t *node)
+list_move_tail(list_node_t *head, list_node_t *node)
 {
-	DPRINTF("list:%p node:%p\n", list, node);
-	list_move_after(list_get_tail(list), node);
+	assert(LIST_NODE_IS_HEAD(head));
+	DPRINTF("head:%p head:%p\n", head, node);
+	list_delete(node);
+	list_move_after(list_get_tail(head), node);
 }
 
 static inline int
@@ -88,10 +95,9 @@ list_count(list_node_t *node)
 static inline void
 list_dump(list_node_t *node)
 {
-#if 0
 	list_node_t *lp;
 	LIST_FOR_EACH (node, lp)
 		printf("list:%p prev:%p next:%p\n", lp, lp->prev, lp->next);
-#endif
 }
+#undef DPRINTF
 #endif /* LIB_LIST_H_ */
