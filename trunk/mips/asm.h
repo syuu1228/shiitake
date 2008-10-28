@@ -8,6 +8,7 @@
 #define COP0_TLB_HI $10
 #define COP0_STATUS $12
 #define COP0_CAUSE $13
+#define COP0_EPC $14
 
 #define THREAD_MD_TLB_LO 0
 #define THREAD_MD_TLB_HI 4
@@ -54,5 +55,5 @@
 #define THREAD_MD_TLB_RANDOM 168
 #define THREAD_MD_TLB_BAD 172
 #define THREAD_MD_ZERO 176
-
+#define THREAD_MD_SIZE 180
 #endif

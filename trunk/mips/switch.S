@@ -11,7 +11,8 @@ md_thread_switch:
 	addiu	$sp,$sp,-8
 	sw	$a1,0($sp)
 	move	$k0,$a0
-#	sw  	$k1,THREAD_MD_SR($k0)
+	mfc0    $k1,COP0_STATUS
+	sw  	$k1,THREAD_MD_SR($k0)
 	mfc0	$k1,COP0_TLB_LO
 	sw	$k1,THREAD_MD_TLB_LO($k0)
 	mfc0	$k1,COP0_TLB_HI
@@ -94,7 +95,7 @@ md_thread_switch:
 	lw	$s7,THREAD_MD_S7($k0)
 	lw	$t8,THREAD_MD_T8($k0)
 	lw	$t9,THREAD_MD_T9($k0)
-#	lw	$gp,THREAD_MD_GP($k0)
+	lw	$gp,THREAD_MD_GP($k0)
 	lw	$sp,THREAD_MD_SP($k0)
 	lw	$fp,THREAD_MD_FP($k0)
 	lw	$ra,THREAD_MD_RA($k0)
@@ -108,8 +109,7 @@ md_thread_switch:
 	mtc0	$k1,COP0_CAUSE
 	lw  	$k1,THREAD_MD_SR($k0)
 	lw	$k0,THREAD_MD_PC($k0)
-	j	$k0
 	mtc0    $k1,COP0_STATUS
-#	nop
-#	rfe
+	j	$k0
+	nop
 	.end	md_thread_switch
