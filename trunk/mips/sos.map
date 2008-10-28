@@ -51,7 +51,7 @@ Linker script and memory map
  general_exception.o(.text)
  .text          0x0000000080000080        0xc general_exception.o
 
-.text           0x0000000080030000     0x4528
+.text           0x0000000080030000     0x4588
                 0x0000000080030000                _ftext = <code 342> (.)
  boot.o(.text)
  .text          0x0000000080030000       0x60 boot.o
@@ -74,142 +74,142 @@ Linker script and memory map
                 0x0000000080030384                general_exception
                 0x0000000080030670                utlb_exception
                 0x0000000080030570                reset_exception
- .text          0x0000000080030770      0x5e0 interrupt.o
-                0x0000000080030c90                handle_reset_exception
+ .text          0x0000000080030770      0x638 interrupt.o
+                0x0000000080030ce8                handle_reset_exception
                 0x0000000080030770                interrupt_init
-                0x0000000080030c30                handle_general_exception
-                0x0000000080030cf0                handle_utlb_exception
-                0x00000000800307a4                dump_frame
- .text          0x0000000080030d50      0x67c ../lib/string.o
-                0x0000000080030f84                strcpy
-                0x0000000080030ea0                memcpy
-                0x00000000800312a4                strncmp
-                0x0000000080031030                strncpy
-                0x0000000080030dc4                memset
-                0x0000000080031198                strcmp
-                0x0000000080030d50                strlen
- .text          0x00000000800313cc      0xc90 ../lib/console.o
-                0x0000000080031bc4                printf
-                0x00000000800319e4                puts
-                0x0000000080031af8                getns
-                0x0000000080031894                putx
-                0x0000000080031a68                putns
-                0x000000008003159c                putu
-                0x000000008003170c                putlu
-                0x00000000800313cc                putd
- .text          0x000000008003205c      0x144 ../kern/main.o
-                0x0000000080032160                thread2
-                0x000000008003205c                main
-                0x0000000080032120                thread1
- .text          0x00000000800321a0      0xb44 ../kern/memory.o
-                0x0000000080032c34                malloc_dump
-                0x00000000800323b0                malloc
-                0x00000000800327fc                calloc
-                0x00000000800321a0                memory_init
-                0x00000000800328b4                free
- .text          0x0000000080032ce4      0x6a4 ../kern/thread.o
-                0x0000000080032ce4                thread_init
-                0x00000000800331ac                thread_wakeup
-                0x00000000800332e4                thread_switch
-                0x00000000800331ec                thread_sleep
-                0x000000008003322c                thread_yield
-                0x0000000080032da8                thread_self
-                0x000000008003310c                thread_destroy
-                0x0000000080032dcc                thread_create
- .text          0x0000000080033388      0x634 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
-                0x0000000080033388                __udivdi3
- .text          0x00000000800339bc      0x644 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
-                0x00000000800339bc                __umoddi3
- .text          0x0000000080034000        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
-                0x0000000080034000                _ecode = <code 342> (.)
+                0x0000000080030c88                handle_general_exception
+                0x0000000080030d48                handle_utlb_exception
+                0x00000000800307fc                dump_frame
+                0x00000000800307b4                interrupt_execute_handler
+ .text          0x0000000080030da8      0x67c ../lib/string.o
+                0x0000000080030fdc                strcpy
+                0x0000000080030ef8                memcpy
+                0x00000000800312fc                strncmp
+                0x0000000080031088                strncpy
+                0x0000000080030e1c                memset
+                0x00000000800311f0                strcmp
+                0x0000000080030da8                strlen
+ .text          0x0000000080031424      0xc90 ../lib/console.o
+                0x0000000080031c1c                printf
+                0x0000000080031a3c                puts
+                0x0000000080031b50                getns
+                0x00000000800318ec                putx
+                0x0000000080031ac0                putns
+                0x00000000800315f4                putu
+                0x0000000080031764                putlu
+                0x0000000080031424                putd
+ .text          0x00000000800320b4      0x144 ../kern/main.o
+                0x00000000800321b8                thread2
+                0x00000000800320b4                main
+                0x0000000080032178                thread1
+ .text          0x00000000800321f8      0xb44 ../kern/memory.o
+                0x0000000080032c8c                malloc_dump
+                0x0000000080032408                malloc
+                0x0000000080032854                calloc
+                0x00000000800321f8                memory_init
+                0x000000008003290c                free
+ .text          0x0000000080032d3c      0x6a4 ../kern/thread.o
+                0x0000000080032d3c                thread_init
+                0x0000000080033204                thread_wakeup
+                0x000000008003333c                thread_switch
+                0x0000000080033244                thread_sleep
+                0x0000000080033284                thread_yield
+                0x0000000080032e00                thread_self
+                0x0000000080033164                thread_destroy
+                0x0000000080032e24                thread_create
+ .text          0x00000000800333e0      0x634 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+                0x00000000800333e0                __udivdi3
+ .text          0x0000000080033a14      0x644 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+                0x0000000080033a14                __umoddi3
+ .text          0x0000000080034058        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+                0x0000000080034058                _ecode = <code 342> (.)
  *(.rodata)
- .rodata        0x0000000080034000      0x1e0 interrupt.o
- .rodata        0x00000000800341e0       0x44 ../lib/string.o
- .rodata        0x0000000080034224       0x28 ../lib/console.o
- .rodata        0x000000008003424c       0x68 ../kern/main.o
- .rodata        0x00000000800342b4      0x104 ../kern/memory.o
- .rodata        0x00000000800343b8       0x6c ../kern/thread.o
- .rodata        0x0000000080034424      0x100 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
-                0x0000000080034424                __clz_tab
-                0x0000000080034528                . = ALIGN (0x8)
- *fill*         0x0000000080034524        0x4 00000000
-                0x0000000080034528                _etext = <code 342> (.)
+ .rodata        0x0000000080034058      0x1ec interrupt.o
+ .rodata        0x0000000080034244       0x44 ../lib/string.o
+ .rodata        0x0000000080034288       0x28 ../lib/console.o
+ .rodata        0x00000000800342b0       0x68 ../kern/main.o
+ .rodata        0x0000000080034318      0x104 ../kern/memory.o
+ .rodata        0x000000008003441c       0x6c ../kern/thread.o
+ .rodata        0x0000000080034488      0x100 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+                0x0000000080034488                __clz_tab
+                0x0000000080034588                . = ALIGN (0x8)
+                0x0000000080034588                _etext = <code 342> (.)
 
-.eh_frame       0x0000000080034528       0x38
- .eh_frame      0x0000000080034528       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
- .eh_frame      0x0000000080034548       0x18 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+.eh_frame       0x0000000080034588       0x38
+ .eh_frame      0x0000000080034588       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .eh_frame      0x00000000800345a8       0x18 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
                                          0x28 (size before relaxing)
 
 .reset_vector
  reset_exception.o(.text)
 
-.data           0x0000000080034560       0x28
-                0x0000000080034560                _fdata = <code 342> (.)
+.data           0x00000000800345c0       0x28
+                0x00000000800345c0                _fdata = <code 342> (.)
  *(.data)
- .data          0x0000000080034560        0x0 utlb_exception.o
- .data          0x0000000080034560        0x0 general_exception.o
- .data          0x0000000080034560        0x0 boot.o
- .data          0x0000000080034560        0x0 reset_exception.o
- .data          0x0000000080034560        0x0 init.o
- .data          0x0000000080034560        0x0 console.o
- .data          0x0000000080034560        0x0 thread.o
- .data          0x0000000080034560        0x0 memory.o
- .data          0x0000000080034560        0x0 switch.o
- .data          0x0000000080034560        0x0 exception.o
- .data          0x0000000080034560        0x0 interrupt.o
- .data          0x0000000080034560        0x0 ../lib/string.o
- .data          0x0000000080034560        0x0 ../lib/console.o
- .data          0x0000000080034560        0x0 ../kern/main.o
- .data          0x0000000080034560        0x0 ../kern/memory.o
- .data          0x0000000080034560        0x0 ../kern/thread.o
- .data          0x0000000080034560        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
- .data          0x0000000080034560        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
- .data          0x0000000080034560        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
-                0x0000000080034560                . = ALIGN (0x8)
-                0x000000008003c550                _gp = <code 342> ((. + 0x7ff0))
+ .data          0x00000000800345c0        0x0 utlb_exception.o
+ .data          0x00000000800345c0        0x0 general_exception.o
+ .data          0x00000000800345c0        0x0 boot.o
+ .data          0x00000000800345c0        0x0 reset_exception.o
+ .data          0x00000000800345c0        0x0 init.o
+ .data          0x00000000800345c0        0x0 console.o
+ .data          0x00000000800345c0        0x0 thread.o
+ .data          0x00000000800345c0        0x0 memory.o
+ .data          0x00000000800345c0        0x0 switch.o
+ .data          0x00000000800345c0        0x0 exception.o
+ .data          0x00000000800345c0        0x0 interrupt.o
+ .data          0x00000000800345c0        0x0 ../lib/string.o
+ .data          0x00000000800345c0        0x0 ../lib/console.o
+ .data          0x00000000800345c0        0x0 ../kern/main.o
+ .data          0x00000000800345c0        0x0 ../kern/memory.o
+ .data          0x00000000800345c0        0x0 ../kern/thread.o
+ .data          0x00000000800345c0        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .data          0x00000000800345c0        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .data          0x00000000800345c0        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+                0x00000000800345c0                . = ALIGN (0x8)
+                0x000000008003c5b0                _gp = <code 342> ((. + 0x7ff0))
  *(.lit8)
  *(.lit4)
  *(.sdata)
- .sdata         0x0000000080034560       0x18 ../lib/string.o
- .sdata         0x0000000080034578       0x10 ../kern/memory.o
-                0x0000000080034588                . = ALIGN (0x8)
-                0x0000000080034588                _edata = <code 342> (.)
-                0x0000000080034588                _fbss = .
+ .sdata         0x00000000800345c0       0x18 ../lib/string.o
+ .sdata         0x00000000800345d8       0x10 ../kern/memory.o
+                0x00000000800345e8                . = ALIGN (0x8)
+                0x00000000800345e8                _edata = <code 342> (.)
+                0x00000000800345e8                _fbss = .
 
-.sbss           0x0000000080034588       0x10
+.sbss           0x00000000800345e8       0x10
  *(.sbss)
- .sbss          0x0000000080034588        0xc ../kern/thread.o
+ .sbss          0x00000000800345e8        0xc ../kern/thread.o
  *(.scommon)
- .scommon       0x0000000080034594        0x4 ../kern/memory.o
-                0x0000000080034594                unit_list_head
+ .scommon       0x00000000800345f4        0x4 ../kern/memory.o
+                0x00000000800345f4                unit_list_head
 
-.bss            0x0000000080034598     0x5000
+.bss            0x00000000800345f8     0x5000
  *(.bss)
- .bss           0x0000000080034598        0x0 utlb_exception.o
- .bss           0x0000000080034598        0x0 general_exception.o
- .bss           0x0000000080034598        0x0 boot.o
- .bss           0x0000000080034598        0x0 reset_exception.o
- .bss           0x0000000080034598        0x0 init.o
- .bss           0x0000000080034598        0x0 console.o
- .bss           0x0000000080034598        0x0 thread.o
- .bss           0x0000000080034598        0x0 memory.o
- .bss           0x0000000080034598        0x0 switch.o
- .bss           0x0000000080034598        0x0 exception.o
- .bss           0x0000000080034598        0x0 interrupt.o
- .bss           0x0000000080034598        0x0 ../lib/string.o
- .bss           0x0000000080034598        0x0 ../lib/console.o
- .bss           0x0000000080034598        0x0 ../kern/main.o
- .bss           0x0000000080034598        0x0 ../kern/memory.o
- .bss           0x0000000080034598        0x0 ../kern/thread.o
- .bss           0x0000000080034598        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
- .bss           0x0000000080034598        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
- .bss           0x0000000080034598        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+ .bss           0x00000000800345f8        0x0 utlb_exception.o
+ .bss           0x00000000800345f8        0x0 general_exception.o
+ .bss           0x00000000800345f8        0x0 boot.o
+ .bss           0x00000000800345f8        0x0 reset_exception.o
+ .bss           0x00000000800345f8        0x0 init.o
+ .bss           0x00000000800345f8        0x0 console.o
+ .bss           0x00000000800345f8        0x0 thread.o
+ .bss           0x00000000800345f8        0x0 memory.o
+ .bss           0x00000000800345f8        0x0 switch.o
+ .bss           0x00000000800345f8        0x0 exception.o
+ .bss           0x00000000800345f8        0x0 interrupt.o
+ .bss           0x00000000800345f8        0x0 ../lib/string.o
+ .bss           0x00000000800345f8        0x0 ../lib/console.o
+ .bss           0x00000000800345f8        0x0 ../kern/main.o
+ .bss           0x00000000800345f8        0x0 ../kern/memory.o
+ .bss           0x00000000800345f8        0x0 ../kern/thread.o
+ .bss           0x00000000800345f8        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .bss           0x00000000800345f8        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .bss           0x00000000800345f8        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
  *(COMMON)
-                0x0000000080034598                . = ALIGN (0x8)
-                0x0000000080039598                . = (. + 0x5000)
- *fill*         0x0000000080034598     0x5000 00
-                0x0000000080039588                _sp = (. - 0x10)
-                0x0000000080039598                _end = .
+                0x00000000800345f8                . = ALIGN (0x8)
+                0x00000000800395f8                . = (. + 0x5000)
+ *fill*         0x00000000800345f8     0x5000 00
+                0x00000000800395e8                _sp = (. - 0x10)
+                0x00000000800395f8                _end = .
 
 .gptab.sdata
  *(.gptab.data)
@@ -221,9 +221,9 @@ Linker script and memory map
 
 /DISCARD/
  *(.reginfo)
-                0x0000000080034528                PROVIDE (etext, _etext)
-                0x0000000080039598                PROVIDE (edata, .)
-                0x0000000080039598                PROVIDE (end, .)
+                0x0000000080034588                PROVIDE (etext, _etext)
+                0x00000000800395f8                PROVIDE (edata, .)
+                0x00000000800395f8                PROVIDE (end, .)
 LOAD boot.o
 LOAD init.o
 LOAD console.o
@@ -243,7 +243,7 @@ LOAD ../kern/thread.o
 LOAD /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a
 OUTPUT(shiitake elf32-littlemips)
 
-.pdr            0x0000000000000000      0x7e0
+.pdr            0x0000000000000000      0x800
  .pdr           0x0000000000000000        0x0 utlb_exception.o
  .pdr           0x0000000000000000        0x0 general_exception.o
  .pdr           0x0000000000000000       0x20 boot.o
@@ -254,17 +254,17 @@ OUTPUT(shiitake elf32-littlemips)
  .pdr           0x00000000000000a0       0x40 memory.o
  .pdr           0x00000000000000e0       0x20 switch.o
  .pdr           0x0000000000000100       0x60 exception.o
- .pdr           0x0000000000000160       0xa0 interrupt.o
- .pdr           0x0000000000000200       0xe0 ../lib/string.o
- .pdr           0x00000000000002e0      0x100 ../lib/console.o
- .pdr           0x00000000000003e0       0x60 ../kern/main.o
- .pdr           0x0000000000000440      0x160 ../kern/memory.o
- .pdr           0x00000000000005a0      0x200 ../kern/thread.o
- .pdr           0x00000000000007a0       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
- .pdr           0x00000000000007c0       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
- .pdr           0x00000000000007e0        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+ .pdr           0x0000000000000160       0xc0 interrupt.o
+ .pdr           0x0000000000000220       0xe0 ../lib/string.o
+ .pdr           0x0000000000000300      0x100 ../lib/console.o
+ .pdr           0x0000000000000400       0x60 ../kern/main.o
+ .pdr           0x0000000000000460      0x160 ../kern/memory.o
+ .pdr           0x00000000000005c0      0x200 ../kern/thread.o
+ .pdr           0x00000000000007c0       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .pdr           0x00000000000007e0       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .pdr           0x0000000000000800        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
 
-.debug_line     0x0000000000000000      0xb31
+.debug_line     0x0000000000000000      0xb38
  .debug_line    0x0000000000000000       0x3f utlb_exception.o
  .debug_line    0x000000000000003f       0x42 general_exception.o
  .debug_line    0x0000000000000081       0x46 boot.o
@@ -275,17 +275,17 @@ OUTPUT(shiitake elf32-littlemips)
  .debug_line    0x0000000000000201       0x3e memory.o
  .debug_line    0x000000000000023f       0x9e switch.o
  .debug_line    0x00000000000002dd      0x113 exception.o
- .debug_line    0x00000000000003f0       0x74 interrupt.o
- .debug_line    0x0000000000000464       0xa2 ../lib/string.o
- .debug_line    0x0000000000000506      0x150 ../lib/console.o
- .debug_line    0x0000000000000656       0x57 ../kern/main.o
- .debug_line    0x00000000000006ad      0x102 ../kern/memory.o
- .debug_line    0x00000000000007af      0x11a ../kern/thread.o
- .debug_line    0x00000000000008c9      0x105 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
- .debug_line    0x00000000000009ce      0x120 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
- .debug_line    0x0000000000000aee       0x43 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+ .debug_line    0x00000000000003f0       0x7b interrupt.o
+ .debug_line    0x000000000000046b       0xa2 ../lib/string.o
+ .debug_line    0x000000000000050d      0x150 ../lib/console.o
+ .debug_line    0x000000000000065d       0x57 ../kern/main.o
+ .debug_line    0x00000000000006b4      0x102 ../kern/memory.o
+ .debug_line    0x00000000000007b6      0x11a ../kern/thread.o
+ .debug_line    0x00000000000008d0      0x105 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .debug_line    0x00000000000009d5      0x120 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .debug_line    0x0000000000000af5       0x43 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
 
-.debug_info     0x0000000000000000     0x302b
+.debug_info     0x0000000000000000     0x306f
  .debug_info    0x0000000000000000       0x51 utlb_exception.o
  .debug_info    0x0000000000000051       0x54 general_exception.o
  .debug_info    0x00000000000000a5       0x47 boot.o
@@ -296,15 +296,15 @@ OUTPUT(shiitake elf32-littlemips)
  .debug_info    0x00000000000006f8       0xb9 memory.o
  .debug_info    0x00000000000007b1       0x49 switch.o
  .debug_info    0x00000000000007fa       0x50 exception.o
- .debug_info    0x000000000000084a      0x4c6 interrupt.o
- .debug_info    0x0000000000000d10      0x385 ../lib/string.o
- .debug_info    0x0000000000001095      0x392 ../lib/console.o
- .debug_info    0x0000000000001427      0x146 ../kern/main.o
- .debug_info    0x000000000000156d      0x517 ../kern/memory.o
- .debug_info    0x0000000000001a84      0x847 ../kern/thread.o
- .debug_info    0x00000000000022cb      0x63d /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
- .debug_info    0x0000000000002908      0x66c /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
- .debug_info    0x0000000000002f74       0xb7 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+ .debug_info    0x000000000000084a      0x50a interrupt.o
+ .debug_info    0x0000000000000d54      0x385 ../lib/string.o
+ .debug_info    0x00000000000010d9      0x392 ../lib/console.o
+ .debug_info    0x000000000000146b      0x146 ../kern/main.o
+ .debug_info    0x00000000000015b1      0x517 ../kern/memory.o
+ .debug_info    0x0000000000001ac8      0x847 ../kern/thread.o
+ .debug_info    0x000000000000230f      0x63d /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .debug_info    0x000000000000294c      0x66c /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .debug_info    0x0000000000002fb8       0xb7 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
 
 .debug_abbrev   0x0000000000000000      0xaf7
  .debug_abbrev  0x0000000000000000       0x14 utlb_exception.o
@@ -380,36 +380,36 @@ OUTPUT(shiitake elf32-littlemips)
  .mdebug.abi32  0x0000000000000000        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
  .mdebug.abi32  0x0000000000000000        0x0 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
 
-.debug_frame    0x0000000000000000      0x738
+.debug_frame    0x0000000000000000      0x754
  .debug_frame   0x0000000000000000       0x2c init.o
  .debug_frame   0x000000000000002c       0x48 console.o
  .debug_frame   0x0000000000000074       0x2c thread.o
  .debug_frame   0x00000000000000a0       0x48 memory.o
- .debug_frame   0x00000000000000e8       0xb0 interrupt.o
- .debug_frame   0x0000000000000198       0xd4 ../lib/string.o
- .debug_frame   0x000000000000026c      0x104 ../lib/console.o
- .debug_frame   0x0000000000000370       0x64 ../kern/main.o
- .debug_frame   0x00000000000003d4      0x14c ../kern/memory.o
- .debug_frame   0x0000000000000520      0x1d0 ../kern/thread.o
- .debug_frame   0x00000000000006f0       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
- .debug_frame   0x0000000000000710       0x28 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .debug_frame   0x00000000000000e8       0xcc interrupt.o
+ .debug_frame   0x00000000000001b4       0xd4 ../lib/string.o
+ .debug_frame   0x0000000000000288      0x104 ../lib/console.o
+ .debug_frame   0x000000000000038c       0x64 ../kern/main.o
+ .debug_frame   0x00000000000003f0      0x14c ../kern/memory.o
+ .debug_frame   0x000000000000053c      0x1d0 ../kern/thread.o
+ .debug_frame   0x000000000000070c       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .debug_frame   0x000000000000072c       0x28 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
 
-.debug_loc      0x0000000000000000     0x196e
+.debug_loc      0x0000000000000000     0x1999
  .debug_loc     0x0000000000000000       0x2b init.o
  .debug_loc     0x000000000000002b       0x56 console.o
  .debug_loc     0x0000000000000081       0x2b thread.o
  .debug_loc     0x00000000000000ac       0x56 memory.o
- .debug_loc     0x0000000000000102       0xd9 interrupt.o
- .debug_loc     0x00000000000001db      0x12d ../lib/string.o
- .debug_loc     0x0000000000000308      0x160 ../lib/console.o
- .debug_loc     0x0000000000000468       0x81 ../kern/main.o
- .debug_loc     0x00000000000004e9      0x1d9 ../kern/memory.o
- .debug_loc     0x00000000000006c2      0x2b0 ../kern/thread.o
- .debug_loc     0x0000000000000972      0x7c9 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
- .debug_loc     0x000000000000113b      0x833 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+ .debug_loc     0x0000000000000102      0x104 interrupt.o
+ .debug_loc     0x0000000000000206      0x12d ../lib/string.o
+ .debug_loc     0x0000000000000333      0x160 ../lib/console.o
+ .debug_loc     0x0000000000000493       0x81 ../kern/main.o
+ .debug_loc     0x0000000000000514      0x1d9 ../kern/memory.o
+ .debug_loc     0x00000000000006ed      0x2b0 ../kern/thread.o
+ .debug_loc     0x000000000000099d      0x7c9 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+ .debug_loc     0x0000000000001166      0x833 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
 
 .debug_pubnames
-                0x0000000000000000      0x383
+                0x0000000000000000      0x3a1
  .debug_pubnames
                 0x0000000000000000       0x20 init.o
  .debug_pubnames
@@ -419,23 +419,23 @@ OUTPUT(shiitake elf32-littlemips)
  .debug_pubnames
                 0x0000000000000071       0x38 memory.o
  .debug_pubnames
-                0x00000000000000a9       0x86 interrupt.o
+                0x00000000000000a9       0xa4 interrupt.o
  .debug_pubnames
-                0x000000000000012f       0x61 ../lib/string.o
+                0x000000000000014d       0x61 ../lib/string.o
  .debug_pubnames
-                0x0000000000000190       0x5f ../lib/console.o
+                0x00000000000001ae       0x5f ../lib/console.o
  .debug_pubnames
-                0x00000000000001ef       0x33 ../kern/main.o
+                0x000000000000020d       0x33 ../kern/main.o
  .debug_pubnames
-                0x0000000000000222       0x64 ../kern/memory.o
+                0x0000000000000240       0x64 ../kern/memory.o
  .debug_pubnames
-                0x0000000000000286       0x9d ../kern/thread.o
+                0x00000000000002a4       0x9d ../kern/thread.o
  .debug_pubnames
-                0x0000000000000323       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
+                0x0000000000000341       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_udivdi3.o)
  .debug_pubnames
-                0x0000000000000343       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
+                0x0000000000000361       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_umoddi3.o)
  .debug_pubnames
-                0x0000000000000363       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
+                0x0000000000000381       0x20 /usr/local/lib/gcc/mipsel-elf/4.2.4/libgcc.a(_clz.o)
 
 .comment        0x0000000000000000       0xea
  .comment       0x0000000000000000       0x12 init.o

@@ -108,8 +108,8 @@ md_thread_switch:
 	lw	$k1,THREAD_MD_CAUSE($k0)
 	mtc0	$k1,COP0_CAUSE
 	lw  	$k1,THREAD_MD_SR($k0)
-	lw	$k0,THREAD_MD_PC($k0)
 	mtc0    $k1,COP0_STATUS
+	lw	$k0,THREAD_MD_PC($k0)
 	j	$k0
 	nop
 	.end	md_thread_switch

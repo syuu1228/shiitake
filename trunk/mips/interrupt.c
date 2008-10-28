@@ -2,12 +2,22 @@
 #include <mips/cpu.h>
 #include <mips/thread.h>
 
+#include <mips/testmachine.h>
+
 void
 interrupt_init(void)
 {
 //	const int sr = SR_CU0 | SR_IEo | SR_IEp | SR_IEc;
 	const int sr = SR_CU0 | INT_LEV4 | SR_IEo | SR_IEp | SR_IEc;
 	asm volatile("mtc0 %0, $12" : : "r"(sr));
+
+	*((volatile int *)(RTC_ADDRESS + DEV_RTC_HZ)) = 1000;
+}
+
+void 
+interrupt_execute_handler(int level)
+{
+	printf("level:%x\n", level);
 }
 
 void
@@ -43,12 +53,16 @@ void
 handle_general_exception(unsigned status, unsigned cause, unsigned epc, 
 			 md_thread_t *frame)
 {
-	printf("status:%x cause:%x epc:%x\n"
-	       "[general exception]\n",
+/*	if(cause & CAUSE_EXC_MASK == EXC_INT)
+		interrupt_execute_handler(cause & CAUSE_IP_MASK);
+		else {*/
+		printf("status:%x cause:%x epc:%x\n"
+		       "[general exception]\n",
 	       status, cause, epc);
-	dump_frame(frame);
-	while(1)
-		;
+		dump_frame(frame);
+		while(1)
+			;
+//	}
 }
 
 void
