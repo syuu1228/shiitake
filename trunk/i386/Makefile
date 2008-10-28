@@ -1,7 +1,7 @@
 CFLAGS = -I.. -Werror -Wall -Wmissing-prototypes -Wunused -Wshadow -Wpointer-arith -falign-jumps=1 -falign-loops=1 -falign-functions=1 -Wundef -fno-builtin -g -O
 CFLAGS += $(shell if $(CC) -fno-stack-protector -S -o /dev/null -xc /dev/null > /dev/null 2>&1; then echo "-fno-stack-protector"; fi)
 LDFLAGS = -T ldscript
-OBJS = boot.o init.o segment.o console.o thread.o memory.o locore.o ../lib/string.o ../lib/console.o ../kern/main.o ../kern/memory.o ../kern/thread.o
+OBJS = boot.o init.o segment.o console.o thread.o memory.o switch.o interrupt.o ../lib/string.o ../lib/console.o ../kern/main.o ../kern/memory.o ../kern/thread.o
 
 all: shiitake
 

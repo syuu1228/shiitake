@@ -17,6 +17,7 @@
 
 #include <i386/multiboot.h>
 #include <i386/segment.h>
+#include <i386/interrupt.h>
 #include <lib/console.h>
 
 /* Check if the bit BIT in FLAGS is set.  */
@@ -132,4 +133,6 @@ arch_init (unsigned long magic, unsigned long addr)
     }
   gdt_init();
   printf("gdt initialized\n");
+  interrupt_init();
+  printf("interrupt initialized\n");
 }  

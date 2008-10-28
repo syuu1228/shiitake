@@ -91,7 +91,54 @@ typedef struct {
 	descriptor_t *base;
 } __attribute__ ((__packed__)) descriptor_table_register_t;
 
-inline static void
+static inline void
+set_segment_descriptor(segment_descriptor_t *descriptor, uint32_t base, uint32_t limit,
+		       uint8_t type, uint8_t descriptor_type, uint8_t privilege_level,
+		       uint8_t present, uint8_t operation_size, uint8_t granularity)
+{
+        descriptor->limit_l = (uint16_t)(0xffff & limit);
+        descriptor->limit_h = (uint8_t)(0x0f & (limit >> 16));
+        descriptor->base_l = (uint16_t)(0xffff & base);
+        descriptor->base_m = (uint8_t)(0xff & (base >> 16));
+        descriptor->base_h = (uint8_t)(0xff & (base >> 24));
+	descriptor->type = type;
+	descriptor->descriptor_type = descriptor_type;
+	descriptor->privilege_level = privilege_level;
+	descriptor->present = present;
+	descriptor->operation_size = operation_size;
+	descriptor->granularity = granularity;
+}
+
+static inline void
+set_tss_descriptor(segment_descriptor_t *descriptor, tss_t *base, uint8_t type,
+		   uint8_t privilege_level, uint8_t present, uint8_t granularity)
+{
+        descriptor->limit_l = (uint16_t)(0xffff & sizeof(tss_t));
+        descriptor->limit_h = (uint8_t)(0x0f & (sizeof(tss_t) >> 16));
+        descriptor->base_l = (uint16_t)(0xffff & (uint32_t)base);
+        descriptor->base_m = (uint8_t)(0xff & ((uint32_t)base >> 16));
+        descriptor->base_h = (uint8_t)(0xff & ((uint32_t)base >> 24));
+	descriptor->type = type;
+	descriptor->privilege_level = privilege_level;
+	descriptor->present = present;
+	descriptor->granularity = granularity;
+}
+
+static inline void
+set_gate_descriptor(gate_descriptor_t *descriptor, uint32_t offset, uint16_t segment_selector,
+		    uint8_t parameter_count, uint8_t type, uint8_t privilege_level,
+		    uint8_t present)
+{
+	descriptor->offset_l = (uint16_t)(0xffff & offset);
+	descriptor->offset_h = (uint16_t)(0xffff & (offset >> 16));
+	descriptor->segment_selector = segment_selector;
+	descriptor->parameter_count = parameter_count;
+	descriptor->type = type;
+	descriptor->privilege_level = privilege_level;
+	descriptor->present = present;
+}
+
+static inline void
 set_descriptor_table_register(descriptor_table_register_t *reg,
 			      descriptor_t *descriptor_table,
 			      int length)
@@ -104,23 +151,10 @@ void gdt_init(void);
 
 void gdt_dump(void);
 
-void 
-gdt_set_segment(uint16_t selector, uint32_t base, uint32_t limit,
-		uint8_t type, uint8_t descriptor_type, uint8_t privilege_level,
-		uint8_t present, uint8_t operation_size, uint8_t granularity);
-void 
-gdt_set_tss(uint16_t selector, tss_t *base, uint8_t type,
-	    uint8_t privilege_level, uint8_t present, uint8_t granularity);
-
 segment_descriptor_t *
-gdt_get_segment(uint16_t selector);
-
-void 
-gdt_set_gate(uint16_t selector, uint32_t offset, uint16_t segment_selector,
-	     uint8_t stack_copy_count, uint8_t type, uint8_t privilge_level,
-	     uint8_t present);
+gdt_get_segment_descriptor(uint16_t selector);
 
 gate_descriptor_t *
-gdt_get_gate(uint16_t selector);
+gdt_get_gate_descriptor(uint16_t selector);
 
 #endif
