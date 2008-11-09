@@ -1,10 +1,10 @@
 #include <mips/asm.h>
 	.text
-	.align	2
 	.globl	general_exception
 	.ent	general_exception
 general_exception:
 	.set 	noat
+	.set	noreorder
 	subu	$sp, $sp, THREAD_MD_SIZE
 	mfc0	$k1,COP0_STATUS
 	sw	$k1,THREAD_MD_SR($sp)
@@ -58,7 +58,7 @@ general_exception:
 	move	$a0,$k1
 	move	$a2,$k0
 	move	$a3,$sp
-	jal	handle_general_exception
+	jal	trap
 	nop
 	lw	$k0,THREAD_MD_TLB_LO($sp)
 	mtc0	$k0,COP0_TLB_LO
@@ -103,6 +103,7 @@ general_exception:
 	lw	$k0,THREAD_MD_BAD($sp)
 	mtc0	$k0,COP0_BAD
 	lw	$k1,THREAD_MD_PC($sp)
+	mtc0	$k1,COP0_EPC
 	lw	$a0,THREAD_MD_CAUSE($sp)
 	mtc0	$a0,COP0_CAUSE
 	lw	$k0,THREAD_MD_SR($sp)
@@ -110,15 +111,15 @@ general_exception:
 	addu	$sp, $sp, THREAD_MD_SIZE
 	j	$k1
 	rfe
-	.set	macro
+	.set	at
 	.set	reorder
 	.end	general_exception
 	
-	.align	2
 	.globl	reset_exception
 	.ent	reset_exception
 reset_exception:
 	.set 	noat
+	.set	noreorder
 	subu	$sp, $sp, THREAD_MD_SIZE
 	mfc0	$k1,COP0_STATUS
 	sw	$k1,THREAD_MD_SR($sp)
@@ -172,17 +173,17 @@ reset_exception:
 	move	$a0,$k1
 	move	$a2,$k0
 	move	$a3,$sp
-	jal	handle_reset_exception
+	jal	trap_reset
 	nop
-	.set	macro
+	.set	at
 	.set	reorder
 	.end	reset_exception
 	
-	.align	2
-	.globl	utlb_exception
-	.ent	utlb_exception
-utlb_exception:
+	.globl	cache_error_exception
+	.ent	cache_error_exception
+cache_error_exception:
 	.set 	noat
+	.set	noreorder
 	subu	$sp, $sp, THREAD_MD_SIZE
 	mfc0	$k1,COP0_STATUS
 	sw	$k1,THREAD_MD_SR($sp)
@@ -236,8 +237,8 @@ utlb_exception:
 	move	$a0,$k1
 	move	$a2,$k0
 	move	$a3,$sp
-	jal	handle_utlb_exception
+	jal	trap_cache_error
 	nop
-	.set	macro
+	.set	at
 	.set	reorder
-	.end	utlb_exception
+	.end	cache_error_exception

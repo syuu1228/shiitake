@@ -9,9 +9,9 @@ NM = $(CROSS_COMPILE)nm
 STRIP = $(CROSS_COMPILE)strip
 OBJCOPY = $(CROSS_COMPILE)objcopy
 OBJDUMP = $(CROSS_COMPILE)objdump
-CFLAGS = -g -EL -I../ -march=mips1 -mno-mips16 -O0 -mgp32 -mfp32 -mabi=32 -mno-abicalls -msoft-float -mmemcpy -mlong-calls -fno-builtin -Werror
+CFLAGS = -g -EL -I../ -march=mips3 -mno-mips16 -O0 -mgp32 -mfp32 -mabi=32 -mno-abicalls -msoft-float -mmemcpy -mlong-calls -fno-builtin -Werror
 LDFLAGS = -T ldscript --oformat $(OFORMAT)
-OBJS = boot.o init.o console.o thread.o memory.o switch.o exception.o general_exception.o interrupt.o reset_exception.o utlb_exception.o ../lib/string.o ../lib/console.o ../kern/main.o ../kern/memory.o ../kern/thread.o
+OBJS = boot.o init.o console.o thread.o memory.o switch.o interrupt.o trap.o syscall.o exception.o tlb_refill_vector.o xtlb_refill_vector.o general_vector.o interrupt_vector.o reset_vector.o cache_error_vector.o ../lib/string.o ../lib/console.o ../kern/main.o ../kern/memory.o ../kern/thread.o
 
 all: shiitake
 

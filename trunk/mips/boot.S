@@ -2,7 +2,7 @@
 	
       .text
       .globl _start
-      .ent   _start	
+      .ent   _start
 _start:	
       .set noreorder
       /* Disable interrupt */

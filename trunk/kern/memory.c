@@ -3,7 +3,8 @@
 #include <lib/console.h>
 #include <lib/list.h>
 
-#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
+//#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
+#define DPRINTF(...) do{}while(0)
 
 typedef struct malloc_unit
 {

@@ -6,14 +6,23 @@ ENTRY(_start)			/* Entry point of application		*/
 SECTIONS
 {
   /**** Code and read-only data ****/
-  .utlb_vector 0x80000000 :
+  .tlb_refill_vector 0x80000000 :
   {
-  	utlb_exception.o (.text)
+	tlb_refill_vector.o (.text)
   }
-  .general_vector 0x80000080:
+  .xtlb_refill_vector 0x80000080 :
   {
-  	general_exception.o (.text)
+	xtlb_refill_vector.o (.text)
   }
+  .general_vector 0x80000180 :
+  {
+  	general_vector.o (.text)
+  }
+  .interrupt_vector 0x80000200 :
+  {
+	interrupt_vector.o (.text)
+  }
+  
   .text 0x80030000 :
   {
     _ftext = ABSOLUTE(.) ;	/* Start of code and read-only data	*/
@@ -26,9 +35,13 @@ SECTIONS
     . = ALIGN(8);
     _etext = ABSOLUTE(.);	/* End of code and read-only data	*/
   } = 0
+  .cache_error_vector 0xa0000100 :
+  {
+	cache_error_vector.o (.text)
+  }
   .reset_vector 0xbfc00000 :
   {
-  	reset_exception.o (.text)
+  	reset_vector.o (.text)
   }
   /**** Initialised data ****/
 

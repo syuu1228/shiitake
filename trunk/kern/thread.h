@@ -12,6 +12,8 @@ typedef struct thread
 	uint8_t stack_area[THREAD_STACK_SIZE];
 } thread_t;
 
+thread_t *thread_running;
+
 void thread_init(void);
 thread_t *thread_self(void);
 thread_t *thread_create(void (*function)(void));
@@ -21,8 +23,9 @@ void thread_sleep(thread_t *t);
 void thread_rotate(void);
 void thread_yield(void);
 void thread_switch(thread_t *next);
+void thread_finalize(void);
 
 void md_thread_create(thread_t *t, void (*function)(void));
 void md_thread_switch(thread_t *cur, void *new);
-
+void md_thread_trampoline(void (*function)(void));
 #endif /* KERN_THREAD_H_*/

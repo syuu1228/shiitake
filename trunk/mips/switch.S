@@ -112,4 +112,74 @@ md_thread_switch:
 	lw	$k0,THREAD_MD_PC($k0)
 	j	$k0
 	nop
+	.set	reorder
+	.set	macro
+	.set    at
 	.end	md_thread_switch
+
+	.globl	md_thread_trampoline
+	.ent	md_thread_trampoline
+md_thread_trampoline:
+	.set	noreorder
+	.set	nomacro
+	.set    noat
+
+	jal	$a0
+	nop
+	jal	thread_finalize
+	nop
+	lw	$k0,%gp_rel(thread_running)($gp)
+	lw	$k1,THREAD_MD_TLB_LO($k0)
+	mtc0	$k1,COP0_TLB_LO
+	lw	$k1,THREAD_MD_TLB_HI($k0)
+	mtc0	$k1,COP0_TLB_HI
+	lw	$k1,THREAD_MD_TLB_INX($k0)
+	mtc0	$k1,COP0_TLB_INX
+	lw	$k1,THREAD_MD_TLB_CTX($k0)
+	mtc0	$k1,COP0_TLB_CTX
+	lw	$at,THREAD_MD_AT($k0)
+	lw	$v0,THREAD_MD_V0($k0)
+	lw	$v1,THREAD_MD_V1($k0)
+	lw	$a0,THREAD_MD_A0($k0)
+	lw	$a1,THREAD_MD_A1($k0)
+	lw	$a2,THREAD_MD_A2($k0)
+	lw	$a3,THREAD_MD_A3($k0)
+	lw	$t0,THREAD_MD_T0($k0)
+	lw	$t1,THREAD_MD_T1($k0)
+	lw	$t2,THREAD_MD_T2($k0)
+	lw	$t3,THREAD_MD_T3($k0)
+	lw	$t4,THREAD_MD_T4($k0)
+	lw	$t5,THREAD_MD_T5($k0)
+	lw	$t6,THREAD_MD_T6($k0)
+	lw	$t7,THREAD_MD_T7($k0)
+	lw	$s0,THREAD_MD_S0($k0)
+	lw	$s1,THREAD_MD_S1($k0)
+	lw	$s2,THREAD_MD_S2($k0)
+	lw	$s3,THREAD_MD_S3($k0)
+	lw	$s4,THREAD_MD_S4($k0)
+	lw	$s5,THREAD_MD_S5($k0)
+	lw	$s6,THREAD_MD_S6($k0)
+	lw	$s7,THREAD_MD_S7($k0)
+	lw	$t8,THREAD_MD_T8($k0)
+	lw	$t9,THREAD_MD_T9($k0)
+	lw	$gp,THREAD_MD_GP($k0)
+	lw	$sp,THREAD_MD_SP($k0)
+	lw	$fp,THREAD_MD_FP($k0)
+	lw	$ra,THREAD_MD_RA($k0)
+	lw	$k1,THREAD_MD_HI($k0)
+	mthi	$k1
+	lw	$k1,THREAD_MD_LO($k0)
+	mtlo	$k1
+	lw	$k1,THREAD_MD_BAD($k0)
+	mtc0	$k1,COP0_BAD
+	lw	$k1,THREAD_MD_CAUSE($k0)
+	mtc0	$k1,COP0_CAUSE
+	lw  	$k1,THREAD_MD_SR($k0)
+	mtc0    $k1,COP0_STATUS
+	lw	$k0,THREAD_MD_PC($k0)
+	j	$k0
+	nop
+	.set	reorder
+	.set	macro
+	.set    at
+	.end	md_thread_trampoline

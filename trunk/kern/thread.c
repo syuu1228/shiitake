@@ -6,7 +6,7 @@
 
 //#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
 #define DPRINTF(...) do{}while(0)
-static thread_t *running = 0;
+thread_t *thread_running = 0;
 static list_node_t runq = {0};
 
 static inline void
@@ -38,21 +38,21 @@ static inline void
 rotate_queue(void)
 {
 	DPRINTF("\n");
-	add_queue(running);
+	add_queue(thread_running);
 }
 
 void 
 thread_init(void)
 {
 	DPRINTF("\n");
-	running = thread_create(NULL);
-	assert(get_queue() == running);
+	thread_running = thread_create(NULL);
+	assert(get_queue() == thread_running);
 }
 
 thread_t *
 thread_self(void)
 {
-	return running;
+	return thread_running;
 }
 
 thread_t *
@@ -99,17 +99,24 @@ thread_yield(void)
 	rotate_queue();
 //	LIST_DUMP(&runq);
 	next = get_queue();
-	DPRINTF("current:%p next:%p\n", running, next);
-	if(running != next)
+	DPRINTF("current:%p next:%p\n", thread_running, next);
+	if(thread_running != next)
 		thread_switch(next);
 }
 
 void
 thread_switch(thread_t *next)
 {
-	thread_t *current = running;
+	thread_t *current = thread_running;
 	
 	assert(current != next);
-	running = next;
+	thread_running = next;
 	md_thread_switch(current, next);
+}
+
+void
+thread_finalize(void)
+{
+	thread_destroy(thread_running);
+	thread_running = get_queue();
 }
