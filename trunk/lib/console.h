@@ -3,7 +3,7 @@
 #include <stdarg.h>
 #include <arch/console.h>
 
-#define panic(...) (printf("[panic] "), printf(__VA_ARGS__), while(1){})
+#define panic(...) {printf("[panic] "); printf(__VA_ARGS__); while(1);}
 int printf(const char *format, ...);
 void puts(const char *str);
 void putns(const char *str, int n);

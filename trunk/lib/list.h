@@ -9,7 +9,7 @@ typedef struct list_node
 } list_node_t;
 
 #define LIST_GET(node, name, type) (type *)((char *)node - offsetof(type, name))
-#define LIST_FOR_EACH(head, node) for(node = head; node; node = node->next)
+#define LIST_FOR_EACH(head, node) for(node = (head)->next; node; node = node->next)
 #define LIST_FOR_EACH_REVERSE(tail, node) for(node = tail; node; node = node->prev)
 #define LIST_NODE_IS_HEAD(node) (!node->prev)
 #define LIST_DUMP(head)							\

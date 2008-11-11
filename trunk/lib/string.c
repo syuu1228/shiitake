@@ -1,7 +1,8 @@
 #include <lib/string.h>
 #include <lib/console.h>
 
-#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
+//#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
+#define DPRINTF(...) do{}while(0)
 
 int
 strlen(const char *s)

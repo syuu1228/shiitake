@@ -1,6 +1,7 @@
 #include <lib/console.h>
 #include <kern/memory.h>
 #include <kern/thread.h>
+#include <kern/file_system.h>
 
 void thread1(void);
 void thread3(void);
@@ -31,6 +32,9 @@ main(void)
 	printf("%u byte of memory initializd.\n", memory_size);
 	thread_init();
 	printf("thread initialized.\n");
+	file_system_init();
+	printf("file system initialized.\n");
+
 	thread_t *t2 = thread_create((void (*)(void))thread2);
 	t2->md.sr |= 16; /* user mode */
 	thread_create(thread3);
@@ -52,8 +56,11 @@ void
 thread3(void)
 {
 	printf("thread3\n");
-	printf("thread3\n");
-	printf("thread3\n");
-	printf("thread3\n");
-	printf("thread3\n");
+	int fd = opendir("/");
+	dirent *ent;
+	while(ent = readdir(fd)) {
+		printf("ino:%u off:%u reclen:%d type:%d name:%s\n",
+		       ent->d_ino, ent->d_off, ent->d_reclen, ent->d_type, ent->d_name);
+	}
+	closedir(fd);
 }
