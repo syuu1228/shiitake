@@ -1,76 +1,49 @@
 #include <kern/disk.h>
 #include <mips/testmachine.h>
+#include <mips/config.h>
 #include <lib/string.h>
 
-//#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
-#define DPRINTF(...) do{}while(0)
+#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
+//#define DPRINTF(...) do{}while(0)
 
-ssize_t 
-disk_read(int id, void *buf, off_t offset, size_t count)
+void md_disk_init(int id)
 {
-	int i, c = count;
-	
-	DPRINTF("id:%d buf:%x offset:%u count:%u\n", id, buf, offset, count);
-	*((volatile int *) (DISK_ADDRESS + DEV_DISK_ID)) = id;
-	for (i = 0; c > DEV_DISK_BUFFER_LEN; c -= DEV_DISK_BUFFER_LEN, i
-			+= DEV_DISK_BUFFER_LEN)
-	{
-		*((volatile int *) (DISK_ADDRESS + DEV_DISK_OFFSET)) = offset + i;
-		*((volatile int *) (DISK_ADDRESS + DEV_DISK_START_OPERATION))
-				=DEV_DISK_OPERATION_READ;
-		DPRINTF("READ_OP offset:%u\n", offset + i);
-		if (!*((volatile int *) (DISK_ADDRESS + DEV_DISK_STATUS)))
-		{
-			DPRINTF("DISK_STATUS:%d\n", *((volatile int *) (DISK_ADDRESS + DEV_DISK_STATUS)));
-			DPRINTF("return:-1\n");
-			return -1;
-		}
-		memcpy(buf + i, (const void *)((volatile unsigned char *) DISK_ADDRESS
-				+ DEV_DISK_BUFFER), DEV_DISK_BUFFER_LEN);
-	}
-	*((volatile int *) (DISK_ADDRESS + DEV_DISK_OFFSET)) = offset + i;
-	*((volatile int *) (DISK_ADDRESS + DEV_DISK_START_OPERATION))
-			= DEV_DISK_OPERATION_READ;
-	DPRINTF("READ_OP offset:%u\n", offset + i);
-	if (!*((volatile int *) (DISK_ADDRESS + DEV_DISK_STATUS)))
-	{
-		DPRINTF("DISK_STATUS:%d\n", *((volatile int *) (DISK_ADDRESS + DEV_DISK_STATUS)));
-		DPRINTF("return:-1\n");
-		return -1;
-	}
-	memcpy(buf + i, (const void *)((volatile unsigned char *) DISK_ADDRESS + DEV_DISK_BUFFER),
-			c);
-	DPRINTF("return:%d\n", i + c);
-	return i + c;
 }
 
-ssize_t 
-disk_write(int id, const void *buf, off_t offset, size_t count)
+int 
+md_disk_sector_read(int id, unsigned char *buf, uint32_t lba, uint8_t count)
 {
-	int i, c = count;
-
-	DPRINTF("id:%d buf:%x offset:%u count:%u\n", id, buf, offset, count);
+	DPRINTF("id:%d buf:%p lba:%u count:%u\n",
+		id, buf, lba, count);
 	*((volatile int *) (DISK_ADDRESS + DEV_DISK_ID)) = id;
-	for (i = 0; c > DEV_DISK_BUFFER_LEN; c -= DEV_DISK_BUFFER_LEN, i
-			+= DEV_DISK_BUFFER_LEN)
-	{
-		*((volatile int *) (DISK_ADDRESS + DEV_DISK_OFFSET)) = offset + i;
-		*((volatile int *) (DISK_ADDRESS + DEV_DISK_START_OPERATION))
-				= DEV_DISK_OPERATION_WRITE;
-		DPRINTF("WRITE_OP offset:%u\n", offset + i);
-		if (!*((volatile int *) (DISK_ADDRESS + DEV_DISK_STATUS)))
-			return -1;
-		memcpy((void *)((volatile unsigned char *) DISK_ADDRESS + DEV_DISK_BUFFER), buf
-				+ i, DEV_DISK_BUFFER_LEN);
-	}
-	*((volatile int *) (DISK_ADDRESS + DEV_DISK_OFFSET)) = offset + i;
+	*((volatile int *) (DISK_ADDRESS + DEV_DISK_OFFSET)) = lba * DISK_SECTOR_SIZE;
 	*((volatile int *) (DISK_ADDRESS + DEV_DISK_START_OPERATION))
-			=DEV_DISK_OPERATION_WRITE;
-	DPRINTF("WRITE_OP offset:%u\n", offset + i);
-	if (!*((volatile int *) (DISK_ADDRESS + DEV_DISK_STATUS)))
+		= DEV_DISK_OPERATION_READ;
+	if (!*((volatile int *) (DISK_ADDRESS + DEV_DISK_STATUS))) {
+		DPRINTF("disk read error\n");
 		return -1;
-	memcpy((void *)((volatile unsigned char *) DISK_ADDRESS + DEV_DISK_BUFFER), buf + i,
-			c);
-	DPRINTF("return:%d\n", i + c);
-	return i + c;
+	}
+	memcpy((void *)buf,
+	       (const void *)((volatile unsigned char *) DISK_ADDRESS
+			      + DEV_DISK_BUFFER), DISK_SECTOR_SIZE * count);
+	return 0;
+}
+
+int 
+md_disk_sector_write(int id, const unsigned char *buf, uint32_t lba, uint8_t count)
+{
+	DPRINTF("id:%d buf:%p lba:%u count:%u\n",
+		id, buf, lba, count);
+	*((volatile int *) (DISK_ADDRESS + DEV_DISK_ID)) = id;
+	*((volatile int *) (DISK_ADDRESS + DEV_DISK_OFFSET)) = lba * DISK_SECTOR_SIZE;
+	*((volatile int *) (DISK_ADDRESS + DEV_DISK_START_OPERATION))
+		= DEV_DISK_OPERATION_WRITE;
+	if (!*((volatile int *) (DISK_ADDRESS + DEV_DISK_STATUS))) {
+		DPRINTF("disk write error\n");
+		return -1;
+	}
+	memcpy((void *)((volatile unsigned char *) DISK_ADDRESS
+			+ DEV_DISK_BUFFER), 
+	       (const void *)buf, DISK_SECTOR_SIZE * count);
+	return 0;
 }

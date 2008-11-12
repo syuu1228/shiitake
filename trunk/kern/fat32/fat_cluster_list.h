@@ -16,6 +16,7 @@ fat_cluster_list_t *fat_cluster_list_open_by_cluster_no(fat_instance_t * ins,
 fat_cluster_list_t *fat_cluster_list_open_by_fat_dir_entry(fat_instance_t * ins,
 							   fat_dir_entry_t *dir);
 cluster_t fat_cluster_list_read(fat_cluster_list_t *list);
+cluster_t fat_cluster_list_next(fat_cluster_list_t *list);
 int fat_cluster_list_tell(fat_cluster_list_t *list);
 int fat_cluster_list_seek_set(fat_cluster_list_t *list, int offset);
 int fat_cluster_list_seek_cur(fat_cluster_list_t *list, int offset);

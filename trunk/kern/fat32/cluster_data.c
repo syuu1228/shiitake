@@ -1,6 +1,8 @@
 #include <kern/fat32/cluster_data.h>
 #include <kern/fat32/cluster.h>
+#include <kern/disk.h>
 #include <lib/assert.h>
+#include <lib/console.h>
 
 //#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
 #define DPRINTF(...) do{}while(0)

@@ -1,7 +1,8 @@
 #include <kern/fat32/cluster.h>
+#include <kern/disk.h>
 #include <lib/string.h>
 #include <lib/assert.h>
-#include <kern/disk.h>
+#include <lib/console.h>
 
 //#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
 #define DPRINTF(...) do{}while(0)
@@ -23,7 +24,7 @@ cluster_read(fat_instance_t * ins, const cluster_t cluster_no)
 
 	DPRINTF("ins:%p clusterNo:%u\n", ins, cluster_no);
 	assert(bpb_validate_cluster_no (ins->bpb, cluster_no));
-	if ((disk_read (ins->disk_id, &extent, cluster_offset(ins, cluster_no),
+	if ((disk_read (ins->disk_id, (unsigned char *)&extent, cluster_offset(ins, cluster_no),
 			sizeof(uint32_t))) != sizeof(uint32_t))
 		DPRINTF("read failed\n");
 	extent &= 0x0FFFFFFF;

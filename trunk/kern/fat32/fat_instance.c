@@ -1,5 +1,6 @@
 #include <kern/fat32/fat_instance.h>
 #include <kern/mbr.h>
+#include <kern/memory.h>
 
 //#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
 #define DPRINTF(...) do{}while(0)

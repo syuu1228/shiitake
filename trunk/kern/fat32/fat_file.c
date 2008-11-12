@@ -2,7 +2,9 @@
 #include <kern/fat32/fat_file.h>
 #include <kern/fat32/fat_type.h>
 #include <kern/fat32/fat_path.h>
+#include <kern/memory.h>
 #include <lib/assert.h>
+#include <lib/console.h>
 
 //#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
 #define DPRINTF(...) do{}while(0)
@@ -32,11 +34,10 @@ fat_file_open(fat_instance_t *ins, const char *path)
 }
 
 ssize_t 
-fat_file_read(fat_file_t *file, void *buffer, size_t c)
+fat_file_read(fat_file_t *file, unsigned char *buffer, size_t c)
 {
 	DPRINTF("file:%p buffer:%p count:%u\n", file, buffer, c);
 	size_t count = c;
-	cluster_t cluster_no;
 	off_t offset = file->offset;
 	
 	while (c >= bpb_cluster_size(file->ins->bpb))

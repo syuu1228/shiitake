@@ -1,5 +1,8 @@
 #include <kern/fat32/bpb.h>
 #include <kern/fat32/fat_instance.h>
+#include <kern/memory.h>
+#include <kern/disk.h>
+#include <lib/console.h>
 
 //#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
 #define DPRINTF(...) do{}while(0)
@@ -51,7 +54,7 @@ bpb_read (void *ptr)
 		DPRINTF("return:false\n");
 		return false;
 	}
-	if ((disk_read (ins->disk_id, ins->bpb, fat_instance_head_offset (ins), sizeof (bpb_t))) != sizeof (bpb_t))
+	if ((disk_read (ins->disk_id, (unsigned char *)ins->bpb, fat_instance_head_offset (ins), sizeof (bpb_t))) != sizeof (bpb_t))
 	{
 		DPRINTF("read failed\n");
 		DPRINTF("return:false\n");

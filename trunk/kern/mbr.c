@@ -1,6 +1,8 @@
 #include <kern/mbr.h>
 #include <kern/disk.h>
+#include <kern/memory.h>
 #include <lib/string.h>
+#include <lib/console.h>
 
 //#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
 #define DPRINTF(...) do{}while(0)
@@ -10,7 +12,7 @@ mbr_read(const int id)
 {
 	DPRINTF("id:%d\n", id);
 	mbr_t *m = (mbr_t *)calloc(1, sizeof(mbr_t));
-	if ((disk_read (id, m, 0, sizeof (mbr_t))) != sizeof (mbr_t))
+	if ((disk_read (id, (unsigned char *)m, 0, sizeof (mbr_t))) != sizeof (mbr_t))
 	{
 		DPRINTF ("read failed\n");
 		free(m);

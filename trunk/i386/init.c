@@ -133,6 +133,8 @@ arch_init (unsigned long magic, unsigned long addr)
     }
   gdt_init();
   printf("gdt initialized\n");
+/*
   interrupt_init();
   printf("interrupt initialized\n");
+*/
 }  

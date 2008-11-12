@@ -1,4 +1,6 @@
 #include <kern/fat32/fat_cluster_list.h>
+#include <kern/memory.h>
+#include <lib/console.h>
 #include <lib/assert.h>
 
 //#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)

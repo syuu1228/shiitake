@@ -1,4 +1,5 @@
 #include <kern/file_descriptor.h>
+#include <kern/memory.h>
 #include <lib/string.h>
 
 static file_descriptor_t *file_descriptor_construct(void);

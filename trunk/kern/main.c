@@ -4,8 +4,9 @@
 #include <kern/file_system.h>
 
 void thread1(void);
-void thread3(void);
 
+void thread3(void);
+#ifdef MIPS
 int thread2[] =
 {
 	0x24020001, /*        li      v0,1 */
@@ -23,7 +24,10 @@ int thread2[] =
 	0x03e00008, /*        jr      ra */
 	00000000    /*        nop */
 };
+#endif
 
+#include <kern/mbr.h>
+#include <kern/disk.h>
 int 
 main(void)
 {
@@ -32,11 +36,29 @@ main(void)
 	printf("%u byte of memory initializd.\n", memory_size);
 	thread_init();
 	printf("thread initialized.\n");
+
+	unsigned char m[512] = {0};
+	int i;
+	for(i = 0; i < 512; i+=4)
+		disk_read(0, m + i, i, 4);
+	for(i = 0; i < 512; i++) {
+		if(i % 16 == 0)
+			printf("\n%x: ", i);
+		printf("%x ", m[i]);
+	}
+	disk_read(0, m, 0, 512);
+	for(i = 0; i < 512; i++) {
+		if(i % 16 == 0)
+			printf("\n%x: ", i);
+		printf("%x ", m[i]);
+	}
+	
 	file_system_init();
 	printf("file system initialized.\n");
-
+#if 0
 	thread_t *t2 = thread_create((void (*)(void))thread2);
 	t2->md.sr |= 16; /* user mode */
+#endif
 	thread_create(thread3);
 	thread1();
 	return 0;
@@ -58,9 +80,10 @@ thread3(void)
 	printf("thread3\n");
 	int fd = opendir("/");
 	dirent *ent;
-	while(ent = readdir(fd)) {
+	while((ent = readdir(fd))) {
 		printf("ino:%u off:%u reclen:%d type:%d name:%s\n",
 		       ent->d_ino, ent->d_off, ent->d_reclen, ent->d_type, ent->d_name);
 	}
 	closedir(fd);
 }
+

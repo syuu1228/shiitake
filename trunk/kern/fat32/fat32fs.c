@@ -97,7 +97,7 @@ seekdir(int fno, off_t offset)
 	file_descriptor_t *fd = file_descriptor_get(fno);
 
 	if(!fd)
-		return;
+		return -1;
 	if (!fd->private_data)
 		return -1;
 	return fat_file_seek_set((fat_file_t *)fd->private_data, offset);

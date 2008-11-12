@@ -1,6 +1,7 @@
 #include <kern/fat32/dir_entry.h>
 #include <lib/string.h>
 #include <lib/assert.h>
+#include <lib/console.h>
 
 //#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
 #define DPRINTF(...) do{}while(0)
