@@ -1,47 +1,11 @@
 #include <kern/disk.h>
 #include <i386/config.h>
+#include <i386/cpu.h>
 #include <lib/string.h>
 #include <lib/console.h>
 
 #define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
 //#define DPRINTF(...) do{}while(0)
-
-
-static inline uint8_t inb(uint16_t port)
-{
-	uint8_t value;
-	asm volatile("inb %%dx,%0" : "=a"(value) : "d"(port));
-	return value;
-}
-
-static inline uint16_t inw(uint16_t port)
-{
-	uint16_t value;
-	asm volatile("inw %%dx,%0" : "=a"(value) : "d"(port));
-	return value;
-}
-
-static inline uint16_t inl(uint16_t port)
-{
-	uint32_t value;
-	asm volatile("inl %%dx,%0" : "=a"(value) : "d"(port));
-	return value;
-}
-
-static inline void outb(uint8_t value, uint16_t port)
-{
-	asm volatile("outb %0,%%dx" : : "a"(value), "d"(port));
-}
-
-static inline void outw(uint16_t value, uint8_t port)
-{
-	asm volatile("outw %0,%%dx" : : "a"(value), "d"(port));
-}
-
-static inline void outl(uint32_t value, uint8_t port)
-{
-	asm volatile("outw %0,%%dx" : : "a"(value), "d"(port));
-}
 
 #define IDE_REG_DATA            0x01f0
 #define IDE_REG_ERROR           0x01f1
@@ -61,66 +25,64 @@ static inline void outl(uint32_t value, uint8_t port)
 #define IDE_STATUS_DRDY 0x40
 #define IDE_STATUS_BSY  0x80
 
+#define IDE_COMMAND_READ_SECTORS 0x20
+#define IDE_COMMAND_SET_FEATURES 0xef
+
+#define IDE_DEVICE_CONTROL_NIEN 0x2
+#define IDE_DEVICE_CONTROL_SRST 0x4
+
 #define IDE_COMMAND_PIO_READ 0xec
 
 void md_disk_init(int id)
 {
-	// プライマリのみ初期化
+	ioport_write8(IDE_REG_DEVICE_CONTROL, IDE_DEVICE_CONTROL_NIEN); 
 	
-	// 割込み不許可
-	outb (0x02, 0x3F6);
-	
-	// マスタデバイス選択
-	while ((inb(0x1F7) & 0x88) != 0x00);
-	outb ((inb(0x1F6) & 0xEF), 0x1F6);
+	while((ioport_read8(IDE_REG_STATUS) & 
+	       (IDE_STATUS_DRQ|IDE_STATUS_BSY)) != 0)
+		;
+	ioport_write8(IDE_REG_DEVICE_HEAD, 
+		      ioport_read8(IDE_REG_DEVICE_HEAD) & 0xEF);
 
-	// SET FEATUREコマンド(割込み禁止中)
-	while ((inb(0x1F7) & 0x88) != 0x00);
-	printf ("select,");
+	while((ioport_read8(IDE_REG_STATUS) & 
+	       (IDE_STATUS_DRQ|IDE_STATUS_BSY)) != 0)
+		;
 	
-	outb (0x03, 0x1F1);
-	// PIO4モード
-	outb (0x0C, 0x1F2);
-	outb (0x00, 0x1F3);
-	outb (0x00, 0x1F4);
-	outb (0x00, 0x1F5);
-	outb (0x00, 0x1F6);
-	outb (0xEF, 0x1F7);
+	ioport_write8(IDE_REG_FEATURES, 0x03);
+	ioport_write8(IDE_REG_SECTOR_COUNT, 0x0C);
+	ioport_write8(IDE_REG_SECTOR_NUMBER, 0x00);
+	ioport_write8(IDE_REG_CYLINDER_LOW, 0x00);
+	ioport_write8(IDE_REG_CYLINDER_HIGH, 0x00);
+	ioport_write8(IDE_REG_DEVICE_HEAD, 0x00);
+	ioport_write8(IDE_REG_COMMAND, IDE_COMMAND_SET_FEATURES);
 	
-	// ステータスの引取り
-	while ((inb(0x1F7) & 0x88) != 0x00);
+	while((ioport_read8(IDE_REG_STATUS) & 
+	       (IDE_STATUS_DRQ|IDE_STATUS_BSY)) != 0)
+		;
 }
 
 int 
 md_disk_sector_read(int id, unsigned char *buf, uint32_t lba, uint8_t count)
 {
-	// READ SECTORSコマンド(割込みフェーズあり)
-	outb (0x00, 0x1F1);
-	outb (count, 0x1F2);
-	// sector number (LBA[7:0])
-	outb ((lba & 0xFF), 0x1F3);
-	// cylinder low (LBA[15:8])
-	outb (((lba >> 8) & 0xFF), 0x1F4);
-	// cylinder high (LBA[23:16])
-	outb (((lba >> 16) & 0xFF), 0x1F5);
-	// device/head(マスタ，LBAモード，LBA[27:24])
-	outb ((0xE0 | ((lba >> 24) & 0xF)), 0x1F6);
-	outb (0x20, 0x1F7);
-	
+	uint16_t *sbuf = (unsigned short *)buf;
+	ioport_write8(IDE_REG_FEATURES, 0x00);
+	ioport_write8(IDE_REG_SECTOR_COUNT, count);
+	ioport_write8(IDE_REG_SECTOR_NUMBER, (lba & 0xff)); /* lba[7:0] */
+	ioport_write8(IDE_REG_CYLINDER_LOW, (lba >> 8) & 0xff); /* lba[15:8] */
+	ioport_write8(IDE_REG_CYLINDER_HIGH, (lba >> 16) & 0xff); /* lba[23:16] */
+	ioport_write8(IDE_REG_DEVICE_HEAD, ((lba >> 24) & 0xf) | 0xe0); /* lba[27:24] */
+	ioport_write8(IDE_REG_COMMAND, IDE_COMMAND_READ_SECTORS);
 	do
-	{ // 全セクタ読込み完了まで
-		// バースト転送準備完了待ち
-		while ((inb(0x1F7) & 0x08) != 0x08);
-		printf ("cmd,"); 
+	{
+		while((ioport_read8(IDE_REG_STATUS) & IDE_STATUS_DRQ)
+		      != IDE_STATUS_DRQ)
+			;
 		do
-		{ // データ読取り
-			unsigned short data = inw (0x1F0);
-			*buf++ = data & 0xFF;
-			*buf++ = (data >> 8) & 0xFF;
-		} while ((inb(0x1F7) & 0x88) == 0x08);
 		
-	} while ((inb(0x1F7) & 0x88) != 0x00);
-	printf ("data\n");
+			*sbuf++ = ioport_read16(IDE_REG_DATA) & 0xffff;
+		while((ioport_read8(IDE_REG_STATUS) & 
+		       (IDE_STATUS_DRQ|IDE_STATUS_BSY)) == IDE_STATUS_DRQ);
+	} while ((ioport_read8(IDE_REG_STATUS) &
+		  (IDE_STATUS_DRQ|IDE_STATUS_BSY)) != 0);
 	return 0;
 }
 

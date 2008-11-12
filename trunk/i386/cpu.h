@@ -1,7 +1,7 @@
-#ifndef CPU_H
-#define CPU_H
+#ifndef I386_CPU_H
+#define I386_CPU_H
 
-#include <types.h>
+#include <lib/types.h>
 
 struct eflags {
 	uint8_t carry_flag:1;
@@ -27,4 +27,42 @@ struct eflags {
 	uint8_t id_flag:1;
 	uint16_t __unused5:10;
 } __attribute__ ((__packed__));
+
+
+static inline uint8_t ioport_read8(uint16_t port)
+{
+	uint8_t value;
+	asm volatile("inb %%dx,%0" : "=a"(value) : "d"(port));
+	return value;
+}
+
+static inline uint16_t ioport_read16(uint16_t port)
+{
+	uint16_t value;
+	asm volatile("inw %%dx,%0" : "=a"(value) : "d"(port));
+	return value;
+}
+
+static inline uint32_t ioport_read32(uint16_t port)
+{
+	uint32_t value;
+	asm volatile("inl %%dx,%0" : "=a"(value) : "d"(port));
+	return value;
+}
+
+static inline void ioport_write8(uint16_t port, uint8_t value)
+{
+	asm volatile("outb %0,%%dx" : : "a"(value), "d"(port));
+}
+
+static inline void ioport_write16(uint8_t port, uint16_t value)
+{
+	asm volatile("outw %0,%%dx" : : "a"(value), "d"(port));
+}
+
+static inline void ioport_write32(uint8_t port, uint32_t value)
+{
+	asm volatile("outw %0,%%dx" : : "a"(value), "d"(port));
+}
+
 #endif

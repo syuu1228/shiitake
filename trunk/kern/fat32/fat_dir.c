@@ -6,12 +6,12 @@
 #define DPRINTF(...) do{}while(0)
 
 int 
-fat_dir_read(fat_file_t * file, fat_dir_entry_t * dir)
+fat_dir_read(fat_file_t *file, fat_dir_entry_t *dir)
 {
 	DPRINTF("file:%p\n", file);
 
 	retry:
-	if ((fat_file_read(file, &(dir->dir_entry), sizeof(dir_entry_t)))
+	if ((fat_file_read(file, (unsigned char *)&(dir->dir_entry), sizeof(dir_entry_t)))
 			!= sizeof(dir_entry_t))
 	{
 		DPRINTF("read failed\n");
