@@ -75,6 +75,8 @@ unit_merge(malloc_unit_t *unit1, malloc_unit_t *unit2)
 size_t
 memory_init(void)
 {
+	printf("memory_head:%p\n", md_memory_head());
+	printf("memory_tail:%p\n", md_memory_tail());
 	unit_list_head = (malloc_unit_t *)md_memory_head();
 	unit_list_head->next = 0;
 	unit_list_head->prev = 0;

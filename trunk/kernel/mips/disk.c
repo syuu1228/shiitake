@@ -3,8 +3,8 @@
 #include <mips/config.h>
 #include <lib/string.h>
 
-#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
-//#define DPRINTF(...) do{}while(0)
+//#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
+#define DPRINTF(...) do{}while(0)
 
 void md_disk_init(int id)
 {

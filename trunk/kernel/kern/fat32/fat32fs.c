@@ -7,7 +7,8 @@
 #include <lib/string.h>
 #include <arch/config.h>
 
-#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
+//#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
+#define DPRINTF(...) do{}while(0)
 
 static fat_instance_t *ins;
 
