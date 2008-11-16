@@ -13,8 +13,9 @@ CFLAGS = -g -EL -march=mips3 -mno-mips16 -O0 -mgp32 -mfp32 -mabi=32 -mno-abicall
 all: testapp
 
 testapp:
-	$(CC) -c $(CFLAGS) testapp.S -o testapp.o
-	$(CC) -T ldscript -o testapp testapp.o `$(CC) -print-libgcc-file-name`
+	$(CC) -c $(CFLAGS) start.S -o start.o
+	$(CC) -c $(CFLAGS) testapp.c -o testapp.o
+	$(CC) -T ldscript -o testapp start.o testapp.o `$(CC) -print-libgcc-file-name`
 
 clean:
 	rm -f testapp *.o

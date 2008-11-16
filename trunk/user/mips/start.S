@@ -16,29 +16,15 @@ _start:
 	sw $zero, 0($s0)
 	bne $s0, $s1, 1b
 	addiu $s0, 4
+	addiu $sp,$sp,-24
+	sw $ra,20($sp)
+	sw $fp,16($sp)
+	move $fp,$sp
 	jal main
 	nop
+	lw $ra,20($sp)
+	lw $fp,16($sp)
+	addiu $sp,$sp,24
 	jr $ra
 	nop
 	.end	_start
-
-
-	.globl main
-	.ent main
-	.set noreorder
-main:
-	li $v0, 1
-	li $a0, 0x10
-	li $a1, 0x20
-	li $a2, 0x30
-	li $a3, 0x40
-	syscall
-	li $v0, 2
-	li $a0, 0x100
-	li $a1, 0x200
-	li $a2, 0x300
-	li $a3, 0x400
-	syscall
-	jr $ra
-	nop
-	.end main

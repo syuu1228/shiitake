@@ -8,7 +8,7 @@ SECTIONS
   .text 0x80800000 :
   {
     _ftext = ABSOLUTE(.) ;	/* Start of code and read-only data	*/
-    testapp.o (.text)		/* Entry point				*/
+    start.o (.text)		/* Entry point				*/
     *(.text)
     _ecode = ABSOLUTE(.) ;	/* End of code				*/
 
