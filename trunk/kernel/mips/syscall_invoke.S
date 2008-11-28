@@ -1,3 +1,4 @@
+#include <mips/asm.h>
 	.text
 	.globl	syscall_invoke
 	.ent	syscall_invoke
@@ -18,4 +19,3 @@ syscall_invoke:
 	nop
 	.set	reorder
 	.end	syscall_invoke
-	
