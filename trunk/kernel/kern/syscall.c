@@ -1,6 +1,6 @@
 #include <kern/syscall.h>
 
-void *syscall_entries[SYSCALL_MAX] = {
+void *syscall_functions[SYSCALL_MAX] = {
 	(void *)putchar,
 	(void *)getchar,
 	(void *)getattr,
