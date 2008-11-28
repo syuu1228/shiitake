@@ -124,8 +124,12 @@ md_thread_trampoline:
 	.set	nomacro
 	.set    noat
 
+	addiu   $sp,$sp,-8
+	sw	$gp,0($sp)
 	jal	$a0
 	nop
+	lw	$gp,0($sp)
+	addiu	$sp,$sp,8
 	jal	thread_finalize
 	nop
 	lw	$k0,%gp_rel(thread_running)($gp)

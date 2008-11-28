@@ -50,11 +50,6 @@ SECTIONS
   {
     *(.bss)
     *(COMMON)
-
-    /* Allocate room for stack */
-    .   =  ALIGN(8) ;
-    .   += 0x5000 ;
-    _sp =  . - 16;
   }
 
   _end = . ;			/* End of unitialised data		*/

@@ -18,4 +18,6 @@ void
 interrupt_handle(int level)
 {
 	printf("level:%x\n", level);
+	while(1)
+		;
 }

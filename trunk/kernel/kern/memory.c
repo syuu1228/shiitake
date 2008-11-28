@@ -5,9 +5,12 @@
 
 //#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
 #define DPRINTF(...) do{}while(0)
-
+#define DEBUG 1
 typedef struct malloc_unit
 {
+#ifdef DEBUG
+	int magic;
+#endif
 	struct malloc_unit *prev, *next;
 	size_t size;
 	bool allocated;
@@ -75,9 +78,12 @@ unit_merge(malloc_unit_t *unit1, malloc_unit_t *unit2)
 size_t
 memory_init(void)
 {
-	printf("memory_head:%p\n", md_memory_head());
-	printf("memory_tail:%p\n", md_memory_tail());
+	DPRINTF("memory_head:%p\n", md_memory_head());
+	DPRINTF("memory_tail:%p\n", md_memory_tail());
 	unit_list_head = (malloc_unit_t *)md_memory_head();
+#ifdef DEBUG
+	unit_list_head->magic = 0xdeadbeef;
+#endif
 	unit_list_head->next = 0;
 	unit_list_head->prev = 0;
         unit_list_head->size = md_memory_tail() - (char *)unit_list_head - sizeof(malloc_unit_t);
@@ -93,8 +99,16 @@ malloc(size_t size)
 	malloc_unit_t *unit;
 	DPRINTF("size:%d\n", size);
 	for (unit = unit_list_head; unit; unit = unit->next)
+#ifdef DEBUG
+	{
+		if (unit->allocated)
+			assert(unit->magic == 0xdeadbeef);
+#endif
 		if (!unit->allocated && unit->size >= size)
 			break;
+#ifdef DEBUG
+	}
+#endif
 	if (unit->allocated)
 	{
 		printf("Ugh, no left memory!\n");
@@ -104,6 +118,9 @@ malloc(size_t size)
 	if (unit->size > size + sizeof(malloc_unit_t))
 	{
 		malloc_unit_t *new_unit =(malloc_unit_t *)(unit_data(unit) + size);
+#ifdef DEBUG
+		new_unit->magic = 0xdeadbeef;
+#endif
 		new_unit->size = unit_tail(unit) - unit_data(new_unit);
 		new_unit->allocated = false;
 		unit->size = size;
@@ -111,6 +128,10 @@ malloc(size_t size)
 	}
 	unit->allocated = true;
 	DPRINTF("return:%x\n", unit_data(unit));
+#ifdef DEBUG
+	assert(md_memory_head() < (char *)unit_data(unit));
+	assert(md_memory_tail() > (char *)unit_data(unit));
+#endif
 	return unit_data(unit);
 }
 
@@ -128,7 +149,14 @@ void
 free(void *ptr)
 {
 	DPRINTF("ptr:%x\n", ptr);
+#ifdef DEBUG
+	assert(md_memory_head() < (char *)ptr);
+	assert(md_memory_tail() > (char *)ptr);
+#endif
 	malloc_unit_t *unit = unit_data_to_head(ptr);
+#ifdef DEBUG
+	assert(unit->magic == 0xdeadbeef);
+#endif
 	unit->allocated = false;
 	if (unit->prev && !unit->prev->allocated 
 	    && unit_tail(unit->prev) == (char *)unit)

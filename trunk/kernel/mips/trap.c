@@ -3,6 +3,9 @@
 #include <mips/cpu.h>
 #include <mips/thread.h>
 
+#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
+//#define DPRINTF(...) do{}while(0)
+
 static inline void
 dump_frame(md_thread_t *frame)
 {
@@ -37,6 +40,8 @@ trap(unsigned status, unsigned cause, unsigned epc,
      md_thread_t *frame)
 {
 	const int exc = cause & CAUSE_EXC_MASK;
+	DPRINTF("status:%x cause:%x epc:%x exc:%x\n",
+		status, cause, epc, exc);
 	switch(exc) {
 	case EXC_INT:
 		interrupt_handle(cause & CAUSE_IP_MASK);
@@ -45,9 +50,7 @@ trap(unsigned status, unsigned cause, unsigned epc,
 		syscall_handle(status, cause, epc, frame);
 		break;
 	default:
-		printf("status:%x cause:%x epc:%x exc:%x\n"
-		       "[general exception]\n",
-		       status, cause, epc, exc);
+		printf("[general exception]\n");
 		dump_frame(frame);
 		while(1)
 			;

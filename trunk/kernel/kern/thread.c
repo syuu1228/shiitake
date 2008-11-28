@@ -4,7 +4,8 @@
 #include <lib/console.h>
 #include <lib/string.h>
 
-//#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
+//#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), \
+//                 printf)
 #define DPRINTF(...) do{}while(0)
 thread_t *thread_running = 0;
 static list_node_t runq = {0};
@@ -59,11 +60,11 @@ thread_t *
 thread_create(void (*function)(void))
 {
 	DPRINTF("function:%p\n", function);
-	thread_t *t = malloc(sizeof(thread_t));
-	memset(t, 0, sizeof(thread_t));
+	thread_t *t = calloc(sizeof(thread_t), 1);
 	md_thread_create(t, function);
 	add_queue(t);
-	DPRINTF("&runq:%p runq.prev:%p runq.next:%p\n", &runq, runq.prev, runq.next);
+	DPRINTF("&runq:%p runq.prev:%p runq.next:%p\n", 
+		&runq, runq.prev, runq.next);
 	DPRINTF("t:%p\n", t);
 	return t;
 }

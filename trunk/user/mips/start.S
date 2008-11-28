@@ -5,7 +5,7 @@
 _start:
 	/* Setup sp and gp */
 	la $gp, _gp
-	la $sp, _sp
+//	la $sp, _sp
 	/* Clear bss */
 	la $s0, _fbss	/* First address */
 	la $s1, _end	/* Last  address */
