@@ -15,5 +15,7 @@
 #define	SYSCALL_CLOSE 11
 #define	SYSCALL_MAX 12
 
+#ifdef _KERNEL
 extern void *syscall_functions[];
+#endif
 #endif

@@ -8,7 +8,7 @@ NM = $(CROSS_COMPILE)nm
 STRIP = $(CROSS_COMPILE)strip
 OBJCOPY = $(CROSS_COMPILE)objcopy
 OBJDUMP = $(CROSS_COMPILE)objdump
-CFLAGS = -g -EL -march=mips3 -mno-mips16 -O0 -mgp32 -mfp32 -mabi=32 -mno-abicalls -msoft-float -mmemcpy -mlong-calls -fno-builtin -Werror
+CFLAGS = -g -EL -march=mips3 -mno-mips16 -O0 -mgp32 -mfp32 -mabi=32 -mno-abicalls -msoft-float -mmemcpy -mlong-calls -fno-builtin -Werror -I../../kernel
 
 all: testapp
 

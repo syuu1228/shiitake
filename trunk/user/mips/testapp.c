@@ -1,12 +1,29 @@
+#include <kern/syscall.h>
 
-int syscall1(int a, int b, int c, int d)
+#define SYSCALL_ENTER(no)			\
+	asm volatile("li $v0, %0\n"		\
+		     "syscall" :: "i"(no))
+
+void putchar(int c)
 {
-	asm volatile("li $v0, 0x1\n"
-		     "syscall");
+	SYSCALL_ENTER(SYSCALL_PUTCHAR);
+}
+
+int getchar(void)
+{
+	SYSCALL_ENTER(SYSCALL_GETCHAR);
 }
 
 int main(void)
 {
-	syscall1(0x10, 0x20, 0x30, 0x40);
-	return 10;
+	putchar('a');
+	putchar('b');
+	putchar('c');
+	while(1) {
+		int c = getchar();
+		putchar(c);
+		if(c == 'q')
+			break;
+	}
+	return 0;
 }
