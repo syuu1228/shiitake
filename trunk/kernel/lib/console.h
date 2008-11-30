@@ -1,7 +1,7 @@
 #ifndef LIB_CONSOLE_H_
 #define LIB_CONSOLE_H_
 #include <stdarg.h>
-#include <arch/console.h>
+#include <kern/console.h>
 
 #define panic(...) {printf("[panic] "); printf(__VA_ARGS__); while(1);}
 int printf(const char *format, ...);

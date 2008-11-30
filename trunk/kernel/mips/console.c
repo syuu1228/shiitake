@@ -1,4 +1,4 @@
-#include <lib/console.h>
+#include <kern/console.h>
 #include <mips/testmachine.h>
 
 void putchar(int c)

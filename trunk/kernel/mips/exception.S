@@ -55,6 +55,7 @@ general_exception:
 	sw	$k0,THREAD_MD_PC($sp)
 	mfc0	$a1,COP0_CAUSE
 	sw	$a1,THREAD_MD_CAUSE($sp)
+	la	$gp,_gp
 	move	$a0,$k1
 	move	$a2,$k0
 	move	$a3,$sp

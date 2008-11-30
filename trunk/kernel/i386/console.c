@@ -1,4 +1,4 @@
-#include <lib/console.h>
+#include <kern/console.h>
 
 /* Some screen stuff.  */
 /* The number of columns.  */
@@ -19,7 +19,7 @@ static int ypos;
 static volatile unsigned char *video;
 
 /* Clear the screen and initialize VIDEO, XPOS and YPOS.  */
-void
+static void
 cls (void)
 {
   int i;
