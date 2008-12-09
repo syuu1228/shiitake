@@ -18,6 +18,7 @@
 #include <i386/multiboot.h>
 #include <i386/segment.h>
 #include <i386/interrupt.h>
+#include <i386/console.h>
 #include <lib/console.h>
 
 /* Check if the bit BIT in FLAGS is set.  */
