@@ -115,7 +115,6 @@ md_thread_switch:
 	.set	reorder
 	.set	macro
 	.set    at
-	.end	md_thread_switch
 
 	.globl	md_thread_trampoline
 	.ent	md_thread_trampoline
@@ -186,4 +185,4 @@ md_thread_trampoline:
 	.set	reorder
 	.set	macro
 	.set    at
-	.end	md_thread_trampoline
+

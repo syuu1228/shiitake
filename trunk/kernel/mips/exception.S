@@ -114,7 +114,6 @@ general_exception:
 	rfe
 	.set	at
 	.set	reorder
-	.end	general_exception
 	
 	.globl	reset_exception
 	.ent	reset_exception
@@ -178,7 +177,6 @@ reset_exception:
 	nop
 	.set	at
 	.set	reorder
-	.end	reset_exception
 	
 	.globl	cache_error_exception
 	.ent	cache_error_exception
@@ -242,4 +240,4 @@ cache_error_exception:
 	nop
 	.set	at
 	.set	reorder
-	.end	cache_error_exception
+

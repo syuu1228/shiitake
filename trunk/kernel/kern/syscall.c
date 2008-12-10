@@ -1,6 +1,6 @@
 #include <kern/syscall.h>
 #include <kern/file_system.h>
-#include <arch/console.h>
+#include <kern/console.h>
 
 void *syscall_functions[SYSCALL_MAX] = {
 	(void *)putchar,

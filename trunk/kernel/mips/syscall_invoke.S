@@ -18,4 +18,3 @@ syscall_invoke:
 	jr	$ra
 	nop
 	.set	reorder
-	.end	syscall_invoke

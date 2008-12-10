@@ -4,8 +4,10 @@
 #include <lib/console.h>
 #include <lib/string.h>
 
-//#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), \
-//                 printf)
+/*
+#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), \
+                 printf)
+*/
 #define DPRINTF(...) do{}while(0)
 thread_t *thread_running = 0;
 static list_node_t runq = {0};

@@ -33,4 +33,4 @@ md_thread_switch:
 	movl	THREAD_MD_EIP(%ecx),%eax
 	movl	%eax,(%esp)
 	ret
-	.end	md_thread_switch
+

@@ -32,4 +32,4 @@ die:
       j	    die
       nop
       .set reorder
-      .end   _start
+
