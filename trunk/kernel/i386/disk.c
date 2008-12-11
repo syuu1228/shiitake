@@ -4,8 +4,8 @@
 #include <lib/string.h>
 #include <lib/console.h>
 
-#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
-//#define DPRINTF(...) do{}while(0)
+//#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
+#define DPRINTF(...) do{}while(0)
 
 #define IDE_REG_DATA            0x01f0
 #define IDE_REG_ERROR           0x01f1
