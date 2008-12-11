@@ -81,7 +81,7 @@ DEFINE_VECTOR(44);
 DEFINE_VECTOR(45);
 DEFINE_VECTOR(46);
 DEFINE_VECTOR(47);
-DEFINE_VECTOR(48);
+DEFINE_VECTOR(128);
 
 #define IDT_SIZE 256
 static descriptor_t idt[IDT_SIZE] = {{{0}}};
@@ -205,7 +205,7 @@ interrupt_init(void)
 	SET_IDT(45);
 	SET_IDT(46);
 	SET_IDT(47);
-	SET_IDT(48);
+	SET_IDT(128);
 
 	set_descriptor_table_register(&idtr, idt, IDT_SIZE);
 	idt_load(&idtr);

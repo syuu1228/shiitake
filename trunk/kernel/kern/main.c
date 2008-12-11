@@ -14,9 +14,8 @@ main(void)
 	printf("thread initialized.\n");
 	file_system_init();
 	printf("file system initialized.\n");
-	asm volatile("int $48");
-//	execute("/TESTAPP");
-//	thread_yield();
+	execute("/TESTAPP");
+	thread_yield();
 	printf("shiitake stopped.\n");
 	return 0;
 }

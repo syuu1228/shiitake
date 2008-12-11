@@ -4,12 +4,12 @@
 	asm volatile("li $v0, %0\n"		\
 		     "syscall" :: "i"(no))
 
-void putchar(int c)
+static void putchar(int c)
 {
 	SYSCALL_ENTER(SYSCALL_PUTCHAR);
 }
 
-int getchar(void)
+static int getchar(void)
 {
 	SYSCALL_ENTER(SYSCALL_GETCHAR);
 }

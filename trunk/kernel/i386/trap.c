@@ -1,6 +1,7 @@
 #include <lib/console.h>
 #include <lib/types.h>
 #include <i386/frame.h>
+#include <i386/syscall.h>
 
 #define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
 
@@ -21,8 +22,9 @@ trap(int vector, trapframe_t *frame)
 		frame->eip,
 		frame->eax, frame->ecx, frame->edx, frame->ebx,
 		frame->esp, frame->ebp, frame->esi, frame->edi);
-	if(vector == 48) {
+	if(vector == 128) {
 		printf("syscall received\n");
+		syscall_handle(frame);
 	}else
 		while(1)
 			;

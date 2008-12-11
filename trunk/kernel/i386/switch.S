@@ -34,3 +34,20 @@ md_thread_switch:
 	movl	%eax,(%esp)
 	ret
 
+	.globl	md_thread_trampoline
+md_thread_trampoline:
+	call	*%ebx
+	call	thread_finalize
+	movl	thread_running, %ecx
+	movl	THREAD_MD_EBX(%ecx),%ebx
+	movl	THREAD_MD_ESP(%ecx),%esp
+	movl	THREAD_MD_EBP(%ecx),%ebp
+	movl	THREAD_MD_ESP(%ecx),%esp
+	movl	THREAD_MD_ESI(%ecx),%esi
+	movl	THREAD_MD_EDI(%ecx),%edi
+	movl	THREAD_MD_EIP(%ecx),%eax
+	pushl	THREAD_MD_EFLAGS(%ecx)
+	popfl
+	movl	THREAD_MD_EIP(%ecx),%eax
+	movl	%eax,(%esp)
+	ret

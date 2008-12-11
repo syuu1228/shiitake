@@ -2,16 +2,18 @@
 #include <kern/elf.h>
 #include <kern/file_system.h>
 #include <kern/memory.h>
+#include <kern/thread.h>
 #include <lib/console.h>
 #include <lib/assert.h>
+#include <lib/string.h>
 
-//#define DPRINTF (printf("[%s:%s:%d] ", __FILE__, __FUNCTION__, __LINE__), printf)
+//#define DPRINTF (printf)
 #define DPRINTF(...) do{}while(0)
 
 void
 execute(const char *path)
 {
-	elf32_header_t hdr = {0};
+	elf32_header_t hdr = {{0}};
 	int fd = open(path, 0, 0);
 	if(fd < 0)
 		panic("open failed\n");
@@ -43,6 +45,7 @@ execute(const char *path)
 	assert(sizeof(elf32_program_header_t) == hdr.e_phentsize);
 	assert(sizeof(elf32_section_header_t) == hdr.e_shentsize);
 
+	int loaded = 0;
 	if(hdr.e_phoff) {
 		elf32_program_header_t ph[hdr.e_phnum];
 		memset(ph, 0, sizeof(ph));
@@ -65,6 +68,9 @@ execute(const char *path)
 				assert(ph[i].p_paddr);
 				assert(ph[i].p_filesz);
 				assert(ph[i].p_memsz);
+				printf("addr:%x memsz:%x offset:%x filesz:%x\n",
+				       ph[i].p_paddr, ph[i].p_memsz,
+				       ph[i].p_offset, ph[i].p_filesz);
 				unsigned char *dest =
 					(unsigned char *)ph[i].p_paddr;
 				memset(dest, 0, ph[i].p_memsz);
@@ -72,8 +78,11 @@ execute(const char *path)
 					panic("seek failed\n");				
 				if(read(fd, dest, ph[i].p_filesz) != ph[i].p_filesz)
 					panic("read failed\n");
+				loaded = 1;
 			}
 		}
 	}
+	if(!loaded)
+		panic("load failed\n");
         thread_create((void (*)(void))hdr.e_entry);
 }

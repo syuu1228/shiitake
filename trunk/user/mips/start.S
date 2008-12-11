@@ -3,12 +3,9 @@
 	.ent	_start
 	.set noreorder
 _start:
-	/* Setup sp and gp */
 	la $gp, _gp
-//	la $sp, _sp
-	/* Clear bss */
-	la $s0, _fbss	/* First address */
-	la $s1, _end	/* Last  address */
+	la $s0, _fbss
+	la $s1, _end
 	addu $s1, 3
 	li $s2, ~3
 	and $s1, $s2
@@ -27,4 +24,5 @@ _start:
 	addiu $sp,$sp,24
 	jr $ra
 	nop
-	.end	_start
+
+	.end
